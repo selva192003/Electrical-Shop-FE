@@ -1,0 +1,36 @@
+.footer {
+  background-color: #0b1f3b;
+  color: #e5e7eb;
+  padding: var(--space-2) var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.footer-brand {
+  font-weight: 500;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: var(--color-accent-soft);
+}
+
+.footer-copy {
+  color: #9ca3af;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding-inline: var(--space-2);
+  }
+}
