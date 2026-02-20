@@ -21,8 +21,12 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      const redirectTo = location.state?.from?.pathname || '/';
-      navigate(redirectTo, { replace: true });
+      if (user.role === 'admin') {
+        navigate('/admin/dashboard', { replace: true });
+      } else {
+        const redirectTo = location.state?.from?.pathname || '/';
+        navigate(redirectTo, { replace: true });
+      }
     }
   }, [user, navigate, location.state]);
 

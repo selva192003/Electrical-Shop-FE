@@ -1,0 +1,35 @@
+/* Admin Orders — ado-* */
+.ado { display: flex; flex-direction: column; gap: 1.25rem; }
+.ado-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; }
+.ado-title { font-size: 1.5rem; font-weight: 800; color: #0b1f3b; margin: 0 0 0.15rem; }
+.ado-subtitle { font-size: 0.85rem; color: #6b7280; margin: 0; }
+
+.ado-search { padding: 0.5rem 0.9rem; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 0.88rem; outline: none; width: 260px; transition: border-color 0.2s; }
+.ado-search:focus { border-color: #0b1f3b; }
+
+.ado-tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.ado-tab { background: #f3f4f6; border: none; border-radius: 6px; padding: 5px 12px; font-size: 0.8rem; font-weight: 600; color: #6b7280; cursor: pointer; transition: background 0.15s, color 0.15s; }
+.ado-tab:hover { background: #e5e7eb; }
+.ado-tab--active { background: #0b1f3b; color: #fff; }
+
+.ado-table-wrap { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow-x: auto; }
+.ado-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; min-width: 780px; }
+.ado-table th { text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: #9ca3af; padding: 0.75rem 1rem; font-weight: 600; border-bottom: 1.5px solid #f3f4f6; white-space: nowrap; }
+.ado-table td { padding: 0.65rem 1rem; color: #374151; border-bottom: 1px solid #f9fafb; vertical-align: middle; }
+.ado-table tr:last-child td { border-bottom: none; }
+.ado-table tr:hover td { background: #fafbfc; }
+.ado-empty { text-align: center; color: #9ca3af; padding: 2rem; }
+
+.ado-mono { font-family: monospace; font-size: 0.82rem; color: #6b7280; }
+.ado-customer { display: flex; flex-direction: column; }
+.ado-cname { font-weight: 600; color: #0b1f3b; }
+.ado-cemail { font-size: 0.75rem; color: #9ca3af; }
+.ado-muted { color: #6b7280; font-size: 0.82rem; }
+
+.ado-badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 0.73rem; font-weight: 600; }
+.ado-badge--paid { background: #dcfce7; color: #16a34a; }
+.ado-badge--unpaid { background: #fee2e2; color: #dc2626; }
+
+.ado-select { border: 1.5px solid #e2e8f0; border-radius: 6px; padding: 4px 8px; font-size: 0.8rem; outline: none; background: #fff; cursor: pointer; }
+.ado-select:focus { border-color: #0b1f3b; }
+.ado-select:disabled { opacity: 0.6; cursor: not-allowed; }

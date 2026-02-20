@@ -1,0 +1,230 @@
+.support-page,
+.ticket-detail-page {
+  padding: 2rem 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.support-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.support-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.support-form {
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.support-form-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-primary);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-primary);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 0.6rem 0.75rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--color-accent);
+}
+
+.form-error {
+  color: #ef4444;
+  font-size: 0.82rem;
+}
+
+.support-empty {
+  text-align: center;
+  padding: 3rem;
+  color: var(--color-muted);
+}
+
+.support-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.support-item {
+  display: block;
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.support-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(11, 31, 59, 0.12);
+}
+
+.support-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.support-item-subject {
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: 1rem;
+}
+
+.support-item-status {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.support-item-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  text-transform: capitalize;
+}
+
+/* Ticket Detail */
+.ticket-detail-header {
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.ticket-detail-subject {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+.ticket-detail-meta {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  color: var(--color-muted);
+  margin-bottom: 1rem;
+  text-transform: capitalize;
+}
+
+.ticket-detail-description {
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+.ticket-replies-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.ticket-no-replies {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.ticket-reply {
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ticket-reply--admin {
+  background: #eff6ff;
+  border-left: 4px solid var(--color-primary);
+}
+
+.ticket-reply--user {
+  background: #fffbeb;
+  border-left: 4px solid var(--color-accent);
+}
+
+.ticket-reply-sender {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: capitalize;
+}
+
+.ticket-reply-message {
+  color: var(--color-text);
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.ticket-reply-date {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+.ticket-reply-form {
+  padding: 1.25rem;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ticket-reply-form h3 {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.ticket-reply-form textarea {
+  padding: 0.6rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  resize: vertical;
+  outline: none;
+  font-family: inherit;
+}
+
+.ticket-reply-form textarea:focus {
+  border-color: var(--color-accent);
+}

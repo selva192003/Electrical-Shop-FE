@@ -8,6 +8,13 @@ export const getProfile = () => axiosInstance.get('/users/profile');
 
 export const updateProfile = (data) => axiosInstance.put('/users/profile', data);
 
+export const uploadProfileImage = (formData) =>
+  axiosInstance.post('/users/profile/image', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+
+export const changePassword = (data) => axiosInstance.put('/users/change-password', data);
+
 export const getAddresses = () => axiosInstance.get('/users/addresses');
 
 export const addAddress = (data) => axiosInstance.post('/users/addresses', data);

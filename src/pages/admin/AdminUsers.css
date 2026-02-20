@@ -1,0 +1,32 @@
+/* Admin Users — adu-* */
+.adu { display: flex; flex-direction: column; gap: 1.25rem; }
+.adu-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; }
+.adu-title { font-size: 1.5rem; font-weight: 800; color: #0b1f3b; margin: 0 0 0.15rem; }
+.adu-subtitle { font-size: 0.85rem; color: #6b7280; margin: 0; }
+
+.adu-search { width: 100%; max-width: 360px; padding: 0.55rem 0.9rem; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+.adu-search:focus { border-color: #0b1f3b; }
+
+.adu-table-wrap { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow-x: auto; }
+.adu-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; min-width: 640px; }
+.adu-table th { text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: #9ca3af; padding: 0.75rem 1rem; font-weight: 600; border-bottom: 1.5px solid #f3f4f6; white-space: nowrap; }
+.adu-table td { padding: 0.65rem 1rem; color: #374151; border-bottom: 1px solid #f9fafb; vertical-align: middle; }
+.adu-table tr:last-child td { border-bottom: none; }
+.adu-table tr:hover td { background: #fafbfc; }
+.adu-empty { text-align: center; color: #9ca3af; padding: 2rem; }
+
+.adu-user { display: flex; align-items: center; gap: 0.65rem; }
+.adu-avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #fff; flex-shrink: 0; }
+.adu-name { font-weight: 600; color: #0b1f3b; }
+.adu-muted { color: #6b7280; font-size: 0.82rem; }
+
+.adu-badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 0.73rem; font-weight: 600; }
+.adu-badge--admin { background: #fef3c7; color: #b45309; }
+.adu-badge--user { background: #f3f4f6; color: #6b7280; }
+.adu-badge--active { background: #dcfce7; color: #16a34a; }
+.adu-badge--blocked { background: #fee2e2; color: #dc2626; }
+
+.adu-btn { border: none; border-radius: 6px; padding: 5px 14px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
+.adu-btn:hover { opacity: 0.8; }
+.adu-btn--block { background: #fee2e2; color: #dc2626; }
+.adu-btn--unblock { background: #dcfce7; color: #16a34a; }

@@ -1,0 +1,120 @@
+.notifications-page {
+  padding: 2rem 1rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.notifications-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.notifications-badge {
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.1rem 0.5rem;
+  border-radius: 20px;
+}
+
+.notifications-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.notifications-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 4rem;
+  color: var(--color-muted);
+}
+
+.notifications-empty-icon {
+  font-size: 3rem;
+}
+
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+  position: relative;
+}
+
+.notification-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(11, 31, 59, 0.1);
+}
+
+.notification-item--unread {
+  border-left: 4px solid var(--color-accent);
+  background: #fffbeb;
+}
+
+.notification-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.notification-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-title {
+  font-weight: 700;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.notification-message {
+  color: var(--color-text);
+  font-size: 0.88rem;
+  line-height: 1.4;
+  margin-bottom: 0.35rem;
+}
+
+.notification-date {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+.notification-delete-btn {
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.25rem;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.notification-delete-btn:hover {
+  color: #ef4444;
+}

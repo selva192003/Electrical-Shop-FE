@@ -1,6 +1,8 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import { logout } from '../../redux/slices/authSlice.js';
+import { fetchUnreadCount } from '../../redux/slices/notificationSlice.js';
 import logo from '../../assets/sri-murugan-logo.png';
 import './Navbar.css';
 
@@ -9,6 +11,16 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const cartCount = useSelector((state) => state.cart.items.length);
+  const unreadCount = useSelector((state) => state.notifications.unreadCount);
+
+  // Fetch unread notification count periodically when logged in
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchUnreadCount());
+      const interval = setInterval(() => dispatch(fetchUnreadCount()), 60000); // every minute
+      return () => clearInterval(interval);
+    }
+  }, [user, dispatch]);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -36,12 +48,17 @@ const Navbar = () => {
           <NavLink to="/" end className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
             Home
           </NavLink>
+           <NavLink to="/products" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+            Products
+          </NavLink>
           <NavLink to="/orders" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
             Orders
-          </NavLink>
-          <NavLink to="/load-calculator" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
-            Load Calculator
-          </NavLink>
+          </NavLink>         
+          {user && (
+            <NavLink to="/wishlist" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+              Wishlist
+            </NavLink>
+          )}
           {user?.role === 'admin' && (
             <NavLink to="/admin/dashboard" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
               Admin
@@ -50,6 +67,15 @@ const Navbar = () => {
         </nav>
 
         <div className="navbar-actions">
+          {user && (
+            <NavLink to="/notifications" className="nav-bell" title="Notifications">
+              <span className="bell-icon">🔔</span>
+              {unreadCount > 0 && (
+                <span className="bell-badge">{unreadCount > 9 ? '9+' : unreadCount}</span>
+              )}
+            </NavLink>
+          )}
+
           <NavLink to="/cart" className="nav-cart">
             <span className="cart-icon">🛒</span>
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
