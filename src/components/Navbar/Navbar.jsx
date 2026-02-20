@@ -1,6 +1,7 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/slices/authSlice.js';
+import logo from '../../assets/sri-murugan-logo.png';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -18,8 +19,17 @@ const Navbar = () => {
     <header className="navbar">
       <div className="navbar-inner">
         <Link to="/" className="navbar-logo">
-          <span className="logo-mark">⚡</span>
-          <span className="logo-text">VoltCart</span>
+          <span className="logo-image-wrapper" aria-hidden="true">
+            <img
+              src={logo}
+              alt="Sri Murugan Electricals and Hardwares logo"
+              className="logo-image"
+            />
+          </span>
+          <span className="logo-text-block">
+            <span className="logo-text-main">Sri Murugan</span>
+            <span className="logo-text-sub">Electricals &amp; Hardwares</span>
+          </span>
         </Link>
 
         <nav className="navbar-links">

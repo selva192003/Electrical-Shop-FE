@@ -1,0 +1,27 @@
+.vision-section {
+  margin-top: var(--space-2);
+}
+
+.vision-inner {
+  background: radial-gradient(circle at top left, rgba(250, 204, 21, 0.1), transparent),
+    linear-gradient(135deg, #0b1f3b 0%, #111827 60%, #020617 100%);
+  color: #e5e7eb;
+  padding: var(--space-3);
+  text-align: center;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.vision-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #f9fafb;
+}
+
+.vision-text {
+  font-size: 0.95rem;
+  max-width: 600px;
+  margin: 0 auto;
+  color: #e5e7eb;
+}

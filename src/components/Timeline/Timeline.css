@@ -1,0 +1,127 @@
+.timeline {
+  position: relative;
+  margin-top: var(--space-2);
+  padding-block: var(--space-1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--color-accent), rgba(15, 23, 42, 0.08));
+}
+
+.timeline-item {
+  position: relative;
+  display: flex;
+  gap: 8px;
+}
+
+.timeline-item--left {
+  justify-content: flex-start;
+}
+
+.timeline-item--right {
+  justify-content: flex-end;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  width: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.timeline-item--left .timeline-marker {
+  left: calc(50% - 40px);
+}
+
+.timeline-item--right .timeline-marker {
+  left: calc(50% + 8px);
+}
+
+.timeline-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 2px solid var(--color-accent);
+  background-color: var(--color-primary);
+  color: var(--color-accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft);
+}
+
+.timeline-year {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.timeline-content {
+  width: 46%;
+  background-color: var(--color-bg-alt);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+  font-size: 0.85rem;
+  border-left: 3px solid rgba(245, 180, 0, 0.35);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.timeline-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--color-primary);
+}
+
+.timeline-description {
+  color: var(--color-text-muted);
+}
+
+.timeline-item:hover .timeline-content {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.16);
+  border-left-color: var(--color-accent);
+}
+
+.timeline-item:hover .timeline-icon {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .timeline::before {
+    left: 18px;
+    transform: none;
+  }
+
+   .timeline-marker {
+    left: 18px;
+  }
+
+  .timeline-item,
+  .timeline-item--left,
+  .timeline-item--right {
+    justify-content: flex-start;
+  }
+
+  .timeline-content {
+    width: auto;
+    margin-left: 44px;
+  }
+}

@@ -1,0 +1,65 @@
+.app-wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
+.watermark {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.watermark::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70vw;
+  max-width: 900px;
+  aspect-ratio: 1 / 1;
+  background-image: var(--watermark-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.05;
+  filter: grayscale(0.5);
+  animation: watermark-float 24s ease-in-out infinite;
+}
+
+@keyframes watermark-float {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -52%) scale(1.01);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@media (max-width: 1024px) {
+  .watermark::before {
+    width: 60vw;
+    opacity: 0.045;
+  }
+}
+
+@media (max-width: 768px) {
+  .watermark::before {
+    width: 80vw;
+    opacity: 0.035;
+  }
+}
+
+@media (max-width: 480px) {
+  .watermark::before {
+    width: 90vw;
+    opacity: 0.03;
+  }
+}

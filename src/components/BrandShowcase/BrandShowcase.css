@@ -1,0 +1,150 @@
+.brand-section {
+  background-color: #ffffff;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: var(--radius-lg);
+}
+
+.brand-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand-section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111827;
+}
+
+.brand-section-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.brand-strip-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(148, 163, 184, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+  padding-block: 12px;
+}
+
+.brand-strip-gradient {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.brand-strip-gradient-left {
+  left: 0;
+  background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0));
+}
+
+.brand-strip-gradient-right {
+  right: 0;
+  background: linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0));
+}
+
+.brand-strip {
+  position: relative;
+  white-space: nowrap;
+}
+
+.brand-strip-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 32px;
+  animation: brand-scroll 28s linear infinite;
+}
+
+.brand-strip-wrapper:hover .brand-strip-track {
+  animation-play-state: paused;
+}
+
+.brand-pill {
+  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1rem;
+  color: #1a1a1a;
+  padding: 6px 10px;
+  position: relative;
+  cursor: default;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.brand-pill::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: #facc15;
+  transition: width 0.3s ease;
+}
+
+.brand-pill:hover {
+  color: #facc15;
+  transform: scale(1.05);
+}
+
+.brand-pill:hover::after {
+  width: 100%;
+}
+
+.brand-trust-text {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+@keyframes brand-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 1024px) {
+  .brand-pill {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .brand-section {
+    padding-inline: 16px;
+  }
+
+  .brand-pill {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-section-title {
+    font-size: 1.05rem;
+  }
+
+  .brand-section-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .brand-pill {
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+  }
+}

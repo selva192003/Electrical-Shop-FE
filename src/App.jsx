@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Footer from './components/Footer/Footer.jsx';
+import Watermark from './components/Watermark/Watermark.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Home from './pages/Home/Home.jsx';
 import Login from './pages/Login/Login.jsx';
@@ -18,6 +19,14 @@ import AdminProducts from './pages/admin/Products.jsx';
 import AdminUsers from './pages/admin/Users.jsx';
 import AdminOrders from './pages/admin/Orders.jsx';
 import LoadCalculator from './pages/LoadCalculator/LoadCalculator.jsx';
+import About from './pages/Info/About.jsx';
+import Contact from './pages/Info/Contact.jsx';
+import Terms from './pages/Info/Terms.jsx';
+import Privacy from './pages/Info/Privacy.jsx';
+import RefundPolicy from './pages/Info/RefundPolicy.jsx';
+import ShippingPolicy from './pages/Info/ShippingPolicy.jsx';
+import Faq from './pages/Info/Faq.jsx';
+import Support from './pages/Info/Support.jsx';
 import { loadProfile } from './redux/slices/authSlice.js';
 import ToastProvider from './components/Toast/ToastProvider.jsx';
 
@@ -33,9 +42,10 @@ const App = () => {
 
   return (
     <ToastProvider>
-      <div className="app-root">
+      <div className="app-root app-wrapper">
+        <Watermark />
         <Navbar />
-        <main style={{ flex: 1 }}>
+        <main style={{ flex: 1, position: 'relative', zIndex: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
@@ -75,6 +85,14 @@ const App = () => {
             />
             <Route path="/payment-status" element={<PaymentStatus />} />
             <Route path="/load-calculator" element={<LoadCalculator />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/shipping-policy" element={<ShippingPolicy />} />
+            <Route path="/faq" element={<Faq />} />
+            <Route path="/support" element={<Support />} />
             <Route
               path="/admin/dashboard"
               element={

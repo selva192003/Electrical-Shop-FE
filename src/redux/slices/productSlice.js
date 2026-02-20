@@ -38,6 +38,8 @@ const initialState = {
   totalPages: 0,
   loading: false,
   error: null,
+  featuredLoading: false,
+  featuredError: null,
   filters: {
     keyword: '',
     category: '',
@@ -74,8 +76,17 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      .addCase(fetchFeaturedProducts.pending, (state) => {
+        state.featuredLoading = true;
+        state.featuredError = null;
+      })
       .addCase(fetchFeaturedProducts.fulfilled, (state, action) => {
+        state.featuredLoading = false;
         state.featured = action.payload.products || action.payload;
+      })
+      .addCase(fetchFeaturedProducts.rejected, (state, action) => {
+        state.featuredLoading = false;
+        state.featuredError = action.payload;
       })
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.categories = action.payload;
