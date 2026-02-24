@@ -26,9 +26,9 @@ const Categories = () => {
       </div>
 
       {error ? (
-        <EmptyState icon="⚠️" title="Failed to load categories" message={error} />
+        <EmptyState icon="warning" title="Failed to load categories" message={error} />
       ) : categories.length === 0 ? (
-        <EmptyState icon="📦" title="No categories yet" message="Check back soon!" />
+        <EmptyState icon="inventory_2" title="No categories yet" message="Check back soon!" />
       ) : (
         <div className="categories-grid">
           {categories.map((cat) => (
@@ -37,7 +37,7 @@ const Categories = () => {
               to={`/products?category=${cat._id}`}
               className="category-card"
             >
-              <div className="category-card__icon">{cat.icon || '⚡'}</div>
+              <div className="category-card__icon"><span className="material-icons">{cat.icon || 'bolt'}</span></div>
               <h3 className="category-card__name">{cat.name}</h3>
               {cat.description && (
                 <p className="category-card__desc">{cat.description}</p>

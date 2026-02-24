@@ -44,32 +44,51 @@ export const clearWishlist = createAsyncThunk('wishlist/clear', async (_, { reje
 
 const wishlistSlice = createSlice({
   name: 'wishlist',
-  initialState: { items: [], loading: false, error: null },
+  initialState: { items: [], loading: false, error: null, _removedItem: null },
   reducers: {},
   extraReducers: (builder) => {
-    const loading = (state) => { state.loading = true; state.error = null; };
-    const failed = (state, action) => { state.loading = false; state.error = action.payload; };
-
     builder
-      .addCase(fetchWishlist.pending, loading)
-      .addCase(fetchWishlist.fulfilled, (state, action) => { state.loading = false; state.items = action.payload; })
-      .addCase(fetchWishlist.rejected, failed)
+      // ── Fetch ──
+      .addCase(fetchWishlist.pending,    (state) => { state.loading = true; state.error = null; })
+      .addCase(fetchWishlist.fulfilled,  (state, action) => { state.loading = false; state.items = action.payload; })
+      .addCase(fetchWishlist.rejected,   (state, action) => { state.loading = false; state.error = action.payload; })
 
-      .addCase(addToWishlist.pending, loading)
-      .addCase(addToWishlist.fulfilled, (state) => { state.loading = false; })
-      .addCase(addToWishlist.rejected, failed)
-
-      .addCase(removeFromWishlist.pending, loading)
-      .addCase(removeFromWishlist.fulfilled, (state, action) => {
-        state.loading = false;
-        // remove by id (action.payload.wishlist contains updated ids)
-        if (action.payload?.wishlist) {
-          const ids = action.payload.wishlist.map(String);
-          state.items = state.items.filter(p => ids.includes(String(p._id)));
+      // ── Add (optimistic) ──
+      .addCase(addToWishlist.pending, (state, action) => {
+        state.loading = true; state.error = null;
+        const id = action.meta.arg;
+        if (!state.items.some((w) => String(w._id || w) === String(id))) {
+          state.items.push({ _id: id }); // optimistic stub
         }
       })
-      .addCase(removeFromWishlist.rejected, failed)
+      .addCase(addToWishlist.fulfilled, (state) => { state.loading = false; })
+      .addCase(addToWishlist.rejected,  (state, action) => {
+        state.loading = false; state.error = action.payload;
+        // revert — remove the stub
+        const id = action.meta.arg;
+        state.items = state.items.filter((w) => String(w._id || w) !== String(id));
+      })
 
+      // ── Remove (optimistic) ──
+      .addCase(removeFromWishlist.pending, (state, action) => {
+        state.loading = true; state.error = null;
+        const id = action.meta.arg;
+        state._removedItem = state.items.find((w) => String(w._id || w) === String(id)) || null;
+        state.items = state.items.filter((w) => String(w._id || w) !== String(id));
+      })
+      .addCase(removeFromWishlist.fulfilled, (state) => {
+        state.loading = false; state._removedItem = null;
+      })
+      .addCase(removeFromWishlist.rejected, (state, action) => {
+        state.loading = false; state.error = action.payload;
+        // revert — put the item back
+        if (state._removedItem) {
+          state.items.push(state._removedItem);
+          state._removedItem = null;
+        }
+      })
+
+      // ── Clear ──
       .addCase(clearWishlist.fulfilled, (state) => { state.items = []; state.loading = false; });
   },
 });

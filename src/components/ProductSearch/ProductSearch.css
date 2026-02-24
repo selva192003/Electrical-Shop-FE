@@ -18,9 +18,12 @@
 
 .product-search__icon {
   padding: 0 0.75rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  color: #9ca3af;
   pointer-events: none;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .product-search__input {

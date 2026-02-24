@@ -37,6 +37,14 @@
 .testimonial-stars {
   color: #facc15;
   font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.testimonial-star.material-icons {
+  font-size: 18px;
+  color: #facc15;
 }
 
 @media (max-width: 900px) {

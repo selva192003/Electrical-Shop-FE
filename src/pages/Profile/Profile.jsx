@@ -149,7 +149,7 @@ const Profile = () => {
                 </span>
               )}
               <div className="profile-avatar-overlay">
-                {uploadingImg ? '...' : '📷'}
+                {uploadingImg ? '...' : <span className="material-icons" style={{fontSize:'1.2rem'}}>photo_camera</span>}
               </div>
             </div>
             <input
@@ -261,6 +261,10 @@ const Profile = () => {
               <input id="addressLine1" className="input-field" {...registerAddress('addressLine1', { required: true })} />
             </div>
             <div className="form-group">
+              <label className="form-label" htmlFor="addressLine2">Address Line 2 <span style={{fontWeight:400,color:'#9ca3af'}}>(optional)</span></label>
+              <input id="addressLine2" className="input-field" {...registerAddress('addressLine2')} />
+            </div>
+            <div className="form-group">
               <label className="form-label" htmlFor="city">City</label>
               <input id="city" className="input-field" {...registerAddress('city', { required: true })} />
             </div>
@@ -273,6 +277,10 @@ const Profile = () => {
                 <label className="form-label" htmlFor="postalCode">Postal Code</label>
                 <input id="postalCode" className="input-field" {...registerAddress('postalCode', { required: true })} />
               </div>
+            </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="country">Country</label>
+              <input id="country" className="input-field" defaultValue="India" {...registerAddress('country', { required: true })} />
             </div>
             <button className="accent-btn" type="submit">
               Save Address

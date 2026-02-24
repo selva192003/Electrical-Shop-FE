@@ -7,28 +7,28 @@ const Timeline = () => {
       title: 'Humble Beginnings',
       description:
         'Started as a small neighbourhood electrical shop, serving local homes with basic lighting and wiring needs.',
-      icon: '💡',
+      icon: 'lightbulb',
     },
     {
       year: '2005',
       title: 'Hardware & Wiring Expansion',
       description:
         'Expanded into hardware, wiring accessories, and domestic switchgear to support growing residential projects.',
-      icon: '🧰',
+      icon: 'hardware',
     },
     {
       year: '2012',
       title: 'Authorised Brand Partner',
       description:
         'Became an authorised distributor for leading electrical brands, strengthening our promise of genuine products.',
-      icon: '✅',
+      icon: 'task_alt',
     },
     {
       year: '2024',
       title: 'Digital Transformation',
       description:
         'Launched our online platform to make trusted electrical and hardware solutions accessible from anywhere.',
-      icon: '🌐',
+      icon: 'public',
     },
   ];
 
@@ -44,7 +44,7 @@ const Timeline = () => {
           return (
             <div key={m.year} className={`timeline-item timeline-item--${side}`}>
             <div className="timeline-marker">
-              <span className="timeline-icon">{m.icon}</span>
+              <span className="timeline-icon material-icons">{m.icon}</span>
               <span className="timeline-year">{m.year}</span>
             </div>
             <div className="timeline-content">

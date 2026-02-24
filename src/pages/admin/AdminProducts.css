@@ -38,6 +38,16 @@
 .adp-btn--save { background: #0b1f3b; color: #fff; }
 .adp-btn--cancel { background: #f3f4f6; color: #374151; }
 
+/* Icon-only action buttons */
+.adp-actions-cell { display: flex; align-items: center; gap: 6px; }
+.adp-icon-btn { border: none; border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s, transform 0.1s; }
+.adp-icon-btn .material-icons { font-size: 18px; }
+.adp-icon-btn:hover { transform: scale(1.1); }
+.adp-icon-btn--edit { background: #e0e7ff; color: #3730a3; }
+.adp-icon-btn--edit:hover { background: #c7d2fe; }
+.adp-icon-btn--del  { background: #fee2e2; color: #dc2626; }
+.adp-icon-btn--del:hover  { background: #fca5a5; }
+
 /* Modal */
 .adp-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 1rem; }
 .adp-modal { background: #fff; border-radius: 12px; width: 100%; max-width: 540px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
@@ -55,4 +65,47 @@
 .adp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 .adp-modal-actions { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 0.5rem; }
 
-@media (max-width: 600px) { .adp-row { grid-template-columns: 1fr; } }
+/* Larger modal for product form */
+.adp-modal--lg { max-width: 680px; }
+
+/* AI Generate button + description row */
+.adp-desc-header { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.adp-ai-btn { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; border: none; border-radius: 7px; padding: 5px 14px; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: opacity 0.2s; }
+.adp-ai-btn:hover:not(:disabled) { opacity: 0.85; }
+.adp-ai-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* Header with button inline */
+.adp-header-actions { display: flex; align-items: center; gap: 0.6rem; }
+.adp-add-btn--sec { background: #f3f4f6; color: #374151; border: 1.5px solid #e2e8f0; }
+.adp-add-btn--sec:hover { background: #e2e8f0; }
+
+/* Section titles inside the form */
+.adp-section-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #9ca3af; margin: 0.25rem 0 0; }
+.adp-section-header { display: flex; align-items: center; justify-content: space-between; margin-top: 0.25rem; }
+.adp-section-header .adp-section-title { margin: 0; }
+
+/* Inline add button */
+.adp-btn-inline { background: none; border: 1.5px solid #e2e8f0; border-radius: 6px; padding: 3px 10px; font-size: 0.78rem; font-weight: 600; color: #0b1f3b; cursor: pointer; }
+.adp-btn-inline:hover { background: #f3f4f6; }
+
+/* Remove row button */
+.adp-btn-rm { background: #fee2e2; border: none; border-radius: 6px; width: 28px; height: 34px; font-size: 0.8rem; color: #dc2626; cursor: pointer; flex-shrink: 0; }
+.adp-btn-rm:hover { background: #fca5a5; }
+
+/* Specification key-value rows */
+.adp-kv-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.5rem; align-items: center; }
+.adp-kv-key, .adp-kv-val { min-width: 0; }
+
+/* Variant rows */
+.adp-variant-row { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 0.5rem; align-items: center; }
+
+/* Hint / helper text */
+.adp-hint { font-size: 0.78rem; color: #9ca3af; margin: -0.2rem 0 0; }
+.adp-empty-hint { font-size: 0.82rem; color: #9ca3af; font-style: italic; }
+
+@media (max-width: 600px) {
+  .adp-row { grid-template-columns: 1fr; }
+  .adp-kv-row { grid-template-columns: 1fr 1fr auto; }
+  .adp-variant-row { grid-template-columns: 1fr 1fr; }
+  .adp-variant-row .adp-btn-rm { grid-column: span 2; justify-self: start; }
+}

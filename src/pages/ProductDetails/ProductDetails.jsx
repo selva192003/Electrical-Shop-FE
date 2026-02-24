@@ -21,9 +21,9 @@ const Stars = ({ value = 0 }) => {
   return (
     <span className="pd-stars">
       {Array.from({ length: 5 }, (_, i) => {
-        if (i < full) return <span key={i} className="star star-full">★</span>;
-        if (i === full && half) return <span key={i} className="star star-half">★</span>;
-        return <span key={i} className="star star-empty">☆</span>;
+        if (i < full) return <span key={i} className="material-icons star star-full">star</span>;
+        if (i === full && half) return <span key={i} className="material-icons star star-half">star_half</span>;
+        return <span key={i} className="material-icons star star-empty">star_border</span>;
       })}
       <span className="pd-rating-val">{Number(value).toFixed(1)}</span>
     </span>
@@ -168,10 +168,10 @@ const ProductDetails = () => {
 
           <p className={`pd-stock${product.stock === 0 ? ' out' : ''}`}>
             {product.stock === 0
-              ? '✖ Out of Stock'
+              ? <><span className="material-icons" style={{fontSize:'1em',verticalAlign:'middle'}}>block</span> Out of Stock</>
               : product.stock <= 10
-              ? `⚠ Only ${product.stock} left in stock`
-              : `✔ In Stock (${product.stock} available)`}
+              ? <><span className="material-icons" style={{fontSize:'1em',verticalAlign:'middle'}}>warning</span> Only {product.stock} left in stock</>
+              : <><span className="material-icons" style={{fontSize:'1em',verticalAlign:'middle'}}>check_circle</span> In Stock ({product.stock} available)</>}
           </p>
 
           <p className="pd-description">{product.description}</p>
@@ -197,14 +197,14 @@ const ProductDetails = () => {
                 </button>
               </div>
               <button className="accent-btn pd-cart-btn" onClick={handleAddToCart}>
-                🛒 Add to Cart
+                <span className="material-icons" style={{fontSize:'1.1em',verticalAlign:'middle',marginRight:'5px'}}>shopping_cart</span> Add to Cart
               </button>
               <button
                 className={`pd-wish-btn${isWishlisted ? ' active' : ''}`}
                 onClick={handleWishlist}
                 title={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
               >
-                {isWishlisted ? '❤️' : '🤍'}
+                <span className="material-icons">{isWishlisted ? 'favorite' : 'favorite_border'}</span>
               </button>
             </div>
           )}

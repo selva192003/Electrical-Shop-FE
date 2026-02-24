@@ -49,7 +49,7 @@ const Wishlist = () => {
 
       {items.length === 0 ? (
         <div className="wishlist-empty">
-          <span className="wishlist-empty-icon">♡</span>
+          <span className="material-icons wishlist-empty-icon">favorite_border</span>
           <p>Your wishlist is empty.</p>
           <Link to="/" className="btn primary-btn">
             Browse Products
@@ -62,7 +62,7 @@ const Wishlist = () => {
               <Link to={`/products/${product._id}`} className="wishlist-card-image-wrap">
                 {product.images?.[0] ? (
                   <img
-                    src={product.images[0]}
+                    src={product.images[0]?.url || product.images[0]}
                     alt={product.name}
                     className="wishlist-card-image"
                   />

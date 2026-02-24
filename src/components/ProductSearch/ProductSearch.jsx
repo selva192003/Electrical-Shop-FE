@@ -25,7 +25,7 @@ const ProductSearch = ({ placeholder = 'Search products…' }) => {
 
   return (
     <div className="product-search">
-      <span className="product-search__icon">🔍</span>
+      <span className="product-search__icon material-icons">search</span>
       <input
         type="text"
         className="product-search__input"

@@ -11,9 +11,9 @@ const Stars = ({ value = 0 }) => {
   return (
     <span className="product-card-stars" aria-label={`Rating: ${value}`}>
       {Array.from({ length: 5 }, (_, i) => {
-        if (i < full) return <span key={i} className="star star-full">★</span>;
-        if (i === full && half) return <span key={i} className="star star-half">★</span>;
-        return <span key={i} className="star star-empty">☆</span>;
+        if (i < full) return <span key={i} className="material-icons star star-full">star</span>;
+        if (i === full && half) return <span key={i} className="material-icons star star-half">star_half</span>;
+        return <span key={i} className="material-icons star star-empty">star_border</span>;
       })}
     </span>
   );
@@ -69,7 +69,7 @@ const ProductCard = ({ product, onAddToCart }) => {
           onClick={handleWishlist}
           aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
         >
-          {isWishlisted ? '❤️' : '🤍'}
+          <span className="material-icons">{isWishlisted ? 'favorite' : 'favorite_border'}</span>
         </button>
       </div>
 

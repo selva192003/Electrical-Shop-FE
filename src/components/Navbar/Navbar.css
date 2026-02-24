@@ -114,6 +114,7 @@
 .bell-icon {
   font-size: 1.2rem;
 }
+.bell-icon.material-icons { font-size: 22px; color: #e2e8f0; }
 
 .bell-badge {
   position: absolute;
@@ -138,6 +139,7 @@
 .cart-icon {
   font-size: 1.3rem;
 }
+.cart-icon.material-icons { font-size: 22px; color: #e2e8f0; }
 
 .cart-badge {
   position: absolute;

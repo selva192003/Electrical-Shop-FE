@@ -51,6 +51,14 @@
   font-size: 3rem;
   line-height: 1;
   margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-card__icon .material-icons {
+  font-size: 3rem;
+  color: var(--color-accent, #f59e0b);
 }
 
 .category-card__name {

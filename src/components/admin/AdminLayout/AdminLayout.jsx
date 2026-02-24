@@ -6,11 +6,11 @@ import logo from '../../../assets/sri-murugan-logo.png';
 import './AdminLayout.css';
 
 const NAV_ITEMS = [
-  { to: '/admin/dashboard', icon: '📊', label: 'Dashboard' },
-  { to: '/admin/products', icon: '📦', label: 'Products' },
-  { to: '/admin/users',    icon: '👥', label: 'Users' },
-  { to: '/admin/orders',   icon: '📋', label: 'Orders' },
-  { to: '/admin/feedback', icon: '💬', label: 'Feedback' },
+  { to: '/admin/dashboard', icon: 'dashboard',    label: 'Dashboard' },
+  { to: '/admin/products',  icon: 'inventory_2',  label: 'Products' },
+  { to: '/admin/users',     icon: 'group',        label: 'Users' },
+  { to: '/admin/orders',    icon: 'receipt_long', label: 'Orders' },
+  { to: '/admin/feedback',  icon: 'forum',        label: 'Feedback' },
 ];
 
 const AdminLayout = () => {
@@ -47,7 +47,7 @@ const AdminLayout = () => {
             onClick={() => setCollapsed((c) => !c)}
             title={collapsed ? 'Expand' : 'Collapse'}
           >
-            {collapsed ? '›' : '‹'}
+            <span className="material-icons">{collapsed ? 'chevron_right' : 'chevron_left'}</span>
           </button>
         </div>
 
@@ -62,7 +62,7 @@ const AdminLayout = () => {
               onClick={() => setMobileOpen(false)}
               title={collapsed ? item.label : ''}
             >
-              <span className="admin-nav-link__icon">{item.icon}</span>
+              <span className="material-icons admin-nav-link__icon">{item.icon}</span>
               {!collapsed && <span className="admin-nav-link__label">{item.label}</span>}
             </NavLink>
           ))}
@@ -81,7 +81,7 @@ const AdminLayout = () => {
             )}
           </div>
           <button className="admin-sidebar__logout" onClick={handleLogout} title="Logout">
-            <span>🚪</span>
+            <span className="material-icons">logout</span>
             {!collapsed && <span>Logout</span>}
           </button>
         </div>
@@ -95,7 +95,7 @@ const AdminLayout = () => {
             className="admin-topbar__menu"
             onClick={() => setMobileOpen((o) => !o)}
           >
-            ☰
+            <span className="material-icons">menu</span>
           </button>
           <img src={logo} alt="logo" className="admin-topbar__logo" />
           <span className="admin-topbar__title">Admin Panel</span>

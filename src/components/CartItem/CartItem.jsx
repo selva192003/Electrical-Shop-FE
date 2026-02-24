@@ -3,7 +3,8 @@ import './CartItem.css';
 const CartItem = ({ item, onQuantityChange, onRemove }) => {
   const price = item.product?.price || item.price || 0;
   const name = item.product?.name || item.name;
-  const image = item.product?.images?.[0] || item.image || '/placeholder-product.png';
+  const rawImage = item.product?.images?.[0] || item.image;
+  const image = rawImage?.url || rawImage || '/placeholder-product.png';
 
   return (
     <div className="cart-item">
@@ -24,8 +25,8 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
             +
           </button>
         </div>
-        <button type="button" className="cart-item-remove" onClick={() => onRemove(item)}>
-          Remove
+        <button type="button" className="cart-item-remove" onClick={() => onRemove(item)} title="Remove item">
+          <span className="material-icons">delete</span>
         </button>
       </div>
     </div>

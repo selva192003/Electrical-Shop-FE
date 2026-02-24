@@ -69,6 +69,15 @@ export const fetchAdminCategories = createAsyncThunk('admin/fetchCategories', as
   }
 });
 
+export const createAdminCategory = createAsyncThunk('admin/createCategory', async (data, { rejectWithValue }) => {
+  try {
+    const res = await axiosInstance.post('/products/categories', data);
+    return res.data;
+  } catch (err) {
+    return rejectWithValue(err.response?.data?.message || err.message);
+  }
+});
+
 export const fetchAdminProducts = createAsyncThunk('admin/fetchProducts', async (_, { rejectWithValue }) => {
   try {
     const res = await axiosInstance.get('/products', { params: { limit: 100, page: 1 } });
@@ -145,6 +154,24 @@ export const closeAdminTicket = createAsyncThunk('admin/closeTicket', async ({ i
   }
 });
 
+export const fetchAdminInsights = createAsyncThunk('admin/fetchInsights', async (_, { rejectWithValue }) => {
+  try {
+    const res = await axiosInstance.get('/dashboard/insights');
+    return res.data;
+  } catch (err) {
+    return rejectWithValue(err.response?.data?.message || err.message);
+  }
+});
+
+export const generateProductDescription = createAsyncThunk('admin/generateDescription', async (payload, { rejectWithValue }) => {
+  try {
+    const res = await axiosInstance.post('/dashboard/generate-description', payload);
+    return res.data.description;
+  } catch (err) {
+    return rejectWithValue(err.response?.data?.message || err.message);
+  }
+});
+
 // ── Slice ──────────────────────────────────────────────
 
 const adminSlice = createSlice({
@@ -158,6 +185,9 @@ const adminSlice = createSlice({
     ordersLoading: false,
     products: [],
     productsLoading: false,
+    categories: [],
+    insights: null,
+    insightsLoading: false,
     tickets: [],
     ticketsTotal: 0,
     ticketsLoading: false,
@@ -197,6 +227,16 @@ const adminSlice = createSlice({
       .addCase(updateAdminOrderStatus.fulfilled, (s, a) => {
         s.orders = s.orders.map((o) => o._id === a.payload._id ? a.payload : o);
       });
+
+    // categories
+    builder
+      .addCase(fetchAdminCategories.fulfilled, (s, a) => { s.categories = a.payload; });
+
+    // insights
+    builder
+      .addCase(fetchAdminInsights.pending,   (s) => { s.insightsLoading = true; })
+      .addCase(fetchAdminInsights.fulfilled, (s, a) => { s.insightsLoading = false; s.insights = a.payload; })
+      .addCase(fetchAdminInsights.rejected,  (s) => { s.insightsLoading = false; });
 
     // products
     builder

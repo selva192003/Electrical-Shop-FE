@@ -1,37 +1,102 @@
-.timeline {
+/* Horizontal Order Timeline */
+.otl {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem 0 0.5rem;
+  overflow-x: auto;
 }
 
-.timeline-step {
+.otl-step {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
+  position: relative;
+  flex: 1;
+  min-width: 72px;
 }
 
-.timeline-dot {
-  width: 14px;
-  height: 14px;
-  border-radius: 999px;
-  border: 2px solid #d1d5db;
-  margin-bottom: 4px;
-  background-color: #ffffff;
+/* Connecting line — stretches from previous step's dot to current */
+.otl-line {
+  position: absolute;
+  top: 12px;
+  right: 50%;
+  width: 100%;
+  height: 4px;
+  background: #e5e7eb;
+  z-index: 0;
 }
 
-.timeline-dot.completed {
+.otl-line--done {
+  background: #22c55e;
+}
+
+/* Dot */
+.otl-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2.5px solid #d1d5db;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  transition: border-color 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+
+.otl-dot--done {
   border-color: #22c55e;
-  background-color: #bbf7d0;
+  background: #22c55e;
 }
 
-.timeline-dot.active {
-  border-color: var(--color-accent);
-  background-color: var(--color-accent-soft);
+.otl-dot--active {
+  border-color: var(--color-accent, #f59e0b);
+  background: var(--color-accent-soft, #fef3c7);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.18);
 }
 
-.timeline-label {
-  max-width: 80px;
+.otl-icon {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.otl-dot--done .otl-icon   { color: #fff; }
+.otl-dot--active .otl-icon { color: var(--color-accent, #d97706); }
+
+/* Label */
+.otl-label {
+  margin-top: 8px;
+  font-size: 0.7rem;
   text-align: center;
+  color: #9ca3af;
+  line-height: 1.3;
+  max-width: 72px;
+  word-break: break-word;
+}
+
+.otl-label--done   { color: #22c55e; font-weight: 600; }
+.otl-label--active { color: var(--color-accent, #d97706); font-weight: 700; }
+
+/* Cancelled */
+.otl-cancelled {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ef4444;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.75rem 0;
+}
+
+.otl-cancelled-icon { font-size: 1.3rem; }
+
+@media (max-width: 600px) {
+  .otl-label { font-size: 0.62rem; max-width: 54px; }
+  .otl-dot   { width: 24px; height: 24px; }
+  .otl-icon  { font-size: 12px; }
+  .otl-line  { top: 10px; }
 }

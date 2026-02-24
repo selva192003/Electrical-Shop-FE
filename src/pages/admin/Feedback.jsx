@@ -104,7 +104,7 @@ const AdminFeedback = () => {
                   <StatusBadge status={t.status} />
                 </div>
                 <div className="adf-ticket-meta">
-                  <span className="adf-ticket-user">👤 {t.user?.name || 'Unknown'}</span>
+                  <span className="adf-ticket-user"><span className="material-icons" style={{fontSize:'14px',verticalAlign:'middle',marginRight:'3px'}}>person</span>{t.user?.name || 'Unknown'}</span>
                   <span className="adf-ticket-date">{fmt(t.createdAt)}</span>
                 </div>
               </div>
@@ -117,7 +117,7 @@ const AdminFeedback = () => {
       <div className="adf-conv-col">
         {!selectedTicket ? (
           <div className="adf-conv-placeholder">
-            <div className="adf-conv-placeholder-icon">💬</div>
+            <div className="adf-conv-placeholder-icon"><span className="material-icons">forum</span></div>
             <p>Select a ticket to view the conversation</p>
           </div>
         ) : ticketLoading ? (

@@ -69,7 +69,7 @@ const Navbar = () => {
         <div className="navbar-actions">
           {user && (
             <NavLink to="/notifications" className="nav-bell" title="Notifications">
-              <span className="bell-icon">🔔</span>
+              <span className="material-icons bell-icon">notifications</span>
               {unreadCount > 0 && (
                 <span className="bell-badge">{unreadCount > 9 ? '9+' : unreadCount}</span>
               )}
@@ -77,7 +77,7 @@ const Navbar = () => {
           )}
 
           <NavLink to="/cart" className="nav-cart">
-            <span className="cart-icon">🛒</span>
+            <span className="material-icons cart-icon">shopping_cart</span>
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </NavLink>
 

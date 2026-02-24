@@ -143,6 +143,14 @@
   gap: 1px;
 }
 
+.pd-stars .material-icons {
+  font-size: 18px;
+}
+
+.pd-stars .star-full  { color: #f59e0b; }
+.pd-stars .star-half  { color: #f59e0b; }
+.pd-stars .star-empty { color: #d1d5db; }
+
 .pd-rating-val {
   font-size: 0.88rem;
   font-weight: 600;

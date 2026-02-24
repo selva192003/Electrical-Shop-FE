@@ -37,7 +37,11 @@ const TestimonialsSection = () => {
                 <div className="testimonial-name">{t.name}</div>
                 <div className="testimonial-role">{t.role}</div>
               </div>
-              <div className="testimonial-stars">★★★★★</div>
+              <div className="testimonial-stars">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <span key={i} className="material-icons testimonial-star">star</span>
+                ))}
+              </div>
             </div>
           </article>
         ))}

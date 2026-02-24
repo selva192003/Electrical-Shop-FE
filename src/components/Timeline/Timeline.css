@@ -64,6 +64,10 @@
   box-shadow: var(--shadow-soft);
 }
 
+.timeline-icon.material-icons {
+  font-size: 18px;
+}
+
 .timeline-year {
   font-size: 0.78rem;
   font-weight: 600;

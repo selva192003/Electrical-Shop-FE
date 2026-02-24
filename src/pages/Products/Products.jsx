@@ -136,7 +136,7 @@ const Products = () => {
             <div className="products-loading"><Spinner /></div>
           ) : error ? (
             <EmptyState
-              icon="⚠️"
+              icon="warning"
               title="Something went wrong"
               message={error}
               actionLabel="Retry"
@@ -144,7 +144,7 @@ const Products = () => {
             />
           ) : items.length === 0 ? (
             <EmptyState
-              icon="🔌"
+              icon="electrical_services"
               title="No products found"
               message="Try adjusting your search or filters to find what you're looking for."
               actionLabel="Clear Filters"

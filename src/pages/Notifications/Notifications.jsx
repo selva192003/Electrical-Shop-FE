@@ -13,11 +13,11 @@ import Spinner from '../../components/Spinner/Spinner.jsx';
 import './Notifications.css';
 
 const TYPE_ICONS = {
-  order: '📦',
-  support: '🎫',
-  return: '↩️',
-  coupon: '🏷️',
-  system: '🔔',
+  order: 'local_shipping',
+  support: 'confirmation_number',
+  return: 'keyboard_return',
+  coupon: 'local_offer',
+  system: 'notifications',
 };
 
 const Notifications = () => {
@@ -77,7 +77,7 @@ const Notifications = () => {
 
       {items.length === 0 ? (
         <div className="notifications-empty">
-          <span className="notifications-empty-icon">🔔</span>
+          <span className="notifications-empty-icon material-icons">notifications</span>
           <p>No notifications yet.</p>
         </div>
       ) : (
@@ -88,7 +88,7 @@ const Notifications = () => {
               className={`notification-item card ${!n.isRead ? 'notification-item--unread' : ''}`}
               onClick={() => handleMarkRead(n)}
             >
-              <span className="notification-icon">{TYPE_ICONS[n.type] || '🔔'}</span>
+              <span className="notification-icon material-icons">{TYPE_ICONS[n.type] || 'notifications'}</span>
               <div className="notification-content">
                 <p className="notification-title">{n.title}</p>
                 <p className="notification-message">{n.message}</p>

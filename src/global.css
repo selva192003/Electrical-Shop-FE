@@ -18,6 +18,14 @@
   --space-3: 24px;
 }
 
+/* ── Material Icons global baseline ── */
+.material-icons {
+  font-size: 1.25em;
+  vertical-align: middle;
+  line-height: 1;
+  user-select: none;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

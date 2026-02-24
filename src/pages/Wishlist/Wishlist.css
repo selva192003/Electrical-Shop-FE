@@ -28,7 +28,10 @@
 
 .wishlist-empty-icon {
   font-size: 3.5rem;
+  color: #d1d5db;
 }
+
+.wishlist-empty-icon.material-icons { font-size: 3.5rem; }
 
 .wishlist-grid {
   display: grid;
