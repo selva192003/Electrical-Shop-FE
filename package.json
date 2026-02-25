@@ -9,6 +9,7 @@
     "lint": "echo \"no lint configured\""
   },
   "dependencies": {
+    "@react-oauth/google": "^0.13.4",
     "@reduxjs/toolkit": "^2.2.0",
     "axios": "^1.6.0",
     "chart.js": "^4.4.0",

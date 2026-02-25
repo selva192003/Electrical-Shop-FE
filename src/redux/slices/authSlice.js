@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   register as registerApi,
   login as loginApi,
+  googleLogin as googleLoginApi,
   getProfile,
   updateProfile as updateProfileApi,
   getAddresses,
@@ -94,6 +95,15 @@ export const setDefaultUserAddress = createAsyncThunk('auth/setDefaultAddress', 
   }
 });
 
+export const loginWithGoogle = createAsyncThunk('auth/googleLogin', async (token, { rejectWithValue }) => {
+  try {
+    const res = await googleLoginApi(token);
+    return res.data;
+  } catch (err) {
+    return rejectWithValue(err.message);
+  }
+});
+
 const initialState = {
   user: null,
   token: localStorage.getItem(tokenKey) || null,
@@ -177,6 +187,20 @@ const authSlice = createSlice({
           ...addr,
           isDefault: addr._id === action.payload._id,
         }));
+      })
+      .addCase(loginWithGoogle.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        localStorage.setItem(tokenKey, action.payload.token);
+      })
+      .addCase(loginWithGoogle.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });

@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { loginUser } from '../../redux/slices/authSlice.js';
+import { GoogleLogin } from '@react-oauth/google';
+import { loginUser, loginWithGoogle } from '../../redux/slices/authSlice.js';
 import { useToast } from '../../components/Toast/ToastProvider.jsx';
 import './Login.css';
 
@@ -39,6 +40,19 @@ const Login = () => {
     }
   };
 
+  const onGoogleSuccess = async (credentialResponse) => {
+    try {
+      await dispatch(loginWithGoogle(credentialResponse.credential)).unwrap();
+      addToast('Logged in with Google', 'success');
+    } catch (err) {
+      addToast(err || 'Google login failed', 'error');
+    }
+  };
+
+  const onGoogleError = () => {
+    addToast('Google sign-in was cancelled or failed', 'error');
+  };
+
   return (
     <div className="page-container auth-page">
       <div className="auth-card card">
@@ -73,6 +87,22 @@ const Login = () => {
             {loading ? 'Signing in...' : 'Login'}
           </button>
         </form>
+
+        <div className="auth-divider">
+          <span>or</span>
+        </div>
+
+        <div className="google-btn-wrapper">
+          <GoogleLogin
+            onSuccess={onGoogleSuccess}
+            onError={onGoogleError}
+            useOneTap={false}
+            width="100%"
+            text="continue_with"
+            shape="rectangular"
+          />
+        </div>
+
         <p className="auth-footer">
           New here? <Link to="/register">Create an account</Link>
         </p>
