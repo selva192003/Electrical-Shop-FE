@@ -1,12 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import {
-  fetchMyTickets,
-  createSupportTicket,
-} from '../../redux/slices/supportSlice.js';
-import { useToast } from '../../components/Toast/ToastProvider.jsx';
+import { fetchMyTickets } from '../../redux/slices/supportSlice.js';
 import Spinner from '../../components/Spinner/Spinner.jsx';
 import './SupportTickets.css';
 
@@ -17,79 +12,39 @@ const STATUS_COLORS = {
   closed: '#6b7280',
 };
 
+const CATEGORY_LABELS = {
+  order_issue: '📦 Order Issue',
+  payment_issue: '💳 Payment Issue',
+  product_query: '⚡ Product Query',
+  return_request: '🔄 Return Request',
+  other: '💬 Other',
+};
+
 const SupportTickets = () => {
   const dispatch = useDispatch();
-  const { addToast } = useToast();
   const { tickets, loading } = useSelector((state) => state.support);
-  const [showForm, setShowForm] = useState(false);
-
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
   useEffect(() => {
     dispatch(fetchMyTickets());
   }, [dispatch]);
 
-  const onSubmit = async (data) => {
-    try {
-      await dispatch(createSupportTicket(data)).unwrap();
-      addToast('Support ticket submitted!', 'success');
-      reset();
-      setShowForm(false);
-    } catch (err) {
-      addToast(err || 'Failed to create ticket', 'error');
-    }
-  };
-
   return (
     <div className="support-page page-wrapper">
       <div className="support-header">
-        <h1 className="support-title">Support Tickets</h1>
-        <button className="btn primary-btn" onClick={() => setShowForm(!showForm)}>
-          {showForm ? 'Cancel' : '+ New Ticket'}
-        </button>
+        <h1 className="support-title">My Support Tickets</h1>
+        <Link to="/support" className="btn primary-btn">
+          + New Ticket
+        </Link>
       </div>
 
-      {showForm && (
-        <form className="support-form card" onSubmit={handleSubmit(onSubmit)}>
-          <h2 className="support-form-title">New Support Ticket</h2>
-          <div className="form-group">
-            <label>Subject *</label>
-            <input
-              {...register('subject', { required: 'Subject is required' })}
-              placeholder="Brief subject of your issue"
-            />
-            {errors.subject && <span className="form-error">{errors.subject.message}</span>}
-          </div>
-          <div className="form-group">
-            <label>Category</label>
-            <select {...register('category')}>
-              <option value="other">Other</option>
-              <option value="order_issue">Order Issue</option>
-              <option value="payment_issue">Payment Issue</option>
-              <option value="product_query">Product Query</option>
-              <option value="return_request">Return Request</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Description *</label>
-            <textarea
-              {...register('description', { required: 'Description is required' })}
-              rows={4}
-              placeholder="Describe your issue in detail..."
-            />
-            {errors.description && <span className="form-error">{errors.description.message}</span>}
-          </div>
-          <button type="submit" className="btn primary-btn" disabled={loading}>
-            {loading ? 'Submitting...' : 'Submit Ticket'}
-          </button>
-        </form>
-      )}
-
-      {loading && !showForm ? (
+      {loading ? (
         <Spinner />
       ) : tickets.length === 0 ? (
         <div className="support-empty">
-          <p>No support tickets yet.</p>
+          <p>You have no support tickets yet.</p>
+          <Link to="/support" className="btn primary-btn" style={{ marginTop: '1rem', display: 'inline-block' }}>
+            Raise your first ticket
+          </Link>
         </div>
       ) : (
         <div className="support-list">
@@ -99,15 +54,24 @@ const SupportTickets = () => {
                 <span className="support-item-subject">{ticket.subject}</span>
                 <span
                   className="support-item-status"
-                  style={{ background: STATUS_COLORS[ticket.status] + '22', color: STATUS_COLORS[ticket.status] }}
+                  style={{
+                    background: STATUS_COLORS[ticket.status] + '22',
+                    color: STATUS_COLORS[ticket.status],
+                  }}
                 >
-                  {ticket.status.replace('_', ' ')}
+                  {ticket.status.replace(/_/g, ' ')}
                 </span>
               </div>
               <div className="support-item-meta">
-                <span className="support-item-category">{ticket.category?.replace('_', ' ')}</span>
+                <span className="support-item-category">
+                  {CATEGORY_LABELS[ticket.category] ?? ticket.category?.replace(/_/g, ' ')}
+                </span>
                 <span className="support-item-date">
-                  {new Date(ticket.createdAt).toLocaleDateString('en-IN')}
+                  {new Date(ticket.createdAt).toLocaleDateString('en-IN', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
                 </span>
               </div>
             </Link>

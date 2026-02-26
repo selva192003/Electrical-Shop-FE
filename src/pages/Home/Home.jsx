@@ -96,9 +96,7 @@ const Home = () => {
       <section className="home-strip card">
         <div className="home-strip-item">
           <div className="home-strip-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" focusable="false">
-              <path d="M9 16.2 5.5 12.7 4.1 14.1 9 19l11-11-1.4-1.4z" />
-            </svg>
+            <span className="material-icons">verified</span>
           </div>
           <div>
             <div className="home-strip-title">Genuine Brands</div>
@@ -107,9 +105,7 @@ const Home = () => {
         </div>
         <div className="home-strip-item">
           <div className="home-strip-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" focusable="false">
-              <path d="M20 8h-3.17l-1.84-2.76A2 2 0 0 0 13.33 4H4a2 2 0 0 0-2 2v10h2a3 3 0 0 0 6 0h4a3 3 0 0 0 6 0h2v-6a2 2 0 0 0-2-2zm-14 9a1 1 0 1 1 1-1 1 1 0 0 1-1 1zm10 0a1 1 0 1 1 1-1 1 1 0 0 1-1 1z" />
-            </svg>
+            <span className="material-icons">local_shipping</span>
           </div>
           <div>
             <div className="home-strip-title">Timely Delivery</div>
@@ -118,9 +114,7 @@ const Home = () => {
         </div>
         <div className="home-strip-item">
           <div className="home-strip-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" focusable="false">
-              <path d="M12 12a2 2 0 1 0-2-2 2 2 0 0 0 2 2zm0-10A10 10 0 1 0 22 12 10 10 0 0 0 12 2zm3.7 13.3L11 13V7h2v4.2l3.3 1.9z" />
-            </svg>
+            <span className="material-icons">support_agent</span>
           </div>
           <div>
             <div className="home-strip-title">Support 9 AM - 8 PM</div>

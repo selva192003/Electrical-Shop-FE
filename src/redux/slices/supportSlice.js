@@ -80,10 +80,12 @@ const supportSlice = createSlice({
       .addCase(fetchTicket.fulfilled, (state, action) => { state.loading = false; state.currentTicket = action.payload; })
       .addCase(fetchTicket.rejected, failed)
 
+      .addCase(replyTicket.pending, loading)
       .addCase(replyTicket.fulfilled, (state, action) => {
         state.loading = false;
         state.currentTicket = action.payload;
-      });
+      })
+      .addCase(replyTicket.rejected, failed);
   },
 });
 

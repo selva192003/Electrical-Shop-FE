@@ -94,9 +94,7 @@ const Footer = () => {
               <li>
                 <div className="footer-contact-row">
                   <span className="footer-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" focusable="false">
-                      <path d="M6.6 10.8c1.2 2.3 3.1 4.2 5.4 5.4l1.8-1.8c.2-.2.6-.3.9-.2 1 .3 2 .5 3.1.5.5 0 .9.4.9.9V20c0 .5-.4 1-1 1C10.5 21 3 13.5 3 4c0-.5.4-1 1-1h3.5c.5 0 .9.4.9.9 0 1.1.2 2.1.5 3.1.1.3 0 .7-.2.9L6.6 10.8z" />
-                    </svg>
+                    <span className="material-icons">phone</span>
                   </span>
                   <a href="tel:+919876543210" className="footer-link">
                     +91 98765 43210
@@ -106,9 +104,7 @@ const Footer = () => {
               <li>
                 <div className="footer-contact-row">
                   <span className="footer-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" focusable="false">
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 2v.01L12 13 20 6.01V6H4zm0 12h16V9l-8 7-8-7v9z" />
-                    </svg>
+                    <span className="material-icons">email</span>
                   </span>
                   <a href="mailto:support@srmuruganelectricals.com" className="footer-link">
                     support@srmuruganelectricals.com
@@ -118,9 +114,7 @@ const Footer = () => {
               <li>
                 <div className="footer-contact-row">
                   <span className="footer-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" focusable="false">
-                      <path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6.5 12 6.5s2.5 1.1 2.5 2.5S13.4 11.5 12 11.5z" />
-                    </svg>
+                    <span className="material-icons">location_on</span>
                   </span>
                   <address style={{ fontStyle: 'normal' }}>
                     MKM Complex, Nayara Bunk Opposite,<br />
@@ -132,9 +126,7 @@ const Footer = () => {
               <li>
                 <div className="footer-contact-row">
                   <span className="footer-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" focusable="false">
-                      <path d="M12 8c-3.3 0-6 2.2-6 5s2.7 5 6 5 6-2.2 6-5-2.7-5-6-5zm0-6C9.8 2 8 3.8 8 6v1h2V6c0-1.1.9-2 2-2s2 .9 2 2v1h2V6c0-2.2-1.8-4-4-4z" />
-                    </svg>
+                    <span className="material-icons">schedule</span>
                   </span>
                   <div>Mon – Sat: 9:00 AM – 8:00 PM</div>
                 </div>

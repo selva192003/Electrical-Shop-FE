@@ -66,6 +66,44 @@
 .adf-send-btn:hover { opacity: 0.85; }
 .adf-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
+/* Resolved tag */
+.adf-resolved-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #dcfce7;
+  color: #16a34a;
+  border-radius: 7px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+/* Initial description bubble style */
+.adf-msg-bubble--desc {
+  border: 1.5px dashed rgba(255, 255, 255, 0.35);
+}
+
+/* Warning shown above reply box when ticket is resolved */
+.adf-reply-warning {
+  font-size: 0.8rem;
+  color: #92400e;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+/* No-replies notice inside conversation */
+.adf-no-replies {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
 @media (max-width: 900px) {
   .adf { grid-template-columns: 1fr; height: auto; }
   .adf-list-col { max-height: 45vh; }

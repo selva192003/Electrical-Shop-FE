@@ -6,23 +6,24 @@ import {
   replyAdminTicket,
   closeAdminTicket,
   clearSelectedTicket,
+  clearOpenTicketsCount,
 } from '../../redux/slices/adminSlice.js';
 import Spinner from '../../components/Spinner/Spinner.jsx';
 import './AdminFeedback.css';
 
-const STATUS_OPTIONS = ['all', 'open', 'in_progress', 'resolved', 'closed'];
+const STATUS_OPTIONS = ['all', 'open', 'in_progress', 'resolved'];
 
 const StatusBadge = ({ status }) => {
   const map = {
-    open: ['#dcfce7', '#16a34a'],
+    open:        ['#fef9c3', '#b45309'],
     in_progress: ['#dbeafe', '#1d4ed8'],
-    resolved: ['#f3f4f6', '#6b7280'],
-    closed: ['#fee2e2', '#dc2626'],
+    resolved:    ['#dcfce7', '#16a34a'],
+    closed:      ['#f3f4f6', '#6b7280'],
   };
   const [bg, color] = map[status] || ['#f3f4f6', '#374151'];
   return (
     <span className="adf-badge" style={{ background: bg, color }}>
-      {status?.replace('_', ' ')}
+      {status?.replace(/_/g, ' ')}
     </span>
   );
 };
@@ -38,6 +39,11 @@ const AdminFeedback = () => {
     dispatch(fetchAdminTickets({ status: statusFilter === 'all' ? '' : statusFilter }));
   }, [dispatch, statusFilter]);
 
+  // Clear the sidebar badge as soon as admin opens this page
+  useEffect(() => {
+    dispatch(clearOpenTicketsCount());
+  }, [dispatch]);
+
   const selectTicket = (id) => {
     if (selectedTicket?._id === id) return;
     dispatch(fetchAdminTicketById(id));
@@ -51,7 +57,6 @@ const AdminFeedback = () => {
     try {
       await dispatch(replyAdminTicket({ id: selectedTicket._id, message: reply.trim() })).unwrap();
       setReply('');
-      dispatch(fetchAdminTicketById(selectedTicket._id));
     } catch (err) {
       console.error(err);
     } finally {
@@ -59,11 +64,10 @@ const AdminFeedback = () => {
     }
   };
 
-  const handleClose = async (status) => {
+  const handleResolve = async () => {
     if (!selectedTicket) return;
-    await dispatch(closeAdminTicket({ id: selectedTicket._id, status }));
+    await dispatch(closeAdminTicket({ id: selectedTicket._id, status: 'resolved' })).unwrap();
     dispatch(fetchAdminTickets({ status: statusFilter === 'all' ? '' : statusFilter }));
-    dispatch(fetchAdminTicketById(selectedTicket._id));
   };
 
   const fmt = (d) => d ? new Date(d).toLocaleString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
@@ -131,55 +135,77 @@ const AdminFeedback = () => {
                 <div className="adf-conv-info">
                   <StatusBadge status={selectedTicket.status} />
                   <span className="adf-conv-meta">
-                    from <strong>{selectedTicket.user?.name}</strong> · {fmt(selectedTicket.createdAt)}
+                    from <strong>{selectedTicket.user?.name}</strong>
+                    &nbsp;·&nbsp;{selectedTicket.category?.replace(/_/g, ' ')}
+                    &nbsp;·&nbsp;{fmt(selectedTicket.createdAt)}
                   </span>
                 </div>
               </div>
               <div className="adf-conv-actions">
-                {selectedTicket.status !== 'resolved' && (
-                  <button className="adf-action-btn adf-action-btn--resolve" onClick={() => handleClose('resolved')}>
-                    ✓ Resolve
+                {(selectedTicket.status === 'open' || selectedTicket.status === 'in_progress') && (
+                  <button
+                    className="adf-action-btn adf-action-btn--resolve"
+                    onClick={handleResolve}
+                  >
+                    ✓ Mark Resolved
                   </button>
                 )}
-                {selectedTicket.status !== 'closed' && (
-                  <button className="adf-action-btn adf-action-btn--close" onClick={() => handleClose('closed')}>
-                    ✕ Close
-                  </button>
+                {selectedTicket.status === 'resolved' && (
+                  <span className="adf-resolved-tag">✓ Resolved</span>
                 )}
               </div>
             </div>
 
-            {/* Messages */}
+            {/* Conversation: description first, then replies */}
             <div className="adf-messages">
-              {(selectedTicket.messages || []).map((m, i) => {
-                const isAdmin = m.sender === 'admin' || m.senderRole === 'admin';
+              {/* Initial description bubble */}
+              <div className="adf-msg adf-msg--user">
+                <div className="adf-msg-bubble adf-msg-bubble--desc">
+                  <p className="adf-msg-text">{selectedTicket.description}</p>
+                  <span className="adf-msg-time">{fmt(selectedTicket.createdAt)}</span>
+                </div>
+                <span className="adf-msg-label">{selectedTicket.user?.name || 'User'}</span>
+              </div>
+
+              {/* Replies */}
+              {(selectedTicket.replies || []).map((m, i) => {
+                const isAdmin = m.sender === 'admin';
                 return (
                   <div key={i} className={`adf-msg ${isAdmin ? 'adf-msg--admin' : 'adf-msg--user'}`}>
                     <div className="adf-msg-bubble">
-                      <p className="adf-msg-text">{m.message || m.text}</p>
-                      <span className="adf-msg-time">{fmt(m.createdAt || m.sentAt)}</span>
+                      <p className="adf-msg-text">{m.message}</p>
+                      <span className="adf-msg-time">{fmt(m.createdAt)}</span>
                     </div>
-                    <span className="adf-msg-label">{isAdmin ? 'Admin' : (selectedTicket.user?.name || 'User')}</span>
+                    <span className="adf-msg-label">
+                      {isAdmin ? 'Support Team' : (selectedTicket.user?.name || 'User')}
+                    </span>
                   </div>
                 );
               })}
+
+              {selectedTicket.status === 'resolved' && (selectedTicket.replies || []).length === 0 && (
+                <p className="adf-no-replies">No replies yet — ticket was resolved directly.</p>
+              )}
             </div>
 
-            {/* Reply box */}
-            {selectedTicket.status !== 'closed' && (
-              <form className="adf-reply-form" onSubmit={handleReply}>
-                <textarea
-                  className="adf-reply-input"
-                  placeholder="Type your reply…"
-                  rows={3}
-                  value={reply}
-                  onChange={(e) => setReply(e.target.value)}
-                />
-                <button type="submit" className="adf-send-btn" disabled={sending || !reply.trim()}>
-                  {sending ? 'Sending…' : 'Send Reply'}
-                </button>
-              </form>
-            )}
+            {/* Reply form — always visible for admin so they can respond at any stage */}
+            <form className="adf-reply-form" onSubmit={handleReply}>
+              {selectedTicket.status === 'resolved' && (
+                <p className="adf-reply-warning">
+                  ℹ️ This ticket is resolved. Sending a reply will move it back to <strong>In Progress</strong>.
+                </p>
+              )}
+              <textarea
+                className="adf-reply-input"
+                placeholder="Type your reply to the customer…"
+                rows={3}
+                value={reply}
+                onChange={(e) => setReply(e.target.value)}
+              />
+              <button type="submit" className="adf-send-btn" disabled={sending || !reply.trim()}>
+                {sending ? 'Sending…' : 'Send Reply'}
+              </button>
+            </form>
           </>
         )}
       </div>

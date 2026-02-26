@@ -118,6 +118,15 @@ export const updateAdminProduct = createAsyncThunk('admin/updateProduct', async 
   }
 });
 
+export const fetchOpenTicketsCount = createAsyncThunk('admin/fetchOpenTicketsCount', async (_, { rejectWithValue }) => {
+  try {
+    const res = await axiosInstance.get('/support/admin/pending-count');
+    return res.data.count ?? 0;
+  } catch (err) {
+    return rejectWithValue(err.response?.data?.message || err.message);
+  }
+});
+
 export const fetchAdminTickets = createAsyncThunk('admin/fetchTickets', async (params, { rejectWithValue }) => {
   try {
     const res = await axiosInstance.get('/support/admin/all', { params });
@@ -193,11 +202,15 @@ const adminSlice = createSlice({
     ticketsLoading: false,
     selectedTicket: null,
     ticketLoading: false,
+    openTicketsCount: 0,
     error: null,
   },
   reducers: {
     clearSelectedTicket(state) {
       state.selectedTicket = null;
+    },
+    clearOpenTicketsCount(state) {
+      state.openTicketsCount = 0;
     },
   },
   extraReducers: (builder) => {
@@ -253,6 +266,10 @@ const adminSlice = createSlice({
         s.products = s.products.map((p) => p._id === a.payload._id ? a.payload : p);
       });
 
+    // open tickets badge
+    builder
+      .addCase(fetchOpenTicketsCount.fulfilled, (s, a) => { s.openTicketsCount = a.payload; });
+
     // tickets
     builder
       .addCase(fetchAdminTickets.pending, (s) => { s.ticketsLoading = true; })
@@ -276,5 +293,5 @@ const adminSlice = createSlice({
   },
 });
 
-export const { clearSelectedTicket } = adminSlice.actions;
+export const { clearSelectedTicket, clearOpenTicketsCount } = adminSlice.actions;
 export default adminSlice.reducer;

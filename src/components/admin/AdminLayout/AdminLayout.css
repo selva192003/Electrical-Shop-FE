@@ -152,6 +152,48 @@
 .admin-nav-link__label {
   overflow: hidden;
   text-overflow: ellipsis;
+  flex: 1;
+}
+
+/* Ticket count badge */
+.admin-nav-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0;
+  flex-shrink: 0;
+  animation: badge-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 0 2px var(--admin-primary);
+}
+
+/* In collapsed mode, badge sits top-right on the icon */
+.sidebar-collapsed .admin-nav-link {
+  position: relative;
+}
+
+.sidebar-collapsed .admin-nav-badge {
+  position: absolute;
+  top: 5px;
+  right: 6px;
+  min-width: 16px;
+  height: 16px;
+  font-size: 0.6rem;
+  padding: 0 3px;
+}
+
+@keyframes badge-pop {
+  0%   { transform: scale(0); opacity: 0; }
+  70%  { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 .sidebar-collapsed .admin-nav-link {
