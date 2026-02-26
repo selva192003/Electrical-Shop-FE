@@ -109,6 +109,23 @@ const productSlice = createSlice({
       state.selectedProduct = null;
       state.selectedError = null;
     },
+    // Patch a product's ratings/numReviews in all cached arrays after a review submit
+    patchProductRating(state, action) {
+      const { productId, ratings, numReviews } = action.payload;
+      const id = String(productId);
+      const applyPatch = (p) => {
+        if (!p) return;
+        const pid = p._id ? String(p._id) : String(p.id);
+        if (pid === id) {
+          p.ratings    = ratings;
+          p.numReviews = numReviews;
+        }
+      };
+      state.items.forEach(applyPatch);
+      state.featured.forEach(applyPatch);
+      state.related.forEach(applyPatch);
+      if (state.selectedProduct) applyPatch(state.selectedProduct);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -180,6 +197,6 @@ const productSlice = createSlice({
   },
 });
 
-export const { setFilters, clearFilters, setPage, clearSelectedProduct } = productSlice.actions;
+export const { setFilters, clearFilters, setPage, clearSelectedProduct, patchProductRating } = productSlice.actions;
 
 export default productSlice.reducer;
