@@ -6,9 +6,219 @@
 
 .checkout-layout {
   display: grid;
-  grid-template-columns: 2fr 1.1fr;
+  grid-template-columns: 1.6fr 1fr;
+  gap: var(--space-2);
+  align-items: start;
+}
+
+.checkout-left {
+  display: flex;
+  flex-direction: column;
   gap: var(--space-2);
 }
+
+/* ── Address card ── */
+.checkout-addresses h2,
+.checkout-summary h2,
+.checkout-payment-method h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--color-primary);
+}
+
+.checkout-empty-notice {
+  font-size: 0.87rem;
+  color: var(--color-text-muted);
+}
+
+.address-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.address-item {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.address-item--selected {
+  border-color: var(--color-primary);
+  background: #f0f4ff;
+}
+.address-item input[type="radio"] {
+  margin-top: 3px;
+  accent-color: var(--color-primary);
+}
+.address-item__body { flex: 1; }
+
+.address-line {
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+.address-line--name {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.address-line--phone {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+.address-line--phone .material-icons { font-size: 13px; }
+
+.address-default {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  padding: 2px 7px;
+  font-weight: 600;
+}
+
+/* ── Payment method card ── */
+.payment-method-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+}
+.payment-option--active {
+  border-color: var(--color-primary);
+  background: #f0f4ff;
+}
+.payment-option input[type="radio"] {
+  accent-color: var(--color-primary);
+}
+.payment-option__icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+.payment-option__icon--cod {
+  background: #ea580c;
+}
+.payment-option__icon .material-icons { font-size: 20px; }
+.payment-option__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+.payment-option__title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+.payment-option__desc {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+.payment-option__check {
+  color: var(--color-primary);
+  font-size: 20px !important;
+  flex-shrink: 0;
+}
+
+/* ── Summary card ── */
+.summary-list {
+  list-style: none;
+  margin-top: 4px;
+}
+.summary-list li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+.summary-list li span:first-child {
+  color: var(--color-text-muted);
+  flex: 1;
+}
+.summary-divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 10px 0;
+}
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin-bottom: 4px;
+}
+
+.checkout-cod-notice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  color: #9a3412;
+  margin: 10px 0;
+}
+.checkout-cod-notice .material-icons { font-size: 16px; color: #ea580c; }
+
+.checkout-pay-btn {
+  margin-top: var(--space-2);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.checkout-pay-btn .material-icons { font-size: 18px; }
+
+/* Loading spinner inside button */
+.checkout-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-top-color: #0b1f3b;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 768px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 .checkout-addresses h2,
 .checkout-summary h2 {

@@ -21,15 +21,19 @@ const STATUS_COLORS = {
 };
 
 /* ─── Stat Card ─── */
-const StatCard = ({ icon, label, value, color }) => (
-  <div className="adb-stat-card" style={{ '--stat-color': color }}>
-    <div className="adb-stat-icon">{icon}</div>
-    <div className="adb-stat-body">
-      <span className="adb-stat-value">{value}</span>
-      <span className="adb-stat-label">{label}</span>
+const StatCard = ({ icon, label, value, color, to }) => {
+  const inner = (
+    <div className={`adb-stat-card${to ? ' adb-stat-card--link' : ''}`} style={{ '--stat-color': color }}>
+      <div className="adb-stat-icon">{icon}</div>
+      <div className="adb-stat-body">
+        <span className="adb-stat-value">{value}</span>
+        <span className="adb-stat-label">{label}</span>
+      </div>
+      {to && <span className="material-icons adb-stat-arrow">arrow_forward</span>}
     </div>
-  </div>
-);
+  );
+  return to ? <Link to={to} style={{ textDecoration: 'none' }}>{inner}</Link> : inner;
+};
 
 /* ─── Urgency Badge ─── */
 const UrgencyBadge = ({ urgency }) => {
@@ -125,7 +129,7 @@ const AdminDashboard = () => {
         <StatCard icon={<span className="material-icons">shopping_cart</span>}   label="Total Orders"   value={stats.totalOrders}   color="#06b6d4" />
         <StatCard icon={<span className="material-icons">currency_rupee</span>}  label="Total Revenue"  value={`₹${(stats.totalRevenue || 0).toLocaleString('en-IN')}`} color="#22c55e" />
         <StatCard icon={<span className="material-icons">hourglass_empty</span>} label="Pending Orders" value={stats.pendingOrders} color="#f59e0b" />
-        <StatCard icon={<span className="material-icons">warning</span>}         label="Out of Stock"   value={stats.outOfStock}    color="#ef4444" />
+        <StatCard icon={<span className="material-icons">warning</span>}         label="Low Stock (≤5)"  value={stats.lowStock}     color="#f59e0b" to="/admin/low-stock" />
       </div>
 
       {/* ── Charts ── */}

@@ -126,6 +126,14 @@ const productSlice = createSlice({
       state.related.forEach(applyPatch);
       if (state.selectedProduct) applyPatch(state.selectedProduct);
     },
+    // Directly update the currently viewed product's rating without ID comparison
+    setSelectedProductRating(state, action) {
+      const { ratings, numReviews } = action.payload;
+      if (state.selectedProduct) {
+        state.selectedProduct.ratings    = ratings;
+        state.selectedProduct.numReviews = numReviews;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -197,6 +205,6 @@ const productSlice = createSlice({
   },
 });
 
-export const { setFilters, clearFilters, setPage, clearSelectedProduct, patchProductRating } = productSlice.actions;
+export const { setFilters, clearFilters, setPage, clearSelectedProduct, patchProductRating, setSelectedProductRating } = productSlice.actions;
 
 export default productSlice.reducer;

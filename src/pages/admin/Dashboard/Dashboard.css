@@ -30,6 +30,10 @@
   transition: transform 0.2s, box-shadow 0.2s;
 }
 .adb-stat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+.adb-stat-card--link { cursor: pointer; }
+.adb-stat-card--link:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.13); }
+.adb-stat-arrow { font-size: 1.1rem !important; color: var(--stat-color, #6b7280); margin-left: auto; opacity: 0.7; }
+.adb-stat-card--link:hover .adb-stat-arrow { opacity: 1; }
 .adb-stat-icon { font-size: 1.7rem; flex-shrink: 0; display: flex; align-items: center; }
 .adb-stat-icon .material-icons { font-size: 1.7rem; color: var(--stat-color, #0b1f3b); }
 .adb-stat-body { display: flex; flex-direction: column; }

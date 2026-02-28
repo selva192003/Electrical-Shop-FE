@@ -6,6 +6,7 @@ import {
   fetchRelatedProducts,
   clearSelectedProduct,
   patchProductRating,
+  setSelectedProductRating,
 } from '../../redux/slices/productSlice.js';
 import { addItemToCart } from '../../redux/slices/cartSlice.js';
 import { addToWishlist, removeFromWishlist } from '../../redux/slices/wishlistSlice.js';
@@ -170,22 +171,37 @@ const ProductDetails = () => {
         comment: rvComment.trim(),
       });
       const { review, updatedRatings } = res.data;
+      const wasNew = !myReview;
 
       // 1. Patch all cached product lists immediately (no page refresh)
-      if (updatedRatings) dispatch(patchProductRating(updatedRatings));
+      if (updatedRatings) {
+        dispatch(patchProductRating(updatedRatings));
+        // Also directly update the currently-viewed product to guarantee the
+        // header rating row reflects the new average without relying on ID matching
+        dispatch(setSelectedProductRating(updatedRatings));
+      }
 
-      // 2. Update local review state and reload full list
+      // 2. Update local review state
       setMyReview(review);
       setRvSuccess(true);
       setIsEditing(false);
-      setAllReviews((prev) => {
-        const filtered = prev.filter(
-          (r) => String(r.user?._id || r.user) !== String(user._id)
-        );
-        return [review, ...filtered];
-      });
 
-      addToast(myReview ? 'Review updated!' : 'Review submitted!', 'success');
+      // 3. Reload full review list so every card shows the real populated user data
+      //    and the rating distribution bars are recalculated from server truth.
+      try {
+        const listRes = await getProductReviews(product._id);
+        setAllReviews(listRes.data);
+      } catch (_) {
+        // fallback: splice the new review into the existing list
+        setAllReviews((prev) => {
+          const filtered = prev.filter(
+            (r) => String(r.user?._id || r.user) !== String(user._id)
+          );
+          return [review, ...filtered];
+        });
+      }
+
+      addToast(wasNew ? 'Review submitted!' : 'Review updated!', 'success');
     } catch (err) {
       const msg = err.response?.data?.message || 'Could not submit review. Please try again.';
       setRvError(msg);

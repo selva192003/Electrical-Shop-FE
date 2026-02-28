@@ -6,6 +6,9 @@ export const getMyOrders = () => axiosInstance.get('/orders/my');
 
 export const getOrderById = (id) => axiosInstance.get(`/orders/${id}`);
 
+export const cancelOrder = (id, reason) => axiosInstance.patch(`/orders/${id}/cancel`, { reason });
+
 export const getAllOrdersAdmin = () => axiosInstance.get('/orders');
 
 export const updateOrderStatusAdmin = (id, status) => axiosInstance.patch(`/orders/${id}/status`, { status });
+

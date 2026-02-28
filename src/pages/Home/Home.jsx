@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import ProductCard from '../../components/ProductCard/ProductCard.jsx';
@@ -15,6 +16,7 @@ import './Home.css';
 
 const Home = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { addToast } = useToast();
   const { items, featured, categories, loading, error, page, totalPages, filters, featuredLoading, featuredError } =
     useSelector((state) => state.products);
@@ -226,10 +228,10 @@ const Home = () => {
           </p>
         </div>
         <div className="closing-actions">
-          <button type="button" className="accent-btn" onClick={() => window.scrollTo({ top: 700, behavior: 'smooth' })}>
+          <button type="button" className="accent-btn" onClick={() => navigate('/products')}>
             Start Shopping
           </button>
-          <button type="button" className="primary-btn" onClick={() => window.location.assign('tel:+919876543210')}>
+          <button type="button" className="primary-btn" onClick={() => navigate('/support')}>
             Contact Us
           </button>
         </div>

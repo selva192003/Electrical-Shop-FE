@@ -10,6 +10,19 @@ import './AdminOrders.css';
 
 const STATUSES = ['Pending', 'Confirmed', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'];
 
+// Mirrors backend ALLOWED_TRANSITIONS
+const ALLOWED_TRANSITIONS = {
+  Pending:              ['Confirmed', 'Cancelled'],
+  Confirmed:            ['Packed',    'Cancelled'],
+  Packed:               ['Shipped',   'Cancelled'],
+  Shipped:              ['Out for Delivery', 'Cancelled'],
+  'Out for Delivery':   ['Delivered'],
+  Delivered:            [],
+  Cancelled:            [],
+};
+
+const isTerminalStatus = (s) => ALLOWED_TRANSITIONS[s]?.length === 0;
+
 const STATUS_COLOR = {
   Pending: '#fef9c3:#a16207',
   Confirmed: '#e0e7ff:#3730a3',
@@ -113,20 +126,35 @@ const AdminOrders = () => {
                   <td className="ado-muted">{o.orderItems?.length ?? 0}</td>
                   <td><strong>₹{Number(o.totalPrice || 0).toLocaleString('en-IN')}</strong></td>
                   <td>
-                    <span className={`ado-badge ${o.isPaid ? 'ado-badge--paid' : 'ado-badge--unpaid'}`}>
-                      {o.isPaid ? 'Paid' : 'Unpaid'}
-                    </span>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-start' }}>
+                      <span className={`ado-badge ${o.paymentInfo?.method === 'COD' ? 'ado-badge--cod' : 'ado-badge--online'}`}>
+                        {o.paymentInfo?.method === 'COD' ? 'COD' : 'Online'}
+                      </span>
+                      <span className={`ado-badge ${o.isPaid ? 'ado-badge--paid' : 'ado-badge--unpaid'}`} style={{ fontSize: '0.68rem' }}>
+                        {o.isPaid ? 'Paid' : 'Unpaid'}
+                      </span>
+                    </div>
                   </td>
                   <td><StatusBadge status={o.orderStatus} /></td>
                   <td>
-                    <select
-                      className="ado-select"
-                      value={o.orderStatus}
-                      disabled={updating[o._id]}
-                      onChange={(e) => handleStatus(o._id, e.target.value)}
-                    >
-                      {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-                    </select>
+                    {isTerminalStatus(o.orderStatus) ? (
+                      <span className="ado-locked" title={`Order is ${o.orderStatus} — no further changes allowed`}>
+                        <span className="material-icons">lock</span>
+                        Locked
+                      </span>
+                    ) : (
+                      <select
+                        className="ado-select"
+                        value={o.orderStatus}
+                        disabled={updating[o._id]}
+                        onChange={(e) => handleStatus(o._id, e.target.value)}
+                      >
+                        <option value={o.orderStatus}>{o.orderStatus}</option>
+                        {(ALLOWED_TRANSITIONS[o.orderStatus] || []).map((s) => (
+                          <option key={s} value={s}>{s}</option>
+                        ))}
+                      </select>
+                    )}
                   </td>
                 </tr>
               ))}

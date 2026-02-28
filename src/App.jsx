@@ -20,6 +20,7 @@ import AdminProducts from './pages/admin/Products.jsx';
 import AdminUsers from './pages/admin/Users.jsx';
 import AdminOrders from './pages/admin/Orders.jsx';
 import AdminFeedback from './pages/admin/Feedback.jsx';
+import AdminLowStock from './pages/admin/LowStock.jsx';
 import About from './pages/Info/About.jsx';
 import Contact from './pages/Info/Contact.jsx';
 import Terms from './pages/Info/Terms.jsx';
@@ -35,6 +36,7 @@ import Notifications from './pages/Notifications/Notifications.jsx';
 import SupportTickets from './pages/SupportTickets/SupportTickets.jsx';
 import TicketDetail from './pages/SupportTickets/TicketDetail.jsx';
 import Returns from './pages/Returns/Returns.jsx';
+import OrderDetail from './pages/Orders/OrderDetail.jsx';
 import { loadProfile } from './redux/slices/authSlice.js';
 import ToastProvider from './components/Toast/ToastProvider.jsx';
 
@@ -63,6 +65,15 @@ const AdminGuard = () => {
   return <Outlet />;
 };
 
+/* Scroll to top on every route change */
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [pathname]);
+  return null;
+};
+
 const App = () => {
   const dispatch = useDispatch();
 
@@ -73,6 +84,7 @@ const App = () => {
 
   return (
     <ToastProvider>
+      <ScrollToTop />
       <Routes>
         {/* ── Admin (isolated — no Navbar/Footer) ── */}
         <Route element={<AdminGuard />}>
@@ -83,6 +95,7 @@ const App = () => {
             <Route path="users" element={<AdminUsers />} />
             <Route path="orders" element={<AdminOrders />} />
             <Route path="feedback" element={<AdminFeedback />} />
+            <Route path="low-stock" element={<AdminLowStock />} />
           </Route>
         </Route>
 
@@ -108,6 +121,7 @@ const App = () => {
           <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
           <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+          <Route path="/orders/:id" element={<ProtectedRoute><OrderDetail /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
           <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />

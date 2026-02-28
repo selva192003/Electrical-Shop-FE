@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createOrder, getMyOrders, getOrderById } from '../../services/orderService.js';
+import { createOrder, getMyOrders, getOrderById, cancelOrder } from '../../services/orderService.js';
 
 export const createOrderThunk = createAsyncThunk('orders/create', async (data, { rejectWithValue }) => {
   try {
@@ -28,10 +28,26 @@ export const fetchOrderById = createAsyncThunk('orders/byId', async (id, { rejec
   }
 });
 
+export const cancelOrderThunk = createAsyncThunk(
+  'orders/cancel',
+  async ({ id, reason }, { rejectWithValue }) => {
+    try {
+      const res = await cancelOrder(id, reason);
+      return res.data.order;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || err.message || 'Failed to cancel order'
+      );
+    }
+  }
+);
+
 const initialState = {
   list: [],
   current: null,
   loading: false,
+  cancelling: false,
+  cancelError: null,
   error: null,
 };
 
@@ -66,6 +82,22 @@ const orderSlice = createSlice({
       })
       .addCase(fetchOrderById.fulfilled, (state, action) => {
         state.current = action.payload;
+      })
+      .addCase(cancelOrderThunk.pending, (state) => {
+        state.cancelling = true;
+        state.cancelError = null;
+      })
+      .addCase(cancelOrderThunk.fulfilled, (state, action) => {
+        state.cancelling = false;
+        const updated = action.payload;
+        // Update in list
+        state.list = state.list.map((o) => (o._id === updated._id ? updated : o));
+        // Update current if it's the same order
+        if (state.current?._id === updated._id) state.current = updated;
+      })
+      .addCase(cancelOrderThunk.rejected, (state, action) => {
+        state.cancelling = false;
+        state.cancelError = action.payload;
       });
   },
 });

@@ -12,6 +12,15 @@ export const fetchAdminStats = createAsyncThunk('admin/fetchStats', async (_, { 
   }
 });
 
+export const fetchLowStockProducts = createAsyncThunk('admin/fetchLowStock', async (_, { rejectWithValue }) => {
+  try {
+    const res = await axiosInstance.get('/dashboard/low-stock');
+    return res.data;
+  } catch (err) {
+    return rejectWithValue(err.response?.data?.message || err.message);
+  }
+});
+
 export const fetchAdminUsers = createAsyncThunk('admin/fetchUsers', async (_, { rejectWithValue }) => {
   try {
     const res = await axiosInstance.get('/users');
@@ -188,6 +197,8 @@ const adminSlice = createSlice({
   initialState: {
     stats: null,
     statsLoading: false,
+    lowStockProducts: [],
+    lowStockLoading: false,
     users: [],
     usersLoading: false,
     orders: [],
@@ -219,6 +230,12 @@ const adminSlice = createSlice({
       .addCase(fetchAdminStats.pending, (s) => { s.statsLoading = true; s.error = null; })
       .addCase(fetchAdminStats.fulfilled, (s, a) => { s.statsLoading = false; s.stats = a.payload; })
       .addCase(fetchAdminStats.rejected, (s, a) => { s.statsLoading = false; s.error = a.payload; });
+
+    // low stock
+    builder
+      .addCase(fetchLowStockProducts.pending,   (s) => { s.lowStockLoading = true; })
+      .addCase(fetchLowStockProducts.fulfilled, (s, a) => { s.lowStockLoading = false; s.lowStockProducts = a.payload; })
+      .addCase(fetchLowStockProducts.rejected,  (s) => { s.lowStockLoading = false; });
 
     // users
     builder

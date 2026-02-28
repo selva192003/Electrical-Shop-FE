@@ -27,9 +27,27 @@
 .ado-muted { color: #6b7280; font-size: 0.82rem; }
 
 .ado-badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 0.73rem; font-weight: 600; }
-.ado-badge--paid { background: #dcfce7; color: #16a34a; }
+.ado-badge--paid   { background: #dcfce7; color: #16a34a; }
 .ado-badge--unpaid { background: #fee2e2; color: #dc2626; }
+.ado-badge--cod    { background: #fff7ed; color: #ea580c; }
+.ado-badge--online { background: #eff6ff; color: #2563eb; }
 
 .ado-select { border: 1.5px solid #e2e8f0; border-radius: 6px; padding: 4px 8px; font-size: 0.8rem; outline: none; background: #fff; cursor: pointer; }
 .ado-select:focus { border-color: #0b1f3b; }
 .ado-select:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.ado-locked {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #9ca3af;
+  background: #f3f4f6;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: default;
+  user-select: none;
+}
+.ado-locked .material-icons { font-size: 14px; }

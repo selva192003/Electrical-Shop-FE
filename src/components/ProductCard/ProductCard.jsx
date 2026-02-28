@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToWishlist, removeFromWishlist } from '../../redux/slices/wishlistSlice.js';
 import { addItemToCart } from '../../redux/slices/cartSlice.js';
@@ -21,6 +21,7 @@ const Stars = ({ value = 0 }) => {
 
 const ProductCard = ({ product, onAddToCart }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { addToast } = useToast();
   const { user } = useSelector((s) => s.auth || {});
   const wishlistItems = useSelector((s) => s.wishlist?.items || []);
@@ -31,6 +32,7 @@ const ProductCard = ({ product, onAddToCart }) => {
 
   const handleAddToCart = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
     if (onAddToCart) { onAddToCart(product); return; }
     try {
       await dispatch(addItemToCart({ productId: product._id, quantity: 1 })).unwrap();
@@ -42,6 +44,7 @@ const ProductCard = ({ product, onAddToCart }) => {
 
   const handleWishlist = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
     if (!user) { addToast('Please log in to use wishlist', 'info'); return; }
     try {
       if (isWishlisted) {
@@ -57,7 +60,11 @@ const ProductCard = ({ product, onAddToCart }) => {
   };
 
   return (
-    <article className="product-card card">
+    <article
+      className="product-card card"
+      onClick={() => navigate(`/products/${product._id}`)}
+      style={{ cursor: 'pointer' }}
+    >
       <div className="product-card-image-wrapper">
         <img src={imgSrc} alt={product.name} className="product-card-image" />
         {product.stock === 0 && <span className="product-badge-out">Out of Stock</span>}
