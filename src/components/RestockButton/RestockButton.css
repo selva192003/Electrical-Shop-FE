@@ -1,0 +1,22 @@
+.restock-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f0f4ff;
+  color: #003566;
+  border: 2px solid #003566;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  justify-content: center;
+}
+
+.restock-btn:hover { background: #003566; color: white; }
+.restock-btn.subscribed { background: #003566; color: white; }
+.restock-btn.subscribed:hover { background: #dc2626; border-color: #dc2626; color: white; }
+.restock-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.restock-icon { font-size: 16px; }

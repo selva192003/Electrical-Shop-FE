@@ -1,45 +1,103 @@
+/* ── Container ── */
 .toast-container {
   position: fixed;
+  top: 16px;
   right: 16px;
-  bottom: 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  z-index: 50;
+  gap: 10px;
+  z-index: 9999;
+  pointer-events: none;
 }
 
+/* ── Base toast card ── */
 .toast {
-  min-width: 220px;
-  max-width: 320px;
-  padding: 10px 14px;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-soft);
-  font-size: 0.85rem;
-  animation: slide-in 0.3s ease forwards;
+  min-width: 260px;
+  max-width: 380px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+  animation: toast-slide-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  pointer-events: all;
 }
 
-.toast-info {
-  background-color: #e0f2fe;
-  color: #0c4a6e;
+/* ── Body row (message + close) ── */
+.toast-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px 14px 12px;
 }
+
+.toast-message {
+  flex: 1;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0;
+  opacity: 0.75;
+  transition: opacity 0.15s;
+  margin-top: -1px;
+  flex-shrink: 0;
+}
+.toast-close:hover { opacity: 1; }
+
+/* ── Progress bar track ── */
+.toast-progress {
+  height: 4px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.toast-progress-bar {
+  height: 100%;
+  width: 100%;
+  transform-origin: left;
+  animation: toast-shrink linear forwards;
+}
+
+/* ── Color variants ── */
+.toast-error {
+  background: #c0392b;
+  color: #fff;
+}
+.toast-error .toast-close  { color: #fff; }
+.toast-error .toast-progress-bar { background: rgba(255,255,255,0.6); }
 
 .toast-success {
-  background-color: #dcfce7;
-  color: #166534;
+  background: #1a7f37;
+  color: #fff;
 }
+.toast-success .toast-close { color: #fff; }
+.toast-success .toast-progress-bar { background: rgba(255,255,255,0.6); }
 
-.toast-error {
-  background-color: #fee2e2;
-  color: #b91c1c;
+.toast-info {
+  background: #0e5fa8;
+  color: #fff;
 }
+.toast-info .toast-close { color: #fff; }
+.toast-info .toast-progress-bar { background: rgba(255,255,255,0.6); }
 
-@keyframes slide-in {
+/* ── Animations ── */
+@keyframes toast-slide-in {
   from {
     opacity: 0;
-    transform: translateX(20px) translateY(10px);
+    transform: translateX(60px) scale(0.96);
   }
   to {
     opacity: 1;
-    transform: translateX(0) translateY(0);
+    transform: translateX(0) scale(1);
   }
+}
+
+@keyframes toast-shrink {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
 }

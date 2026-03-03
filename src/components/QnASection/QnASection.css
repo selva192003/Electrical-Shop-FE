@@ -1,0 +1,30 @@
+.qna-section { margin-top: 40px; padding-top: 32px; border-top: 2px solid #f0f0f0; }
+.qna-title { font-size: 1.3rem; color: #003566; margin-bottom: 20px; }
+.qna-ask-form { display: flex; gap: 10px; margin-bottom: 24px; }
+.qna-input { flex: 1; border: 2px solid #e0e0e0; border-radius: 8px; padding: 10px 14px; font-size: 14px; transition: border-color 0.2s; }
+.qna-input:focus { outline: none; border-color: #003566; }
+.qna-ask-btn, .qna-answer-post-btn { background: #003566; color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 14px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+.qna-ask-btn:disabled { background: #ccc; cursor: not-allowed; }
+.qna-loading, .qna-empty { color: #888; font-size: 14px; text-align: center; padding: 20px; }
+.qna-list { display: flex; flex-direction: column; gap: 16px; }
+.qna-item { border: 1px solid #f0f0f0; border-radius: 12px; overflow: hidden; }
+.qna-question-row { display: flex; gap: 12px; padding: 14px 16px; background: #f8f9ff; }
+.qna-q-icon { width: 30px; height: 30px; border-radius: 50%; background: #003566; color: white; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
+.qna-q-body { flex: 1; }
+.qna-q-text { font-weight: 600; color: #333; font-size: 14px; margin-bottom: 6px; }
+.qna-q-meta { display: flex; gap: 12px; align-items: center; font-size: 12px; color: #888; }
+.qna-upvote-btn { background: none; border: 1px solid #e0e0e0; border-radius: 6px; padding: 3px 10px; cursor: pointer; font-size: 12px; transition: background 0.2s; }
+.qna-upvote-btn:hover { background: #f0f4ff; }
+.qna-answer-row { display: flex; gap: 12px; padding: 12px 16px; background: white; border-top: 1px solid #f0f0f0; }
+.qna-a-icon { width: 30px; height: 30px; border-radius: 50%; background: #e0e0e0; color: #555; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
+.qna-a-icon.admin { background: #003566; color: white; }
+.qna-a-body { flex: 1; }
+.qna-a-text { font-size: 14px; color: #333; margin-bottom: 6px; }
+.qna-a-meta { display: flex; gap: 10px; align-items: center; font-size: 12px; color: #888; }
+.qna-admin-badge { background: #003566; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.qna-verified-badge { background: #d4edda; color: #155724; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.qna-answer-form { padding: 10px 16px; background: #fafafa; border-top: 1px solid #f0f0f0; }
+.qna-answer-input-row { display: flex; gap: 8px; }
+.qna-reply-btn { background: none; border: 1px solid #ccc; border-radius: 6px; padding: 6px 14px; font-size: 13px; cursor: pointer; color: #003566; }
+.qna-reply-btn:hover { background: #f0f4ff; }
+.qna-cancel-btn { background: white; border: 1px solid #ccc; border-radius: 8px; padding: 10px 14px; font-size: 13px; cursor: pointer; }

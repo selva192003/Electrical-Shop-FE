@@ -1,0 +1,214 @@
+.energy-calc-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+
+.energy-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.energy-header h1 { font-size: 2rem; color: #003566; margin-bottom: 8px; }
+.energy-header p { color: #666; font-size: 1rem; }
+
+.energy-card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  margin-bottom: 32px;
+}
+
+.energy-card h2 { font-size: 1.3rem; color: #003566; margin-bottom: 24px; }
+
+.energy-appliances { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+
+.energy-item {
+  border: 2px solid #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.energy-item.active { border-color: #003566; }
+
+.energy-item-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  cursor: pointer;
+  background: white;
+  transition: background 0.15s;
+}
+
+.energy-item-header:hover { background: #f8f9fa; }
+.energy-item.active .energy-item-header { background: #f0f4ff; }
+
+.energy-checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 2px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+
+.energy-checkbox.checked { background: #003566; border-color: #003566; color: white; }
+
+.energy-item-info { flex: 1; }
+.energy-item-name { display: block; font-weight: 600; font-size: 14px; color: #333; }
+.energy-item-watts { font-size: 12px; color: #888; }
+
+.energy-item-controls {
+  display: flex;
+  gap: 20px;
+  padding: 12px 18px;
+  background: #f8f9ff;
+  border-top: 1px solid #e8eaf0;
+  flex-wrap: wrap;
+}
+
+.energy-control-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.energy-control-group label { font-size: 13px; font-weight: 600; color: #003566; min-width: 70px; }
+
+.qty-control { display: flex; align-items: center; gap: 10px; }
+.qty-control button {
+  width: 28px; height: 28px; border-radius: 6px;
+  border: 2px solid #003566; background: white; color: #003566;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.qty-control button:hover { background: #003566; color: white; }
+.qty-control span { font-size: 14px; font-weight: 700; min-width: 20px; text-align: center; }
+
+.energy-calc-btn {
+  width: 100%;
+  padding: 14px;
+  background: #003566;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.energy-calc-btn:hover { background: #001d3d; }
+.energy-calc-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+/* Results */
+.energy-results { background: white; border-radius: 16px; padding: 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); }
+.energy-results h2 { font-size: 1.3rem; color: #003566; margin-bottom: 24px; }
+
+.savings-hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.savings-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.savings-box.current { background: #fff3cd; border: 2px solid #f4a261; }
+.savings-box.efficient { background: #d4edda; border: 2px solid #2d6a4f; }
+.savings-box.highlight { background: #003566; color: white; }
+.savings-box.eco { background: #e8f5e9; border: 2px solid #4caf50; }
+
+.savings-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #003566;
+  font-weight: 700;
+}
+
+.savings-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+.savings-amount { font-size: 26px; font-weight: 800; }
+.savings-amount.green { color: #2d6a4f; }
+.savings-amount.eco-green { color: #2d6a4f; }
+.savings-kwh { font-size: 13px; opacity: 0.7; }
+
+/* Per-item cards */
+.savings-item-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.savings-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.savings-item-name { font-weight: 700; font-size: 15px; color: #333; }
+.savings-badge {
+  background: #d4edda;
+  color: #155724;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.savings-comparison { margin-bottom: 14px; }
+.savings-old { font-size: 14px; color: #e63946; margin-bottom: 6px; }
+.savings-new {
+  font-size: 14px;
+  color: #2d6a4f;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.savings-percent {
+  background: #2d6a4f;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.view-efficient-btn {
+  background: white;
+  color: #003566;
+  border: 2px solid #003566;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.view-efficient-btn:hover { background: #003566; color: white; }
+

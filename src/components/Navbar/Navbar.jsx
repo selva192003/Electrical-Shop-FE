@@ -54,6 +54,9 @@ const Navbar = () => {
           <NavLink to="/orders" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
             Orders
           </NavLink>         
+          <NavLink to="/calculator" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+            Calculator
+          </NavLink>
           {user && (
             <NavLink to="/wishlist" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
               Wishlist

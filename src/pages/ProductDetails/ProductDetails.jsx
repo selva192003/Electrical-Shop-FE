@@ -14,6 +14,11 @@ import ProductCard from '../../components/ProductCard/ProductCard.jsx';
 import Spinner from '../../components/Spinner/Spinner.jsx';
 import { useToast } from '../../components/Toast/ToastProvider.jsx';
 import { submitReview, getMyReview, getProductReviews } from '../../services/reviewService.js';
+import RestockButton from '../../components/RestockButton/RestockButton.jsx';
+import QnASection from '../../components/QnASection/QnASection.jsx';
+import BulkPricing from '../../components/BulkPricing/BulkPricing.jsx';
+import RecommendedProducts from '../../components/RecommendedProducts/RecommendedProducts.jsx';
+import { trackProductView } from '../../services/recommendationService.js';
 import './ProductDetails.css';
 
 /* ── Static star display ── */
@@ -127,6 +132,8 @@ const ProductDetails = () => {
     dispatch(fetchRelatedProducts(id));
     loadReviews(id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Track product view for recommendations
+    if (user) trackProductView(id).catch(() => {});
     return () => dispatch(clearSelectedProduct());
   }, [id, dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -328,6 +335,16 @@ const ProductDetails = () => {
               </button>
             </div>
           )}
+
+          {/* Restock notification button when out of stock */}
+          {product.stock === 0 && (
+            <RestockButton productId={product._id} />
+          )}
+
+          {/* Bulk pricing */}
+          {product.bulkPricing?.length > 0 && (
+            <BulkPricing tiers={product.bulkPricing} />
+          )}
         </div>
       </div>
 
@@ -505,6 +522,16 @@ const ProductDetails = () => {
             )}
           </>
         )}
+      </div>
+
+      {/* Q&A Section */}
+      <div className="pd-section card">
+        <QnASection productId={id} />
+      </div>
+
+      {/* AI-powered Recommendations */}
+      <div className="pd-section card">
+        <RecommendedProducts productId={id} />
       </div>
 
       {/* Related Products */}

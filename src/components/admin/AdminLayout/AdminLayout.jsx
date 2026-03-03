@@ -7,11 +7,13 @@ import logo from '../../../assets/sri-murugan-logo.png';
 import './AdminLayout.css';
 
 const NAV_ITEMS = [
-  { to: '/admin/dashboard', icon: 'dashboard',    label: 'Dashboard' },
-  { to: '/admin/products',  icon: 'inventory_2',  label: 'Products' },
-  { to: '/admin/users',     icon: 'group',        label: 'Users' },
-  { to: '/admin/orders',    icon: 'receipt_long', label: 'Orders' },
-  { to: '/admin/feedback',  icon: 'support_agent', label: 'Support Tickets' },
+  { to: '/admin/dashboard',    icon: 'dashboard',    label: 'Dashboard' },
+  { to: '/admin/products',     icon: 'inventory_2',  label: 'Products' },
+  { to: '/admin/users',        icon: 'group',        label: 'Users' },
+  { to: '/admin/orders',       icon: 'receipt_long', label: 'Orders' },
+  { to: '/admin/feedback',     icon: 'support_agent', label: 'Support Tickets' },
+  { to: '/admin/warranties',   icon: 'shield',       label: 'Warranties' },
+  { to: '/admin/low-stock',    icon: 'warning',      label: 'Low Stock' },
 ];
 
 const SUPPORT_PATH = '/admin/feedback';

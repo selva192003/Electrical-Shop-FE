@@ -1,0 +1,12 @@
+.bulk-pricing { margin: 20px 0; padding: 18px; background: #f0f7ff; border-radius: 12px; border: 2px solid #bfdbfe; }
+.bulk-pricing-title { font-size: 15px; font-weight: 700; color: #003566; margin-bottom: 12px; }
+.bulk-pricing-table { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+.bulk-pricing-header-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; font-size: 12px; font-weight: 700; color: #666; text-transform: uppercase; padding: 8px 12px; }
+.bulk-pricing-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; font-size: 14px; padding: 10px 12px; border-radius: 8px; background: white; }
+.bulk-pricing-row.highlighted { background: #003566; color: white; }
+.bulk-pricing-row.highlighted .bulk-disc { color: #90caf9; }
+.bulk-qty { font-weight: 600; }
+.bulk-price { font-weight: 800; color: #003566; }
+.bulk-pricing-row.highlighted .bulk-price { color: white; }
+.bulk-disc { color: #22c55e; font-weight: 700; }
+.bulk-note { font-size: 12px; color: #666; }

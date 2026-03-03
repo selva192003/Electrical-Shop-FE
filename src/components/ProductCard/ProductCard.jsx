@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToWishlist, removeFromWishlist } from '../../redux/slices/wishlistSlice.js';
 import { addItemToCart } from '../../redux/slices/cartSlice.js';
@@ -60,10 +60,12 @@ const ProductCard = ({ product, onAddToCart }) => {
   };
 
   return (
-    <article
+    <div
       className="product-card card"
       onClick={() => navigate(`/products/${product._id}`)}
-      style={{ cursor: 'pointer' }}
+      role="link"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === 'Enter' && navigate(`/products/${product._id}`)}
     >
       <div className="product-card-image-wrapper">
         <img src={imgSrc} alt={product.name} className="product-card-image" />
@@ -81,9 +83,9 @@ const ProductCard = ({ product, onAddToCart }) => {
       </div>
 
       <div className="product-card-body">
-        <Link to={`/products/${product._id}`} className="product-card-title">
+        <span className="product-card-title">
           {product.name}
-        </Link>
+        </span>
         <p className="product-card-brand">{product.brand}</p>
         {product.ratings > 0 && (
           <div className="product-card-rating-row">
@@ -98,12 +100,9 @@ const ProductCard = ({ product, onAddToCart }) => {
           <p className="product-card-low-stock">Only {product.stock} left!</p>
         )}
         <div className="product-card-footer">
-          <Link to={`/products/${product._id}`} className="product-card-details-link">
-            View Details
-          </Link>
           <button
             type="button"
-            className="accent-btn product-card-btn"
+            className="accent-btn product-card-btn product-card-btn--full"
             disabled={product.stock === 0}
             onClick={handleAddToCart}
           >
@@ -111,7 +110,7 @@ const ProductCard = ({ product, onAddToCart }) => {
           </button>
         </div>
       </div>
-    </article>
+    </div>
   );
 };
 

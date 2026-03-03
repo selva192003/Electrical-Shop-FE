@@ -288,6 +288,41 @@ const Profile = () => {
           </form>
         </section>
       </div>
+
+      {/* Quick Access to new features */}
+      <div className="profile-quick-access">
+        <h2 className="profile-section-heading">My Benefits &amp; Tools</h2>
+        <div className="profile-quick-grid">
+          <a href="/loyalty" className="profile-quick-card loyalty-card">
+            <span className="pq-icon">🏆</span>
+            <div>
+              <div className="pq-title">Loyalty Points</div>
+              <div className="pq-sub">{user?.loyaltyPoints || 0} pts • {user?.loyaltyTier || 'Bronze'}</div>
+            </div>
+          </a>
+          <a href="/referral" className="profile-quick-card referral-card">
+            <span className="pq-icon">🤝</span>
+            <div>
+              <div className="pq-title">Refer &amp; Earn</div>
+              <div className="pq-sub">{user?.referralCount || 0} referrals made</div>
+            </div>
+          </a>
+          <a href="/warranty" className="profile-quick-card warranty-card">
+            <span className="pq-icon">🛡️</span>
+            <div>
+              <div className="pq-title">Warranty Wallet</div>
+              <div className="pq-sub">Manage product warranties</div>
+            </div>
+          </a>
+          <a href="/projects" className="profile-quick-card projects-card">
+            <span className="pq-icon">⚡</span>
+            <div>
+              <div className="pq-title">My Projects</div>
+              <div className="pq-sub">BOM &amp; project planner</div>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
   );
 };
