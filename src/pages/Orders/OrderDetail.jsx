@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrderById } from '../../redux/slices/orderSlice.js';
+import { requestCancelOtp, verifyCancelOtp } from '../../services/orderService.js';
 import Spinner from '../../components/Spinner/Spinner.jsx';
 import OrderTimeline from '../../components/OrderTimeline/OrderTimeline.jsx';
 import './OrderDetail.css';
@@ -40,6 +41,61 @@ const OrderDetail = () => {
   const navigate  = useNavigate();
   const { current: order, loading, error } = useSelector((s) => s.orders);
 
+  // ── Cancel OTP modal state ──
+  const [cancelStep,   setCancelStep]   = useState(null); // null | 'reason' | 'method' | 'otp'
+  const [cancelReason, setCancelReason] = useState('');
+  const [otpMethod,    setOtpMethod]    = useState('email'); // 'email' | 'sms'
+  const [otpValue,     setOtpValue]     = useState('');
+  const [modalLoading, setModalLoading] = useState(false);
+  const [modalError,   setModalError]   = useState('');
+  const [maskedDest,   setMaskedDest]   = useState('');
+
+  const openCancelModal = () => {
+    setCancelStep('reason');
+    setCancelReason('');
+    setOtpValue('');
+    setOtpMethod('email');
+    setModalError('');
+  };
+
+  const closeCancelModal = () => {
+    setCancelStep(null);
+    setModalError('');
+    setOtpValue('');
+  };
+
+  const handleRequestOtp = async () => {
+    setModalLoading(true);
+    setModalError('');
+    try {
+      const res = await requestCancelOtp(order._id, otpMethod);
+      setMaskedDest(res.data?.message || `OTP sent via ${otpMethod}`);
+      setCancelStep('otp');
+    } catch (err) {
+      setModalError(err.response?.data?.message || 'Failed to send OTP. Try again.');
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    if (!otpValue || otpValue.length !== 6) {
+      setModalError('Please enter the 6-digit OTP.');
+      return;
+    }
+    setModalLoading(true);
+    setModalError('');
+    try {
+      await verifyCancelOtp(order._id, otpValue, cancelReason);
+      closeCancelModal();
+      dispatch(fetchOrderById(order._id)); // refresh order
+    } catch (err) {
+      setModalError(err.response?.data?.message || 'Invalid OTP. Try again.');
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (id) dispatch(fetchOrderById(id));
   }, [id, dispatch]);
@@ -62,8 +118,10 @@ const OrderDetail = () => {
   const isCOD     = order.paymentInfo?.method === 'COD';
   const isPaid    = order.isPaid;
   const isCancelled = order.orderStatus === 'Cancelled';
+  const canCancel   = ['Pending', 'Confirmed'].includes(order.orderStatus);
 
   return (
+    <>
     <div className="page-container od-page">
 
       {/* ── Breadcrumb ── */}
@@ -317,11 +375,142 @@ const OrderDetail = () => {
               <span className="material-icons">storefront</span>
               Continue Shopping
             </Link>
+            {canCancel && (
+              <button className="od-btn od-btn--cancel" onClick={openCancelModal}>
+                <span className="material-icons">cancel</span>
+                Cancel Order
+              </button>
+            )}
           </div>
 
         </div>
       </div>
     </div>
+
+    {/* ════════ CANCEL OTP MODAL ════════ */}
+    {cancelStep && (
+      <div className="od-modal-overlay" onClick={closeCancelModal}>
+        <div className="od-modal" onClick={(e) => e.stopPropagation()}>
+
+          {/* Modal header */}
+          <div className="od-modal__header">
+            <div className="od-modal__title">
+              <span className="material-icons od-modal__icon">cancel</span>
+              Cancel Order #{order._id.slice(-8).toUpperCase()}
+            </div>
+            <button className="od-modal__close" onClick={closeCancelModal}>
+              <span className="material-icons">close</span>
+            </button>
+          </div>
+
+          {/* ── Step 1: Reason ── */}
+          {cancelStep === 'reason' && (
+            <div className="od-modal__body">
+              <p className="od-modal__desc">
+                Please tell us why you want to cancel this order.
+              </p>
+              <label className="od-modal__label">Reason for cancellation</label>
+              <textarea
+                className="od-modal__textarea"
+                rows={3}
+                placeholder="e.g. Changed my mind, found a better deal..."
+                value={cancelReason}
+                onChange={(e) => setCancelReason(e.target.value)}
+              />
+              {modalError && <p className="od-modal__error">{modalError}</p>}
+              <div className="od-modal__footer">
+                <button className="od-btn od-btn--secondary" onClick={closeCancelModal} disabled={modalLoading}>
+                  Go Back
+                </button>
+                <button className="od-btn od-btn--danger" onClick={() => { setModalError(''); setCancelStep('method'); }}>
+                  <span className="material-icons">arrow_forward</span> Next
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ── Step 2: Choose OTP Method ── */}
+          {cancelStep === 'method' && (
+            <div className="od-modal__body">
+              <p className="od-modal__desc">Choose how you want to receive your OTP to confirm cancellation.</p>
+              <div className="od-otp-methods">
+                <button
+                  className={`od-otp-method-card${otpMethod === 'email' ? ' od-otp-method-card--active' : ''}`}
+                  onClick={() => setOtpMethod('email')}
+                >
+                  <span className="material-icons od-otp-method-card__icon">email</span>
+                  <div>
+                    <div className="od-otp-method-card__title">Email OTP</div>
+                    <div className="od-otp-method-card__sub">Sent to your registered email</div>
+                  </div>
+                  {otpMethod === 'email' && <span className="material-icons od-otp-method-card__check">check_circle</span>}
+                </button>
+                <button
+                  className={`od-otp-method-card${otpMethod === 'sms' ? ' od-otp-method-card--active' : ''}`}
+                  onClick={() => setOtpMethod('sms')}
+                >
+                  <span className="material-icons od-otp-method-card__icon">sms</span>
+                  <div>
+                    <div className="od-otp-method-card__title">SMS OTP</div>
+                    <div className="od-otp-method-card__sub">Sent to your registered phone</div>
+                  </div>
+                  {otpMethod === 'sms' && <span className="material-icons od-otp-method-card__check">check_circle</span>}
+                </button>
+              </div>
+              {modalError && <p className="od-modal__error">{modalError}</p>}
+              <div className="od-modal__footer">
+                <button className="od-btn od-btn--secondary" onClick={() => { setCancelStep('reason'); setModalError(''); }} disabled={modalLoading}>
+                  Back
+                </button>
+                <button className="od-btn od-btn--danger" onClick={handleRequestOtp} disabled={modalLoading}>
+                  {modalLoading
+                    ? <><span className="material-icons od-spin">refresh</span> Sending...</>
+                    : <><span className="material-icons">send</span> Send OTP</>
+                  }
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ── Step 3: OTP Entry ── */}
+          {cancelStep === 'otp' && (
+            <div className="od-modal__body">
+              <div className="od-modal__otp-info">
+                <span className="material-icons od-modal__otp-icon">{otpMethod === 'sms' ? 'sms' : 'mark_email_read'}</span>
+                <p className="od-modal__desc">
+                  {maskedDest}.<br/>Enter the 6-digit OTP below to confirm cancellation.
+                </p>
+              </div>
+              <label className="od-modal__label">Enter OTP</label>
+              <input
+                className="od-modal__otp-input"
+                type="text"
+                inputMode="numeric"
+                maxLength={6}
+                placeholder="- - - - - -"
+                value={otpValue}
+                onChange={(e) => setOtpValue(e.target.value.replace(/\D/g, '').slice(0, 6))}
+              />
+              <p className="od-modal__otp-hint">OTP expires in 10 minutes. <button className="od-modal__resend" onClick={handleRequestOtp} disabled={modalLoading}>Resend OTP</button></p>
+              {modalError && <p className="od-modal__error">{modalError}</p>}
+              <div className="od-modal__footer">
+                <button className="od-btn od-btn--secondary" onClick={() => { setCancelStep('method'); setModalError(''); }} disabled={modalLoading}>
+                  Back
+                </button>
+                <button className="od-btn od-btn--danger" onClick={handleVerifyOtp} disabled={modalLoading || otpValue.length !== 6}>
+                  {modalLoading
+                    ? <><span className="material-icons od-spin">refresh</span> Verifying...</>
+                    : <><span className="material-icons">check_circle</span> Confirm Cancellation</>
+                  }
+                </button>
+              </div>
+            </div>
+          )}
+
+        </div>
+      </div>
+    )}
+    </>
   );
 };
 

@@ -307,13 +307,6 @@ const Profile = () => {
               <div className="pq-sub">{user?.referralCount || 0} referrals made</div>
             </div>
           </a>
-          <a href="/warranty" className="profile-quick-card warranty-card">
-            <span className="pq-icon">🛡️</span>
-            <div>
-              <div className="pq-title">Warranty Wallet</div>
-              <div className="pq-sub">Manage product warranties</div>
-            </div>
-          </a>
           <a href="/projects" className="profile-quick-card projects-card">
             <span className="pq-icon">⚡</span>
             <div>

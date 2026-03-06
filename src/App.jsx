@@ -39,14 +39,12 @@ import Returns from './pages/Returns/Returns.jsx';
 import OrderDetail from './pages/Orders/OrderDetail.jsx';
 import Calculator from './pages/Calculator/Calculator.jsx';
 import EnergyCalculator from './pages/EnergyCalculator/EnergyCalculator.jsx';
-import Warranty from './pages/Warranty/Warranty.jsx';
 import Loyalty from './pages/Loyalty/Loyalty.jsx';
 import Referral from './pages/Referral/Referral.jsx';
 import { loadProfile } from './redux/slices/authSlice.js';
 import ToastProvider from './components/Toast/ToastProvider.jsx';
 import { SocketProvider } from './context/SocketContext.jsx';
 
-import AdminWarranties from './pages/admin/Warranties.jsx';
 
 /* Main layout — Navbar + Footer. Admins are always bounced to admin panel. */
 const MainLayout = () => {
@@ -105,7 +103,6 @@ const App = () => {
             <Route path="orders" element={<AdminOrders />} />
             <Route path="feedback" element={<AdminFeedback />} />
             <Route path="low-stock" element={<AdminLowStock />} />
-            <Route path="warranties" element={<AdminWarranties />} />
           </Route>
         </Route>
 
@@ -142,7 +139,6 @@ const App = () => {
           <Route path="/energy-calculator" element={<EnergyCalculator />} />
           {/* /projects is now part of the Wishlist page (tab=projects) */}
           <Route path="/projects" element={<Navigate to="/wishlist?tab=projects" replace />} />
-          <Route path="/warranty" element={<ProtectedRoute><Warranty /></ProtectedRoute>} />
           <Route path="/loyalty" element={<ProtectedRoute><Loyalty /></ProtectedRoute>} />
           <Route path="/referral" element={<ProtectedRoute><Referral /></ProtectedRoute>} />
 

@@ -3,7 +3,7 @@
  * Follows IS 732, IS 3043, IE Rules 1956 (India)
  */
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
   APPLIANCE_SECTIONS,
@@ -16,6 +16,8 @@ import {
   addCalculatorToCart,
   saveCalculatorAsProject,
 } from '../../services/calculatorService';
+import { fetchCart } from '../../redux/slices/cartSlice.js';
+import { useToast } from '../../components/Toast/ToastProvider';
 import './Calculator.css';
 
 // ─── Step labels ──────────────────────────────────────────────────────────────
@@ -71,6 +73,8 @@ function buildInitialHours() {
 // ─────────────────────────────────────────────────────────────────────────────
 const Calculator = () => {
   const { user }   = useSelector((s) => s.auth);
+  const dispatch   = useDispatch();
+  const toast      = useToast();
   const navigate   = useNavigate();
   const printRef   = useRef(null);
 
@@ -107,7 +111,6 @@ const Calculator = () => {
   // ── Actions ───────────────────────────────────────────────────────────
   const [cartLoading, setCartLoading] = useState(false);
   const [projLoading, setProjLoading] = useState(false);
-  const [actionMsg, setActionMsg]     = useState({ type: '', text: '' });
 
   // ── Real-time load preview ────────────────────────────────────────────
   useEffect(() => {
@@ -157,7 +160,6 @@ const Calculator = () => {
     setMatchedItems([]);
     setShoppingList([]);
     setPickedIdx({});
-    setActionMsg({ type: '', text: '' });
     setStep(1);
   };
 
@@ -178,7 +180,6 @@ const Calculator = () => {
     setMatchLoading(true);
     setMatchedItems([]);
     setPickedIdx({});
-    setActionMsg({ type: '', text: '' });
     setStep(3);
     try {
       const data = await matchCalculatorProducts(shoppingList);
@@ -206,19 +207,16 @@ const Calculator = () => {
       .filter((x) => x.product)
       .map((x) => ({ productId: x.product._id, quantity: x.qty }));
     if (!payload.length) {
-      setActionMsg({ type: 'error', text: 'No products matched. Browse the catalog to find items.' });
+      toast.error('No products matched. Browse the catalog to find items.');
       return;
     }
     setCartLoading(true);
-    setActionMsg({ type: '', text: '' });
     try {
       const res = await addCalculatorToCart(payload);
-      setActionMsg({
-        type: 'success',
-        text: `✅ ${res.added} item(s) added to your cart!${res.skipped > 0 ? ` (${res.skipped} out of stock skipped)` : ''}`,
-      });
+      dispatch(fetchCart());
+      toast.success(`${res.added} item(s) added to your cart!${res.skipped > 0 ? ` (${res.skipped} out of stock skipped)` : ''}`);
     } catch (e) {
-      setActionMsg({ type: 'error', text: e.response?.data?.message || 'Failed to add to cart.' });
+      toast.error(e.response?.data?.message || 'Failed to add to cart.');
     } finally {
       setCartLoading(false);
     }
@@ -233,12 +231,11 @@ const Calculator = () => {
       })
       .filter(Boolean);
     if (!itemsPayload.length) {
-      setActionMsg({ type: 'error', text: 'No matched products to save.' });
+      toast.error('No matched products to save.');
       return;
     }
     const pType = PROPERTY_TYPES.find((p) => p.id === propertyType);
     setProjLoading(true);
-    setActionMsg({ type: '', text: '' });
     try {
       const project = await saveCalculatorAsProject({
         name: `${pType?.label || 'Property'} — Electrical Wiring Plan`,
@@ -246,10 +243,10 @@ const Calculator = () => {
         description: `Auto-generated from Load Calculator: ${pType?.label}, ${floors} floor(s), ${calcResult ? (calcResult.totalWatts / 1000).toFixed(2) : '?'} kW total load.`,
         items: itemsPayload,
       });
-      setActionMsg({ type: 'success', text: `📁 Project "${project.name}" saved!` });
+      toast.success(`📁 Project "${project.name}" saved!`);
       setTimeout(() => navigate('/wishlist?tab=projects'), 1200);
     } catch (e) {
-      setActionMsg({ type: 'error', text: e.response?.data?.message || 'Failed to save project.' });
+      toast.error(e.response?.data?.message || 'Failed to save project.');
     } finally {
       setProjLoading(false);
     }
@@ -763,10 +760,6 @@ const Calculator = () => {
                 </p>
               )}
             </div>
-          )}
-
-          {actionMsg.text && (
-            <div className={`action-feedback ${actionMsg.type}`}>{actionMsg.text}</div>
           )}
 
           <div className="calc-footer-nav">

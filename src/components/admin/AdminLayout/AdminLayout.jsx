@@ -12,7 +12,6 @@ const NAV_ITEMS = [
   { to: '/admin/users',        icon: 'group',        label: 'Users' },
   { to: '/admin/orders',       icon: 'receipt_long', label: 'Orders' },
   { to: '/admin/feedback',     icon: 'support_agent', label: 'Support Tickets' },
-  { to: '/admin/warranties',   icon: 'shield',       label: 'Warranties' },
   { to: '/admin/low-stock',    icon: 'warning',      label: 'Low Stock' },
 ];
 

@@ -30,6 +30,11 @@ const Checkout = () => {
   const total                   = useSelector(selectCartTotal);
 
   const [selectedAddressId, setSelectedAddressId] = useState('');
+  const [useNewAddress, setUseNewAddress]         = useState(false);
+  const [newAddr, setNewAddr]                     = useState({
+    fullName: '', phone: '', addressLine1: '', addressLine2: '',
+    city: '', state: 'Tamil Nadu', postalCode: '', country: 'India',
+  }); // state & country are fixed — delivery within Tamil Nadu only
   const [paymentMethod, setPaymentMethod]         = useState('Razorpay');
   const [paying, setPaying]                       = useState(false);
 
@@ -43,22 +48,44 @@ const Checkout = () => {
     if (def) setSelectedAddressId(def._id);
   }, [addresses]);
 
-  const selectedAddress = useMemo(
-    () => addresses.find((a) => a._id === selectedAddressId),
-    [addresses, selectedAddressId]
-  );
+  const selectedAddress = useMemo(() => {
+    if (useNewAddress) {
+      // only treat as valid once name is filled
+      return newAddr.fullName ? newAddr : null;
+    }
+    return addresses.find((a) => a._id === selectedAddressId) || null;
+  }, [addresses, selectedAddressId, useNewAddress, newAddr]);
+
+  /* ── Delivery charge calculation ──
+     Delivery is within Tamil Nadu only.
+     - Erode city        → always FREE
+     - Order ≥ ₹100      → FREE
+     - Order < ₹100      → ₹40
+  */
+  const deliveryCharge = useMemo(() => {
+    if (!selectedAddress || !total) return 0;
+    const city = (selectedAddress.city || '').trim().toLowerCase();
+    if (city === 'erode') return 0;
+    if (total >= 100)     return 0;
+    return 40;
+  }, [selectedAddress, total]);
+
+  const grandTotal = total + deliveryCharge;
 
   /* ── Build shipping address object ── */
-  const buildShipping = () => ({
-    fullName:     selectedAddress.fullName,
-    phone:        selectedAddress.phone,
-    addressLine1: selectedAddress.addressLine1,
-    addressLine2: selectedAddress.addressLine2,
-    city:         selectedAddress.city,
-    state:        selectedAddress.state,
-    postalCode:   selectedAddress.postalCode,
-    country:      selectedAddress.country,
-  });
+  const buildShipping = () => {
+    const addr = useNewAddress ? newAddr : selectedAddress;
+    return {
+      fullName:     addr.fullName,
+      phone:        addr.phone,
+      addressLine1: addr.addressLine1,
+      addressLine2: addr.addressLine2 || '',
+      city:         addr.city,
+      state:        addr.state,
+      postalCode:   addr.postalCode,
+      country:      addr.country,
+    };
+  };
 
   /* ════════════════ COD FLOW ════════════════ */
   const handleCOD = async () => {
@@ -164,7 +191,13 @@ const Checkout = () => {
 
   /* ════════════════ MASTER HANDLER ════════════════ */
   const handlePlaceOrder = () => {
-    if (!selectedAddress) {
+    if (useNewAddress) {
+      const { fullName, phone, addressLine1, city, postalCode } = newAddr;
+      if (!fullName || !phone || !addressLine1 || !city || !postalCode) {
+        addToast('Please fill all required address fields', 'info');
+        return;
+      }
+    } else if (!selectedAddress) {
       addToast('Please select a shipping address', 'info');
       return;
     }
@@ -192,22 +225,19 @@ const Checkout = () => {
           {/* Shipping address */}
           <section className="card checkout-addresses">
             <h2>Shipping Address</h2>
-            {addresses.length === 0 ? (
-              <p className="checkout-empty-notice">
-                No addresses saved yet. Add one in your profile.
-              </p>
-            ) : (
+            {/* ── Saved addresses ── */}
+            {addresses.length > 0 && (
               <div className="address-list">
                 {addresses.map((addr) => (
                   <label
                     key={addr._id}
-                    className={`address-item${selectedAddressId === addr._id ? ' address-item--selected' : ''}`}
+                    className={`address-item${!useNewAddress && selectedAddressId === addr._id ? ' address-item--selected' : ''}`}
                   >
                     <input
                       type="radio"
                       name="address"
-                      checked={selectedAddressId === addr._id}
-                      onChange={() => setSelectedAddressId(addr._id)}
+                      checked={!useNewAddress && selectedAddressId === addr._id}
+                      onChange={() => { setUseNewAddress(false); setSelectedAddressId(addr._id); }}
                     />
                     <div className="address-item__body">
                       <div className="address-line address-line--name">
@@ -231,6 +261,66 @@ const Checkout = () => {
                     </div>
                   </label>
                 ))}
+              </div>
+            )}
+
+            {/* ── Deliver to a different / new address ── */}
+            <label className={`address-item address-item--new${useNewAddress ? ' address-item--selected' : ''}`}>
+              <input
+                type="radio"
+                name="address"
+                checked={useNewAddress}
+                onChange={() => setUseNewAddress(true)}
+              />
+              <div className="address-item__body">
+                <div className="address-line address-line--name">
+                  <span className="material-icons" style={{fontSize:'15px'}}>add_location_alt</span>
+                  {addresses.length === 0 ? 'Enter delivery address' : 'Deliver to a different address'}
+                </div>
+              </div>
+            </label>
+
+            {/* ── Inline new address form ── */}
+            {useNewAddress && (
+              <div className="new-address-form">
+                <div className="new-address-row">
+                  <div className="form-group">
+                    <label className="form-label">Full Name *</label>
+                    <input className="input-field" value={newAddr.fullName}
+                      onChange={(e) => setNewAddr((p) => ({ ...p, fullName: e.target.value }))} />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Phone *</label>
+                    <input className="input-field" value={newAddr.phone}
+                      onChange={(e) => setNewAddr((p) => ({ ...p, phone: e.target.value }))} />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Address Line 1 *</label>
+                  <input className="input-field" value={newAddr.addressLine1}
+                    onChange={(e) => setNewAddr((p) => ({ ...p, addressLine1: e.target.value }))} />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Address Line 2 <span className="opt-label">(optional)</span></label>
+                  <input className="input-field" value={newAddr.addressLine2}
+                    onChange={(e) => setNewAddr((p) => ({ ...p, addressLine2: e.target.value }))} />
+                </div>
+                <div className="new-address-row">
+                  <div className="form-group">
+                    <label className="form-label">City *</label>
+                    <input className="input-field" value={newAddr.city}
+                      onChange={(e) => setNewAddr((p) => ({ ...p, city: e.target.value }))} />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Postal Code *</label>
+                    <input className="input-field" value={newAddr.postalCode}
+                      onChange={(e) => setNewAddr((p) => ({ ...p, postalCode: e.target.value }))} />
+                  </div>
+                </div>
+                <div className="new-address-info-row">
+                  <span className="material-icons">location_on</span>
+                  Tamil Nadu, India
+                </div>
               </div>
             )}
           </section>
@@ -306,15 +396,43 @@ const Checkout = () => {
           </ul>
 
           <div className="summary-divider" />
+
+          <div className="summary-charge-row">
+            <span>Subtotal</span>
+            <span>₹{total.toFixed(2)}</span>
+          </div>
+          <div className="summary-charge-row">
+            <span>Delivery Charge</span>
+            <span className={deliveryCharge === 0 ? 'summary-free' : ''}>
+              {deliveryCharge === 0 ? 'FREE' : `₹${deliveryCharge.toFixed(2)}`}
+            </span>
+          </div>
+
+          {deliveryCharge === 0 && selectedAddress && (
+            <div className="checkout-delivery-notice checkout-delivery-notice--free">
+              <span className="material-icons">local_shipping</span>
+              {(selectedAddress.city || '').trim().toLowerCase() === 'erode'
+                ? 'Free delivery within Erode!'
+                : 'Free delivery on orders ₹100 and above!'}
+            </div>
+          )}
+          {deliveryCharge > 0 && selectedAddress && (
+            <div className="checkout-delivery-notice checkout-delivery-notice--charge">
+              <span className="material-icons">info</span>
+              ₹{deliveryCharge} delivery charge applies for orders below ₹100 outside Erode.
+            </div>
+          )}
+
+          <div className="summary-divider" />
           <div className="summary-total">
             <span>Total</span>
-            <span>₹{total.toFixed(2)}</span>
+            <span>₹{grandTotal.toFixed(2)}</span>
           </div>
 
           {paymentMethod === 'COD' && (
             <div className="checkout-cod-notice">
               <span className="material-icons">info</span>
-              Pay ₹{total.toFixed(2)} in cash upon delivery.
+              Pay ₹{grandTotal.toFixed(2)} in cash upon delivery.
             </div>
           )}
 
@@ -337,7 +455,7 @@ const Checkout = () => {
             ) : (
               <>
                 <span className="material-icons">lock</span>
-                Pay ₹{total.toFixed(2)} with Razorpay
+                Pay ₹{grandTotal.toFixed(2)} with Razorpay
               </>
             )}
           </button>
