@@ -32,3 +32,20 @@ export const getUsersAdmin = () => axiosInstance.get('/users');
 export const blockUser = (id) => axiosInstance.patch(`/users/${id}/block`);
 
 export const unblockUser = (id) => axiosInstance.patch(`/users/${id}/unblock`);
+
+// ── Forgot / Reset Password (OTP flow) ──
+export const sendForgotPasswordOtp = (email) =>
+  axiosInstance.post('/users/forgot-password', { email });
+
+export const verifyOtp = (email, otp) =>
+  axiosInstance.post('/users/verify-otp', { email, otp });
+
+export const resetPassword = (email, otp, password) =>
+  axiosInstance.post('/users/reset-password', { email, otp, password });
+
+// ── Email Verification ──
+export const verifyEmailToken = (token) =>
+  axiosInstance.post('/users/verify-email', { token });
+
+export const resendVerification = (email) =>
+  axiosInstance.post('/users/resend-verification', { email });

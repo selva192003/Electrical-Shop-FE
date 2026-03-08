@@ -42,9 +42,8 @@ const OrderDetail = () => {
   const { current: order, loading, error } = useSelector((s) => s.orders);
 
   // ── Cancel OTP modal state ──
-  const [cancelStep,   setCancelStep]   = useState(null); // null | 'reason' | 'method' | 'otp'
+  const [cancelStep,   setCancelStep]   = useState(null); // null | 'reason' | 'otp'
   const [cancelReason, setCancelReason] = useState('');
-  const [otpMethod,    setOtpMethod]    = useState('email'); // 'email' | 'sms'
   const [otpValue,     setOtpValue]     = useState('');
   const [modalLoading, setModalLoading] = useState(false);
   const [modalError,   setModalError]   = useState('');
@@ -54,7 +53,6 @@ const OrderDetail = () => {
     setCancelStep('reason');
     setCancelReason('');
     setOtpValue('');
-    setOtpMethod('email');
     setModalError('');
   };
 
@@ -68,8 +66,8 @@ const OrderDetail = () => {
     setModalLoading(true);
     setModalError('');
     try {
-      const res = await requestCancelOtp(order._id, otpMethod);
-      setMaskedDest(res.data?.message || `OTP sent via ${otpMethod}`);
+      const res = await requestCancelOtp(order._id);
+      setMaskedDest(res.data?.message || 'OTP sent to your registered email');
       setCancelStep('otp');
     } catch (err) {
       setModalError(err.response?.data?.message || 'Failed to send OTP. Try again.');
@@ -422,61 +420,21 @@ const OrderDetail = () => {
                 <button className="od-btn od-btn--secondary" onClick={closeCancelModal} disabled={modalLoading}>
                   Go Back
                 </button>
-                <button className="od-btn od-btn--danger" onClick={() => { setModalError(''); setCancelStep('method'); }}>
-                  <span className="material-icons">arrow_forward</span> Next
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* ── Step 2: Choose OTP Method ── */}
-          {cancelStep === 'method' && (
-            <div className="od-modal__body">
-              <p className="od-modal__desc">Choose how you want to receive your OTP to confirm cancellation.</p>
-              <div className="od-otp-methods">
-                <button
-                  className={`od-otp-method-card${otpMethod === 'email' ? ' od-otp-method-card--active' : ''}`}
-                  onClick={() => setOtpMethod('email')}
-                >
-                  <span className="material-icons od-otp-method-card__icon">email</span>
-                  <div>
-                    <div className="od-otp-method-card__title">Email OTP</div>
-                    <div className="od-otp-method-card__sub">Sent to your registered email</div>
-                  </div>
-                  {otpMethod === 'email' && <span className="material-icons od-otp-method-card__check">check_circle</span>}
-                </button>
-                <button
-                  className={`od-otp-method-card${otpMethod === 'sms' ? ' od-otp-method-card--active' : ''}`}
-                  onClick={() => setOtpMethod('sms')}
-                >
-                  <span className="material-icons od-otp-method-card__icon">sms</span>
-                  <div>
-                    <div className="od-otp-method-card__title">SMS OTP</div>
-                    <div className="od-otp-method-card__sub">Sent to your registered phone</div>
-                  </div>
-                  {otpMethod === 'sms' && <span className="material-icons od-otp-method-card__check">check_circle</span>}
-                </button>
-              </div>
-              {modalError && <p className="od-modal__error">{modalError}</p>}
-              <div className="od-modal__footer">
-                <button className="od-btn od-btn--secondary" onClick={() => { setCancelStep('reason'); setModalError(''); }} disabled={modalLoading}>
-                  Back
-                </button>
                 <button className="od-btn od-btn--danger" onClick={handleRequestOtp} disabled={modalLoading}>
                   {modalLoading
-                    ? <><span className="material-icons od-spin">refresh</span> Sending...</>
-                    : <><span className="material-icons">send</span> Send OTP</>
+                    ? <><span className="material-icons od-spin">refresh</span> Sending OTP...</>
+                    : <><span className="material-icons">send</span> Send OTP via Email</>
                   }
                 </button>
               </div>
             </div>
           )}
 
-          {/* ── Step 3: OTP Entry ── */}
+          {/* ── Step 2: OTP Entry ── */}
           {cancelStep === 'otp' && (
             <div className="od-modal__body">
               <div className="od-modal__otp-info">
-                <span className="material-icons od-modal__otp-icon">{otpMethod === 'sms' ? 'sms' : 'mark_email_read'}</span>
+                <span className="material-icons od-modal__otp-icon">mark_email_read</span>
                 <p className="od-modal__desc">
                   {maskedDest}.<br/>Enter the 6-digit OTP below to confirm cancellation.
                 </p>
@@ -494,7 +452,7 @@ const OrderDetail = () => {
               <p className="od-modal__otp-hint">OTP expires in 10 minutes. <button className="od-modal__resend" onClick={handleRequestOtp} disabled={modalLoading}>Resend OTP</button></p>
               {modalError && <p className="od-modal__error">{modalError}</p>}
               <div className="od-modal__footer">
-                <button className="od-btn od-btn--secondary" onClick={() => { setCancelStep('method'); setModalError(''); }} disabled={modalLoading}>
+                <button className="od-btn od-btn--secondary" onClick={() => { setCancelStep('reason'); setModalError(''); }} disabled={modalLoading}>
                   Back
                 </button>
                 <button className="od-btn od-btn--danger" onClick={handleVerifyOtp} disabled={modalLoading || otpValue.length !== 6}>

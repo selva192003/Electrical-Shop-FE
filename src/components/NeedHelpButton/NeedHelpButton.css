@@ -1,0 +1,56 @@
+.need-help-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--color-accent);
+  color: var(--color-primary);
+  border: none;
+  border-radius: 50px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(245, 180, 0, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.need-help-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(245, 180, 0, 0.55);
+  background: var(--color-accent-soft);
+}
+
+.need-help-btn:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 3px 10px rgba(245, 180, 0, 0.3);
+}
+
+.need-help-icon {
+  font-size: 1.15rem;
+}
+
+.need-help-label {
+  line-height: 1;
+}
+
+/* Collapse to icon-only on small screens */
+@media (max-width: 480px) {
+  .need-help-btn {
+    padding: 13px;
+    border-radius: 50%;
+    bottom: 20px;
+    right: 16px;
+  }
+  .need-help-label {
+    display: none;
+  }
+  .need-help-icon {
+    font-size: 1.35rem;
+  }
+}

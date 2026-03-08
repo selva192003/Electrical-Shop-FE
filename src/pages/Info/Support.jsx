@@ -36,7 +36,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'How do I contact support for urgent issues?',
-    a: 'Use the form on this page to raise a ticket and our team will respond within 24 hours. For urgent matters, call us directly at +91 98765 43210 during business hours (Mon–Sat, 9 AM–7 PM).',
+    a: 'Use the form on this page to raise a ticket and our team will respond within 24 hours. For urgent matters, call us directly at +91 73737 17175 during business hours (Mon–Sat, 9 AM–9 PM).',
   },
 ];
 
@@ -406,8 +406,8 @@ const Support = () => {
             </div>
             <div>
               <div className="sup-contact__label">Phone</div>
-              <div className="sup-contact__value">+91 98765 43210</div>
-              <div className="sup-contact__sub">Mon – Sat, 9 AM – 7 PM</div>
+              <div className="sup-contact__value">+91 73737 17175</div>
+              <div className="sup-contact__sub">Mon – Sat, 9 AM – 9 PM</div>
             </div>
           </div>
 
@@ -417,7 +417,7 @@ const Support = () => {
             </div>
             <div>
               <div className="sup-contact__label">Email</div>
-              <div className="sup-contact__value">support@srimurugan.com</div>
+              <div className="sup-contact__value">support@srimuruganelectricals.com</div>
               <div className="sup-contact__sub">Response within 24 hours</div>
             </div>
           </div>

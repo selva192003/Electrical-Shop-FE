@@ -8,7 +8,6 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AdminLayout from './components/admin/AdminLayout/AdminLayout.jsx';
 import Home from './pages/Home/Home.jsx';
 import Login from './pages/Login/Login.jsx';
-import Register from './pages/Register/Register.jsx';
 import ProductDetails from './pages/ProductDetails/ProductDetails.jsx';
 import Cart from './pages/Cart/Cart.jsx';
 import Checkout from './pages/Checkout/Checkout.jsx';
@@ -41,9 +40,15 @@ import Calculator from './pages/Calculator/Calculator.jsx';
 import EnergyCalculator from './pages/EnergyCalculator/EnergyCalculator.jsx';
 import Loyalty from './pages/Loyalty/Loyalty.jsx';
 import Referral from './pages/Referral/Referral.jsx';
+import Signup from './pages/Signup/Signup.jsx';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword.jsx';
+import VerifyOTP from './pages/VerifyOTP/VerifyOTP.jsx';
+import ResetPassword from './pages/ResetPassword/ResetPassword.jsx';
+import EmailVerification from './pages/EmailVerification/EmailVerification.jsx';
 import { loadProfile } from './redux/slices/authSlice.js';
 import ToastProvider from './components/Toast/ToastProvider.jsx';
 import { SocketProvider } from './context/SocketContext.jsx';
+import NeedHelpButton from './components/NeedHelpButton/NeedHelpButton.jsx';
 
 
 /* Main layout — Navbar + Footer. Admins are always bounced to admin panel. */
@@ -58,6 +63,7 @@ const MainLayout = () => {
         <Outlet />
       </main>
       <Footer />
+      <NeedHelpButton />
     </div>
   );
 };
@@ -110,7 +116,12 @@ const App = () => {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Navigate to="/signup" replace />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/verify-otp" element={<VerifyOTP />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/verify-email" element={<EmailVerification />} />
           <Route path="/products" element={<Products />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/products/:id" element={<ProductDetails />} />

@@ -3,31 +3,31 @@ import './Timeline.css';
 const Timeline = () => {
   const milestones = [
     {
-      year: '1998',
+      year: '2015',
       title: 'Humble Beginnings',
       description:
-        'Started as a small neighbourhood electrical shop, serving local homes with basic lighting and wiring needs.',
+        'Sri Murugan electricals & Hardwares opened its doors in Perundurai West, serving local homes and electricians with genuine wiring and lighting products.',
       icon: 'lightbulb',
     },
     {
-      year: '2005',
-      title: 'Hardware & Wiring Expansion',
+      year: '2017',
+      title: 'Hardware & Battery Range',
       description:
-        'Expanded into hardware, wiring accessories, and domestic switchgear to support growing residential projects.',
-      icon: 'hardware',
+        'Expanded into hardware, switchgear, and batteries — becoming an authorised dealer for Luminous inverter batteries and Amaron UPS batteries.',
+      icon: 'battery_charging_full',
     },
     {
-      year: '2012',
-      title: 'Authorised Brand Partner',
+      year: '2020',
+      title: 'Multi-Brand Distributor',
       description:
-        'Became an authorised distributor for leading electrical brands, strengthening our promise of genuine products.',
+        'Grew into a comprehensive multi-brand electrical distributor, stocking Havells, Finolex, Polycab, Crompton, Orient, and more under one roof.',
       icon: 'task_alt',
     },
     {
-      year: '2024',
-      title: 'Digital Transformation',
+      year: '2026',
+      title: 'Online Store Launch',
       description:
-        'Launched our online platform to make trusted electrical and hardware solutions accessible from anywhere.',
+        'Launched our e-commerce platform to bring trusted electrical and hardware products to customers across Tamil Nadu.',
       icon: 'public',
     },
   ];

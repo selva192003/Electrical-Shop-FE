@@ -96,8 +96,8 @@ const Footer = () => {
                   <span className="footer-icon" aria-hidden="true">
                     <span className="material-icons">phone</span>
                   </span>
-                  <a href="tel:+919876543210" className="footer-link">
-                    +91 98765 43210
+                  <a href="tel:+917373717175" className="footer-link">
+                    +91 73737 17175
                   </a>
                 </div>
               </li>
@@ -106,8 +106,8 @@ const Footer = () => {
                   <span className="footer-icon" aria-hidden="true">
                     <span className="material-icons">email</span>
                   </span>
-                  <a href="mailto:support@srmuruganelectricals.com" className="footer-link">
-                    support@srmuruganelectricals.com
+                  <a href="mailto:support@srimuruganelectricals.com" className="footer-link">
+                    support@srimuruganelectricals.com
                   </a>
                 </div>
               </li>
@@ -128,7 +128,7 @@ const Footer = () => {
                   <span className="footer-icon" aria-hidden="true">
                     <span className="material-icons">schedule</span>
                   </span>
-                  <div>Mon – Sat: 9:00 AM – 8:00 PM</div>
+                  <div>Mon – Sat: 9:00 AM – 9:00 PM</div>
                 </div>
               </li>
             </ul>

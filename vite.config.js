@@ -9,9 +9,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'Electrical Shop',
-        short_name: 'ElecShop',
-        description: 'Your one-stop platform for quality electrical products',
+        name: 'Sri Murugan Electricals & Hardwares',
+        short_name: 'SriMurugan',
+        description: 'Trusted electrical & hardware store in Perundurai, Tamil Nadu — genuine products, expert advice.',
         theme_color: '#003566',
         background_color: '#ffffff',
         display: 'standalone',

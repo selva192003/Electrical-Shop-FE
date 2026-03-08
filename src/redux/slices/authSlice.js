@@ -28,6 +28,11 @@ export const loginUser = createAsyncThunk('auth/login', async (data, { rejectWit
     const res = await loginApi(data);
     return res.data;
   } catch (err) {
+    // Pass full error details so Login.jsx can inspect code + email for unverified accounts
+    const responseData = err?.response?.data;
+    if (responseData?.code) {
+      return rejectWithValue(responseData);
+    }
     return rejectWithValue(err.message);
   }
 });
@@ -151,7 +156,9 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = typeof action.payload === 'string'
+          ? action.payload
+          : action.payload?.message || 'Login failed';
       })
       .addCase(loadProfile.pending, (state) => {
         state.loading = true;

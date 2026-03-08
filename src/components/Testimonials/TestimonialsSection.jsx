@@ -2,23 +2,24 @@ import './TestimonialsSection.css';
 
 const testimonials = [
   {
-    name: 'Rajesh Kumar',
-    role: 'Homeowner',
+    name: 'Muthu Krishnan',
+    role: 'Homeowner — Perundurai',
     text:
-      'Sri Murugan Electrical & Hardware Store has been our family’s trusted shop for years. Their guidance on safe wiring and genuine products has always made a difference.',
+      'I have been buying all my wiring and switchgear from Sri Murugan Electricals since 2018. Their products are always genuine, and the staff guides you patiently even for small requirements.',
   },
   {
-    name: 'Priya Engineering Works',
-    role: 'Electrical Contractor',
+    name: 'Senthil Electrical Works',
+    role: 'Electrical Contractor — Erode',
     text:
-      'For bulk orders and project requirements, they are reliable, transparent, and timely. The team understands site realities and helps us choose the right materials.',
+      'For bulk orders and site projects, they give competitive rates and ensure the material is always available. Delivery to our sites in Erode district is prompt and hassle-free.',
   },
   {
-    name: 'S. Balasubramanian',
-    role: 'Small Business Owner',
+    name: 'Karthik Enterprises',
+    role: 'Small Business Owner — Perundurai West',
     text:
-      'From our first shop to our latest renovation, they have supplied everything from lighting to MCBs with consistent quality and support.',
+      'Purchased Luminous inverter batteries and a complete wiring kit for our new showroom. The team recommended exactly what we needed — no overselling, just honest advice.',
   },
+
 ];
 
 const TestimonialsSection = () => {

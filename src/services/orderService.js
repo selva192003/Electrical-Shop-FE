@@ -8,8 +8,8 @@ export const getOrderById = (id) => axiosInstance.get(`/orders/${id}`);
 
 export const cancelOrder = (id, reason) => axiosInstance.patch(`/orders/${id}/cancel`, { reason });
 
-export const requestCancelOtp = (id, method = 'email') =>
-  axiosInstance.post(`/orders/${id}/cancel/request-otp`, { method });
+export const requestCancelOtp = (id) =>
+  axiosInstance.post(`/orders/${id}/cancel/request-otp`);
 
 export const verifyCancelOtp = (id, otp, reason) =>
   axiosInstance.post(`/orders/${id}/cancel/verify-otp`, { otp, reason });

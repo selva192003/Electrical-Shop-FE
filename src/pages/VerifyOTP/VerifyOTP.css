@@ -1,0 +1,173 @@
+@import '../Login/Login.css';
+
+/* Input error state */
+.input-error {
+  border-color: #ef4444 !important;
+}
+
+/* OTP icon circle variant */
+.otp-icon-circle {
+  background: linear-gradient(135deg, #0b1f3b 0%, #1a3a6b 100%);
+}
+
+/* 6-box OTP inputs */
+.otp-inputs-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: var(--space-2) 0 var(--space-1);
+}
+
+.otp-input {
+  width: 48px;
+  height: 56px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-alt);
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  caret-color: var(--color-accent);
+}
+
+.otp-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(11, 31, 59, 0.1);
+}
+
+.otp-input:not(:placeholder-shown) {
+  border-color: var(--color-primary-soft);
+  background: #f0f4ff;
+}
+
+.otp-input--error {
+  border-color: #ef4444 !important;
+  background: #fff5f5 !important;
+  animation: shake 0.35s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  60%       { transform: translateX(6px); }
+}
+
+/* Error text centered for OTP page */
+.otp-error-text {
+  text-align: center;
+}
+
+/* Resend row */
+.resend-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: var(--space-2);
+  font-size: 0.85rem;
+}
+
+.resend-text {
+  color: var(--color-text-muted);
+}
+
+.resend-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  font-family: inherit;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.resend-btn:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.resend-cooldown {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.otp-footer-note {
+  font-size: 0.78rem !important;
+  color: var(--color-text-muted) !important;
+  text-align: center;
+  margin-top: var(--space-1) !important;
+}
+
+/* Loading spinner (shared pattern) */
+.btn-spinner-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Back link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: var(--color-primary);
+}
+
+.back-link .material-icons {
+  font-size: 1rem;
+}
+
+/* Auth icon circle */
+.auth-icon-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-soft) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-2);
+}
+
+.auth-icon {
+  font-size: 1.8rem !important;
+  color: #fff;
+}
+
+@media (max-width: 420px) {
+  .otp-input {
+    width: 40px;
+    height: 48px;
+    font-size: 1.2rem;
+  }
+
+  .otp-inputs-wrapper {
+    gap: 7px;
+  }
+}

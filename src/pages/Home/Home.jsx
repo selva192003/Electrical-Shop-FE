@@ -12,6 +12,7 @@ import MissionSection from '../../components/Mission/MissionSection.jsx';
 import VisionSection from '../../components/Vision/VisionSection.jsx';
 import TestimonialsSection from '../../components/Testimonials/TestimonialsSection.jsx';
 import BrandShowcase from '../../components/BrandShowcase/BrandShowcase.jsx';
+import StoreGallery from '../../components/StoreGallery/StoreGallery.jsx';
 import './Home.css';
 
 const Home = () => {
@@ -191,6 +192,8 @@ const Home = () => {
       </section>
 
       <BrandShowcase />
+
+      <StoreGallery />
 
       <section className="home-section trust-section card">
         <div className="home-section-header">
