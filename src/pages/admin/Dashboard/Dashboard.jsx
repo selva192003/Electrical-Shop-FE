@@ -29,7 +29,6 @@ const StatCard = ({ icon, label, value, color, to }) => {
         <span className="adb-stat-value">{value}</span>
         <span className="adb-stat-label">{label}</span>
       </div>
-      {to && <span className="material-icons adb-stat-arrow">arrow_forward</span>}
     </div>
   );
   return to ? <Link to={to} style={{ textDecoration: 'none' }}>{inner}</Link> : inner;
@@ -125,10 +124,10 @@ const AdminDashboard = () => {
 
       {/* ── Stat Cards ── */}
       <div className="adb-stats-grid">
-        <StatCard icon={<span className="material-icons">inventory_2</span>}     label="Total Products" value={stats.totalProducts} color="#8b5cf6" />
-        <StatCard icon={<span className="material-icons">shopping_cart</span>}   label="Total Orders"   value={stats.totalOrders}   color="#06b6d4" />
-        <StatCard icon={<span className="material-icons">currency_rupee</span>}  label="Total Revenue"  value={`₹${(stats.totalRevenue || 0).toLocaleString('en-IN')}`} color="#22c55e" />
-        <StatCard icon={<span className="material-icons">hourglass_empty</span>} label="Pending Orders" value={stats.pendingOrders} color="#f59e0b" />
+        <StatCard icon={<span className="material-icons">inventory_2</span>}     label="Total Products" value={stats.totalProducts} color="#8b5cf6" to="/admin/products" />
+        <StatCard icon={<span className="material-icons">shopping_cart</span>}   label="Total Orders"   value={stats.totalOrders}   color="#06b6d4" to="/admin/orders" />
+        <StatCard icon={<span className="material-icons">currency_rupee</span>}  label="Total Revenue"  value={`₹${(stats.totalRevenue || 0).toLocaleString('en-IN')}`} color="#22c55e" to="/admin/orders" />
+        <StatCard icon={<span className="material-icons">hourglass_empty</span>} label="Pending Orders" value={stats.pendingOrders} color="#f59e0b" to="/admin/orders" />
         <StatCard icon={<span className="material-icons">warning</span>}         label="Low Stock (≤5)"  value={stats.lowStock}     color="#f59e0b" to="/admin/low-stock" />
       </div>
 

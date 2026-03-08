@@ -73,7 +73,7 @@ export const APPLIANCE_SECTIONS = [
   {
     id: 'lighting',
     label: 'Section A – Lighting',
-    icon: '💡',
+    icon: 'lightbulb',
     color: '#f59e0b',
     appliances: [
       { id: 'led_bulb',      name: 'LED Bulb',               wattDefault: 9,    wattMin: 3,   wattMax: 20,   maxQty: 50,  unit: 'bulbs' },
@@ -88,7 +88,7 @@ export const APPLIANCE_SECTIONS = [
   {
     id: 'cooling',
     label: 'Section B – Cooling & Ventilation',
-    icon: '❄️',
+    icon: 'ac_unit',
     color: '#3b82f6',
     appliances: [
       { id: 'ceiling_fan',   name: 'Ceiling Fan (Regular)',   wattDefault: 75,   wattMin: 50,  wattMax: 100,  maxQty: 20,  unit: 'fans' },
@@ -104,7 +104,7 @@ export const APPLIANCE_SECTIONS = [
   {
     id: 'kitchen',
     label: 'Section C – Kitchen Appliances',
-    icon: '🍳',
+    icon: 'kitchen',
     color: '#ef4444',
     appliances: [
       { id: 'refrigerator',  name: 'Refrigerator (200–300L)',  wattDefault: 200,  wattMin: 100, wattMax: 400,  maxQty: 3,   unit: 'units' },
@@ -120,7 +120,7 @@ export const APPLIANCE_SECTIONS = [
   {
     id: 'heavy',
     label: 'Section D – Heavy Appliances',
-    icon: '⚡',
+    icon: 'bolt',
     color: '#f97316',
     appliances: [
       { id: 'washing_machine',name: 'Washing Machine (5–8kg)', wattDefault: 500,  wattMin: 300, wattMax: 2500, maxQty: 5,   unit: 'units' },
@@ -134,7 +134,7 @@ export const APPLIANCE_SECTIONS = [
   {
     id: 'electronics',
     label: 'Section E – Electronics & Entertainment',
-    icon: '📺',
+    icon: 'tv',
     color: '#8b5cf6',
     appliances: [
       { id: 'tv_led',          name: 'LED TV (32–43 inch)',     wattDefault: 60,   wattMin: 30,  wattMax: 200,  maxQty: 10,  unit: 'units' },
@@ -150,7 +150,7 @@ export const APPLIANCE_SECTIONS = [
   {
     id: 'workshop',
     label: 'Section F – Tools / Workshop (Optional)',
-    icon: '🔧',
+    icon: 'build',
     color: '#6b7280',
     optional: true,
     appliances: [

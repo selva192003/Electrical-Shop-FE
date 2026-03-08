@@ -150,7 +150,7 @@ const Signup = () => {
     return (
       <div className="page-container auth-page">
         <div className="auth-card card">
-          <div className="email-sent-icon">📬</div>
+          <div className="email-sent-icon"><span className="material-icons" style={{fontSize:'3rem',color:'#2563eb'}}>mark_email_unread</span></div>
           <h1 className="auth-title">Check your email!</h1>
           <p className="auth-subtitle">
             We sent a verification link to<br />

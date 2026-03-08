@@ -13,11 +13,11 @@ import './Wishlist.css';
 // Must match the backend Project model enum exactly
 const PROJECT_TYPES = ['Residential', 'Commercial', 'Industrial', 'Infrastructure', 'Other'];
 const PROJECT_TYPE_LABELS = {
-  Residential:    '🏠 Residential',
-  Commercial:     '🏢 Commercial',
-  Industrial:     '🏭 Industrial',
-  Infrastructure: '🔌 Infrastructure',
-  Other:          '📦 Other',
+  Residential:    'Residential',
+  Commercial:     'Commercial',
+  Industrial:     'Industrial',
+  Infrastructure: 'Infrastructure',
+  Other:          'Other',
 };
 const STATUS_COLORS = {
   planning:    { bg: '#eef2ff', text: '#4f46e5' },
@@ -172,7 +172,7 @@ const Wishlist = () => {
           className={`wl-tab ${activeTab === 'wishlist' ? 'active' : ''}`}
           onClick={() => setTab('wishlist')}
         >
-          <span className="wl-tab-icon">❤️</span>
+          <span className="material-icons wl-tab-icon">favorite_border</span>
           Wishlist
           {wishItems.length > 0 && <span className="wl-badge">{wishItems.length}</span>}
         </button>
@@ -180,7 +180,7 @@ const Wishlist = () => {
           className={`wl-tab ${activeTab === 'projects' ? 'active' : ''}`}
           onClick={() => setTab('projects')}
         >
-          <span className="wl-tab-icon">📁</span>
+          <span className="material-icons wl-tab-icon">folder_open</span>
           My Projects
           {projects.length > 0 && <span className="wl-badge">{projects.length}</span>}
         </button>
@@ -198,7 +198,7 @@ const Wishlist = () => {
 
           {wishLoading ? <Spinner /> : wishItems.length === 0 ? (
             <div className="wl-empty">
-              <span className="wl-empty-icon">🤍</span>
+              <span className="material-icons wl-empty-icon">favorite_border</span>
               <h3>No saved items yet</h3>
               <p>Browse products and tap the heart icon to save them here.</p>
               <Link to="/products" className="wl-browse-btn">Browse Products</Link>
@@ -309,7 +309,7 @@ const Wishlist = () => {
 
           {projLoading ? <Spinner /> : projects.length === 0 ? (
             <div className="wl-empty">
-              <span className="wl-empty-icon">📐</span>
+              <span className="material-icons wl-empty-icon">engineering</span>
               <h3>No projects yet</h3>
               <p>Create a project to plan your electrical work and manage your parts list.</p>
               <button className="wl-browse-btn" onClick={() => setShowCreate(true)}>Create First Project</button>
@@ -350,7 +350,10 @@ const Wishlist = () => {
                       <h3>{activeProject.name}</h3>
                       {activeProject.description && <p className="proj-detail-desc">{activeProject.description}</p>}
                       {activeProject.siteAddress && (
-                        <p className="proj-detail-addr">📍 {activeProject.siteAddress}</p>
+                        <p className="proj-detail-addr">
+                          <span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle',marginRight:'4px'}}>location_on</span>
+                          {activeProject.siteAddress}
+                        </p>
                       )}
 
                       {/* Status pill — click to change */}
@@ -392,11 +395,12 @@ const Wishlist = () => {
                         onClick={() => handleToggleShare(activeProject._id)}
                         title={activeProject.isShared ? 'Disable sharing' : 'Generate share link'}
                       >
-                        🔗 {activeProject.isShared ? 'Shared' : 'Share'}
+                        <span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle',marginRight:'4px'}}>link</span>
+                        {activeProject.isShared ? 'Shared' : 'Share'}
                       </button>
                       {activeProject.isShared && activeProject.shareToken && (
                         <button className="proj-copy-btn" onClick={() => handleCopyLink(activeProject.shareToken)}>
-                          {copied ? '✅ Copied' : '📋 Copy Link'}
+                          {copied ? 'Copied' : 'Copy Link'}
                         </button>
                       )}
                       <button
@@ -404,10 +408,10 @@ const Wishlist = () => {
                         onClick={() => handleAddToCart(activeProject._id)}
                         disabled={addingToCart || !activeProject.items?.length}
                       >
-                        {addingToCart ? 'Adding…' : `🛒 Add All to Cart`}
+                        {addingToCart ? 'Adding…' : `Add All to Cart`}
                       </button>
                       <button className="proj-delete-btn" onClick={() => handleDelete(activeProject._id)}>
-                        🗑
+                        <span className="material-icons" style={{fontSize:'18px',verticalAlign:'middle'}}>delete</span>
                       </button>
                     </div>
                   </div>
@@ -426,7 +430,7 @@ const Wishlist = () => {
                       <p>No items in this project yet.</p>
                       <p>Use the <strong>Calculator</strong> to auto-generate a shopping list, or browse products and add them here.</p>
                       <div className="proj-items-empty-actions">
-                        <Link to="/calculator" className="wl-btn primary">⚡ Open Calculator</Link>
+                        <Link to="/calculator" className="wl-btn primary">Open Calculator</Link>
                         <Link to="/products" className="wl-btn ghost">Browse Products</Link>
                       </div>
                     </div>
@@ -437,7 +441,7 @@ const Wishlist = () => {
                           <div className="proj-item-img-wrap">
                             {item.product?.images?.[0]?.url
                               ? <img src={item.product.images[0].url} alt={item.productName} className="proj-item-img" />
-                              : <div className="proj-item-no-img">📦</div>
+                              : <div className="proj-item-no-img"><span className="material-icons">image_not_supported</span></div>
                             }
                           </div>
                           <div className="proj-item-info">
@@ -471,7 +475,7 @@ const Wishlist = () => {
                 </div>
               ) : (
                 <div className="proj-detail proj-detail-placeholder">
-                  <span>👈 Select a project to view details</span>
+                  <span>Select a project to view details</span>
                 </div>
               )}
             </div>

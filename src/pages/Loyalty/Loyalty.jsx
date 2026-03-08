@@ -5,13 +5,13 @@ import { useToast } from '../../components/Toast/ToastProvider.jsx';
 import './Loyalty.css';
 
 const TIERS = {
-  Bronze:   { color: '#cd7f32', icon: '🥉', minPoints: 0,    next: 500 },
-  Silver:   { color: '#aaa',    icon: '🥈', minPoints: 500,  next: 2000 },
-  Gold:     { color: '#f4c430', icon: '🥇', minPoints: 2000, next: 5000 },
-  Platinum: { color: '#6cf',    icon: '💎', minPoints: 5000, next: null },
+  Bronze:   { color: '#cd7f32', icon: 'military_tech', minPoints: 0,    next: 500 },
+  Silver:   { color: '#aaa',    icon: 'military_tech', minPoints: 500,  next: 2000 },
+  Gold:     { color: '#f4c430', icon: 'military_tech', minPoints: 2000, next: 5000 },
+  Platinum: { color: '#6cf',    icon: 'workspace_premium', minPoints: 5000, next: null },
 };
 
-const TX_ICONS = { earned: '⬆️', redeemed: '⬇️', bonus: '🎁', expired: '⏳', referral: '🤝' };
+const TX_ICONS = { earned: 'arrow_upward', redeemed: 'arrow_downward', bonus: 'card_giftcard', expired: 'hourglass_empty', referral: 'people' };
 
 export default function Loyalty() {
   const toast = useToast();
@@ -59,12 +59,12 @@ export default function Loyalty() {
   return (
     <div className="loyalty-page">
       <div className="loyalty-header">
-        <h1>🏆 Loyalty Points</h1>
+        <h1>Loyalty Points</h1>
         <p>Earn points on every purchase, redeem for discounts</p>
       </div>
 
       <div className="loyalty-tier-card" style={{ borderColor: tierMeta.color }}>
-        <div className="loyalty-tier-icon">{tierMeta.icon}</div>
+        <div className="loyalty-tier-icon"><span className="material-icons" style={{color: tierMeta.color, fontSize: '2.5rem'}}>{tierMeta.icon}</span></div>
         <div className="loyalty-tier-info">
           <div className="loyalty-tier-name" style={{ color: tierMeta.color }}>{tier} Member</div>
           <div className="loyalty-points-balance">{info.loyaltyPoints?.toLocaleString('en-IN')} points</div>
@@ -91,7 +91,7 @@ export default function Loyalty() {
       <div className="loyalty-perks-row">
         {Object.entries(TIERS).map(([name, meta]) => (
           <div key={name} className={`loyalty-perk-card ${tier === name ? 'current-tier' : ''}`} style={{ borderTopColor: meta.color }}>
-            <div className="loyalty-perk-icon">{meta.icon}</div>
+            <div className="loyalty-perk-icon"><span className="material-icons" style={{color: meta.color}}>{meta.icon}</span></div>
             <div className="loyalty-perk-name" style={{ color: meta.color }}>{name}</div>
             <div className="loyalty-perk-threshold">{meta.minPoints.toLocaleString()} pts</div>
             <ul className="loyalty-perk-list">
@@ -147,7 +147,7 @@ export default function Loyalty() {
           <div className="tx-list">
             {info.transactions?.map(tx => (
               <div key={tx._id} className="tx-item">
-                <span className="tx-icon">{TX_ICONS[tx.type] || '📋'}</span>
+                <span className="tx-icon material-icons">{TX_ICONS[tx.type] || 'list'}</span>
                 <div className="tx-info">
                   <div className="tx-desc">{tx.description}</div>
                   <div className="tx-date">{new Date(tx.createdAt).toLocaleDateString('en-IN')}</div>

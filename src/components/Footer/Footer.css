@@ -170,10 +170,9 @@
   justify-content: center;
 }
 
-.footer-icon svg {
-  width: 12px;
-  height: 12px;
-  fill: var(--color-accent);
+.footer-icon .material-icons {
+  font-size: 14px;
+  color: var(--color-accent);
 }
 
 .footer-map {
@@ -232,6 +231,27 @@
   padding: 14px var(--space-3) 18px;
 }
 
+.footer-bottom-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.footer-copy-left {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.footer-bottom-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .footer-bottom-link {
   color: #9ca3af;
   text-decoration: none;
@@ -275,5 +295,6 @@
   .footer-bottom-inner {
     flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
   }
 }

@@ -21,23 +21,22 @@
 .adb-refresh-btn:hover { opacity: 0.8; }
 
 /* Stat cards */
-.adb-stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 1rem; }
+.adb-stats-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; align-items: stretch; }
 
 .adb-stat-card {
   background: #fff; border-radius: var(--adb-radius); padding: 1rem 1.1rem;
   display: flex; align-items: center; gap: 0.85rem;
   box-shadow: var(--adb-shadow); border-left: 4px solid var(--stat-color, #0b1f3b);
   transition: transform 0.2s, box-shadow 0.2s;
+  min-height: 90px; height: 100%;
 }
 .adb-stat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
 .adb-stat-card--link { cursor: pointer; }
 .adb-stat-card--link:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.13); }
-.adb-stat-arrow { font-size: 1.1rem !important; color: var(--stat-color, #6b7280); margin-left: auto; opacity: 0.7; }
-.adb-stat-card--link:hover .adb-stat-arrow { opacity: 1; }
-.adb-stat-icon { font-size: 1.7rem; flex-shrink: 0; display: flex; align-items: center; }
-.adb-stat-icon .material-icons { font-size: 1.7rem; color: var(--stat-color, #0b1f3b); }
+.adb-stat-icon { width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.adb-stat-icon .material-icons { font-size: 28px; width: 28px; height: 28px; line-height: 28px; text-align: center; color: var(--stat-color, #0b1f3b); }
 .adb-stat-body { display: flex; flex-direction: column; }
-.adb-stat-value { font-size: 1.3rem; font-weight: 800; color: #0b1f3b; line-height: 1.2; }
+.adb-stat-value { font-size: 1.3rem; font-weight: 800; color: #0b1f3b; line-height: 1.2; word-break: break-word; overflow-wrap: anywhere; }
 .adb-stat-label { font-size: 0.72rem; color: #6b7280; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
 
 /* Charts */
@@ -77,6 +76,9 @@
 @media (max-width: 1100px) {
   .adb-charts-row { grid-template-columns: 1fr; }
   .adb-chart-card--sm { max-width: 340px; margin: 0 auto; }
+}
+@media (max-width: 900px) {
+  .adb-stats-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 768px) {
   .adb-stats-grid { grid-template-columns: repeat(2, 1fr); }

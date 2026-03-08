@@ -46,18 +46,33 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/" className="footer-link">
+                <Link to="/products" className="footer-link">
                   Shop
                 </Link>
               </li>
               <li>
-                <Link to="/" className="footer-link">
+                <Link to="/categories" className="footer-link">
                   Categories
                 </Link>
               </li>
               <li>
+                <Link to="/calculator" className="footer-link">
+                  Calculator
+                </Link>
+              </li>
+              <li>
                 <Link to="/orders" className="footer-link">
-                  Orders
+                  My Orders
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="footer-link">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/faq" className="footer-link">
+                  FAQ
                 </Link>
               </li>
               <li>
@@ -143,13 +158,13 @@ const Footer = () => {
               Privacy Policy
             </Link>
             <span className="footer-bottom-separator" aria-hidden="true">
-              •
+              |
             </span>
             <Link to="/terms" className="footer-bottom-link">
               Terms &amp; Conditions
             </Link>
             <span className="footer-bottom-separator" aria-hidden="true">
-              •
+              |
             </span>
             <Link to="/support" className="footer-bottom-link">
               Support

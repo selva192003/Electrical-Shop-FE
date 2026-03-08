@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import {
@@ -293,27 +294,27 @@ const Profile = () => {
       <div className="profile-quick-access">
         <h2 className="profile-section-heading">My Benefits &amp; Tools</h2>
         <div className="profile-quick-grid">
-          <a href="/loyalty" className="profile-quick-card loyalty-card">
-            <span className="pq-icon">🏆</span>
+          <Link to="/loyalty" className="profile-quick-card loyalty-card">
+            <span className="material-icons pq-icon">military_tech</span>
             <div>
               <div className="pq-title">Loyalty Points</div>
               <div className="pq-sub">{user?.loyaltyPoints || 0} pts • {user?.loyaltyTier || 'Bronze'}</div>
             </div>
-          </a>
-          <a href="/referral" className="profile-quick-card referral-card">
-            <span className="pq-icon">🤝</span>
+          </Link>
+          <Link to="/referral" className="profile-quick-card referral-card">
+            <span className="material-icons pq-icon">people</span>
             <div>
               <div className="pq-title">Refer &amp; Earn</div>
               <div className="pq-sub">{user?.referralCount || 0} referrals made</div>
             </div>
-          </a>
-          <a href="/projects" className="profile-quick-card projects-card">
-            <span className="pq-icon">⚡</span>
+          </Link>
+          <Link to="/wishlist?tab=projects" className="profile-quick-card projects-card">
+            <span className="material-icons pq-icon">engineering</span>
             <div>
               <div className="pq-title">My Projects</div>
               <div className="pq-sub">BOM &amp; project planner</div>
             </div>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

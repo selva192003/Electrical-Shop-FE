@@ -67,7 +67,7 @@ const EnergyCalculator = () => {
   return (
     <div className="energy-calc-page">
       <div className="energy-header">
-        <h1>💡 Energy Bill Calculator</h1>
+        <h1>Energy Bill Calculator</h1>
         <p>Discover how much you can save by switching to energy-efficient appliances</p>
       </div>
 
@@ -144,7 +144,7 @@ const EnergyCalculator = () => {
             <div className="savings-box eco">
               <span className="savings-label">CO₂ Reduction</span>
               <span className="savings-amount eco-green">{results.co2Reduction} kg</span>
-              <span className="savings-kwh">per month 🌱</span>
+              <span className="savings-kwh">per month</span>
             </div>
           </div>
 

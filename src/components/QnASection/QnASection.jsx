@@ -96,7 +96,7 @@ export default function QnASection({ productId }) {
                   <span>{q.userName}</span>
                   <span>{new Date(q.createdAt).toLocaleDateString('en-IN')}</span>
                   <button className="qna-upvote-btn" onClick={() => handleUpvote(q._id)}>
-                    👍 {q.upvoteCount || 0}
+                    <span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle',marginRight:'3px'}}>thumb_up</span> {q.upvoteCount || 0}
                   </button>
                 </div>
               </div>

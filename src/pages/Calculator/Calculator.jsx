@@ -30,14 +30,14 @@ const STEPS = [
 
 // ─── Property types ───────────────────────────────────────────────────────────
 const PROPERTY_TYPES = [
-  { id: '1bhk',    label: '1 BHK',           icon: '🏠', floors: 1, projectType: 'Residential' },
-  { id: '2bhk',    label: '2 BHK',           icon: '🏠', floors: 1, projectType: 'Residential' },
-  { id: '3bhk',    label: '3 BHK',           icon: '🏡', floors: 2, projectType: 'Residential' },
-  { id: '4bhk',    label: '4 BHK+',          icon: '🏰', floors: 2, projectType: 'Residential' },
-  { id: 'villa',   label: 'Villa / Bungalow', icon: '🏛️', floors: 3, projectType: 'Residential' },
-  { id: 'office',  label: 'Office',           icon: '🏢', floors: 2, projectType: 'Commercial'  },
-  { id: 'shop',    label: 'Shop / Retail',    icon: '🏪', floors: 1, projectType: 'Commercial'  },
-  { id: 'factory', label: 'Factory',          icon: '🏭', floors: 1, projectType: 'Industrial'  },
+  { id: '1bhk',    label: '1 BHK',           icon: 'home',     floors: 1, projectType: 'Residential' },
+  { id: '2bhk',    label: '2 BHK',           icon: 'home',     floors: 1, projectType: 'Residential' },
+  { id: '3bhk',    label: '3 BHK',           icon: 'home',     floors: 2, projectType: 'Residential' },
+  { id: '4bhk',    label: '4 BHK+',          icon: 'home',     floors: 2, projectType: 'Residential' },
+  { id: 'villa',   label: 'Villa / Bungalow', icon: 'villa',    floors: 3, projectType: 'Residential' },
+  { id: 'office',  label: 'Office',           icon: 'business', floors: 2, projectType: 'Commercial'  },
+  { id: 'shop',    label: 'Shop / Retail',    icon: 'store',    floors: 1, projectType: 'Commercial'  },
+  { id: 'factory', label: 'Factory',          icon: 'factory',  floors: 1, projectType: 'Industrial'  },
 ];
 
 // ─── Build initial state ──────────────────────────────────────────────────────
@@ -243,7 +243,7 @@ const Calculator = () => {
         description: `Auto-generated from Load Calculator: ${pType?.label}, ${floors} floor(s), ${calcResult ? (calcResult.totalWatts / 1000).toFixed(2) : '?'} kW total load.`,
         items: itemsPayload,
       });
-      toast.success(`📁 Project "${project.name}" saved!`);
+      toast.success(`Project "${project.name}" saved!`);
       setTimeout(() => navigate('/wishlist?tab=projects'), 1200);
     } catch (e) {
       toast.error(e.response?.data?.message || 'Failed to save project.');
@@ -254,8 +254,8 @@ const Calculator = () => {
 
   const WarningBadge = ({ level, message }) => (
     <div className={`warning-badge warning-${level}`}>
-      <span className="warning-icon">
-        {level === 'danger' ? '🔴' : level === 'warning' ? '🟡' : 'ℹ️'}
+      <span className="material-icons warning-icon">
+        {level === 'danger' ? 'error' : level === 'warning' ? 'warning' : 'info'}
       </span>
       <span>{message}</span>
     </div>
@@ -272,7 +272,7 @@ const Calculator = () => {
       <div className="calc-page-header">
         <div className="calc-page-header-left">
           <div className="calc-badge">Professional Tool</div>
-          <h1>⚡ Electrical Load Calculator</h1>
+          <h1>Electrical Load Calculator</h1>
           <p>
             Professional electrical planning for residential, commercial &amp; industrial spaces.
             Based on IS 732, IS 3043 &amp; IE Rules 1956.
@@ -322,7 +322,7 @@ const Calculator = () => {
                   className={`property-card ${propertyType === p.id ? 'selected' : ''}`}
                   onClick={() => { setPropertyType(p.id); setFloors(p.floors); }}
                 >
-                  <span className="property-icon">{p.icon}</span>
+                  <span className="material-icons property-icon">{p.icon}</span>
                   <span className="property-name">{p.label}</span>
                   <span className="property-type-tag">{p.projectType}</span>
                 </button>
@@ -410,7 +410,7 @@ const Calculator = () => {
                   style={{ '--section-color': section.color }}
                 >
                   <div className="section-header-left">
-                    <span className="section-icon">{section.icon}</span>
+                    <span className="material-icons section-icon">{section.icon}</span>
                     <div>
                       <span className="section-title">{section.label}</span>
                       {section.optional && <span className="optional-tag">Optional</span>}
@@ -495,7 +495,7 @@ const Calculator = () => {
 
           {calcErrors.length > 0 && (
             <div className="validation-errors">
-              <strong>⚠ Fix the following before calculating:</strong>
+              <strong>Fix the following before calculating:</strong>
               <ul>{calcErrors.map((e, i) => <li key={i}>{e}</li>)}</ul>
             </div>
           )}
@@ -526,7 +526,7 @@ const Calculator = () => {
               </p>
             </div>
             <button className="btn-print" onClick={() => window.print()} title="Print / Save as PDF">
-              🖨️ Print / PDF
+              Print / PDF
             </button>
           </div>
 
@@ -540,19 +540,19 @@ const Calculator = () => {
           {/* Summary Cards */}
           <div className="results-summary-grid">
             {[
-              { label: 'Total Connected Load',   value: `${calcResult.totalWatts.toLocaleString('en-IN')} W`, sub: `${(calcResult.totalWatts/1000).toFixed(2)} kW`,      color: '#1e3a5f', icon: '⚡' },
-              { label: 'Design Load (25% margin)',value: `${calcResult.designWatts.toLocaleString('en-IN')} W`,sub: `+${calcResult.marginWatts} W safety buffer`,           color: '#c0392b', icon: '🛡️' },
-              { label: 'Design Current',          value: `${calcResult.designCurrent.toFixed(2)} A`,           sub: 'At 230V, power factor 0.85',                           color: '#c0392b', icon: '🔌' },
-              { label: 'Recommended MCB',         value: calcResult.mcbRating ? `${calcResult.mcbRating} A` : 'Engineer Reqd.', sub: calcResult.requiresEngineer ? '⚠ >100A — consult engineer' : 'Main isolator (C-Curve)', color: '#16a34a', icon: '⛔' },
-              { label: 'Main Wire Gauge',         value: calcResult.wireGauge.gauge,                           sub: calcResult.wireGauge.use,                               color: '#d97706', icon: '🔗' },
-              { label: 'Phase Requirement',       value: calcResult.phaseResult.phase,                         sub: 'Supply connection type',                               color: calcResult.phaseResult.code === 'single' ? '#16a34a' : '#c0392b', icon: '〰️' },
-              { label: 'Distribution Board',      value: `${calcResult.dbResult.recommendedDB}-Way DB`,        sub: `× ${calcResult.dbResult.dbsNeeded} nos. | ${calcResult.dbResult.subCircuits} sub-circuits`, color: '#7c3aed', icon: '📦' },
-              { label: 'Earthing Conductor',      value: calcResult.earthingResult.conductor,                  sub: calcResult.earthingResult.rod,                          color: '#0891b2', icon: '🌍' },
-              { label: 'Monthly Consumption',     value: `${calcResult.monthlyKwh} kWh`,                       sub: 'At entered usage hours',                               color: '#6d28d9', icon: '📅' },
-              { label: 'Monthly Bill Estimate',   value: `₹${calcResult.monthlyCost.toLocaleString('en-IN')}`, sub: `@ ₹${tariff}/kWh`,                                     color: '#0f766e', icon: '💸' },
+              { label: 'Total Connected Load',   value: `${calcResult.totalWatts.toLocaleString('en-IN')} W`, sub: `${(calcResult.totalWatts/1000).toFixed(2)} kW`,      color: '#1e3a5f', icon: 'bolt' },
+              { label: 'Design Load (25% margin)',value: `${calcResult.designWatts.toLocaleString('en-IN')} W`,sub: `+${calcResult.marginWatts} W safety buffer`,           color: '#c0392b', icon: 'security' },
+              { label: 'Design Current',          value: `${calcResult.designCurrent.toFixed(2)} A`,           sub: 'At 230V, power factor 0.85',                           color: '#c0392b', icon: 'electric_bolt' },
+              { label: 'Recommended MCB',         value: calcResult.mcbRating ? `${calcResult.mcbRating} A` : 'Engineer Reqd.', sub: calcResult.requiresEngineer ? 'Over 100A — consult engineer' : 'Main isolator (C-Curve)', color: '#16a34a', icon: 'power_off' },
+              { label: 'Main Wire Gauge',         value: calcResult.wireGauge.gauge,                           sub: calcResult.wireGauge.use,                               color: '#d97706', icon: 'cable' },
+              { label: 'Phase Requirement',       value: calcResult.phaseResult.phase,                         sub: 'Supply connection type',                               color: calcResult.phaseResult.code === 'single' ? '#16a34a' : '#c0392b', icon: 'waves' },
+              { label: 'Distribution Board',      value: `${calcResult.dbResult.recommendedDB}-Way DB`,        sub: `× ${calcResult.dbResult.dbsNeeded} nos. | ${calcResult.dbResult.subCircuits} sub-circuits`, color: '#7c3aed', icon: 'inventory_2' },
+              { label: 'Earthing Conductor',      value: calcResult.earthingResult.conductor,                  sub: calcResult.earthingResult.rod,                          color: '#0891b2', icon: 'public' },
+              { label: 'Monthly Consumption',     value: `${calcResult.monthlyKwh} kWh`,                       sub: 'At entered usage hours',                               color: '#6d28d9', icon: 'calendar_month' },
+              { label: 'Monthly Bill Estimate',   value: `₹${calcResult.monthlyCost.toLocaleString('en-IN')}`, sub: `@ ₹${tariff}/kWh`,                                     color: '#0f766e', icon: 'payments' },
             ].map((card) => (
               <div key={card.label} className="result-summary-card" style={{ '--card-color': card.color }}>
-                <div className="rsc-icon">{card.icon}</div>
+                <div className="rsc-icon"><span className="material-icons">{card.icon}</span></div>
                 <div className="rsc-body">
                   <span className="rsc-label">{card.label}</span>
                   <span className="rsc-value" style={{ color: card.color }}>{card.value}</span>
@@ -626,7 +626,7 @@ const Calculator = () => {
 
           {/* Disclaimer */}
           <div className="disclaimer-box">
-            <div className="disclaimer-icon">⚠️</div>
+            <div className="disclaimer-icon"><span className="material-icons">warning</span></div>
             <div className="disclaimer-text">
               <strong>Professional Disclaimer</strong>
               <p>
@@ -642,9 +642,9 @@ const Calculator = () => {
           <div className="calc-footer-nav">
             <button className="btn-secondary" onClick={() => setStep(1)}>← Edit Load</button>
             <div className="footer-nav-right">
-              <button className="btn-ghost" onClick={() => window.print()}>🖨️ Print Report</button>
+              <button className="btn-ghost" onClick={() => window.print()}>Print Report</button>
               <button className="btn-primary" onClick={handleMatchProducts}>
-                🛒 View Material List &amp; Shop →
+                View Material List &amp; Shop →
               </button>
             </div>
           </div>
@@ -747,11 +747,11 @@ const Calculator = () => {
           {!matchLoading && matchedCount > 0 && (
             <div className="cta-actions">
               <button className="btn-add-cart" onClick={handleAddAllToCart} disabled={cartLoading || projLoading}>
-                {cartLoading ? 'Adding…' : `🛒 Add All ${matchedCount} Items to Cart`}
+                {cartLoading ? 'Adding…' : `Add All ${matchedCount} Items to Cart`}
               </button>
               {user ? (
                 <button className="btn-save-project" onClick={handleSaveAsProject} disabled={cartLoading || projLoading}>
-                  {projLoading ? 'Saving…' : '📁 Save as Project'}
+                  {projLoading ? 'Saving…' : 'Save as Project'}
                 </button>
               ) : (
                 <p className="login-hint">
@@ -771,7 +771,7 @@ const Calculator = () => {
 
       {/* ── Disclaimer footer ──────────────────────────────────────────── */}
       <div className="calc-disclaimer-footer">
-        <strong>⚠️ Disclaimer:</strong>{' '}
+        <strong>Disclaimer:</strong>{' '}
         This calculation is an estimation tool. Final electrical planning must be approved by a
         licensed electrician as per IS 732, IS 3043 and the Indian Electricity Rules 1956.
       </div>

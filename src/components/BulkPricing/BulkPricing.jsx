@@ -5,7 +5,7 @@ export default function BulkPricing({ tiers = [] }) {
 
   return (
     <div className="bulk-pricing">
-      <h3 className="bulk-pricing-title">💼 Bulk / Business Pricing</h3>
+      <h3 className="bulk-pricing-title">Bulk / Business Pricing</h3>
       <div className="bulk-pricing-table">
         <div className="bulk-pricing-header-row">
           <span>Quantity</span>

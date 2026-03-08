@@ -155,11 +155,12 @@ export default function Projects() {
                 <div>
                   <h2>{activeProject.name}</h2>
                   <p>{activeProject.description || 'No description'}</p>
-                  {activeProject.siteAddress && <p className="site-addr">📍 {activeProject.siteAddress}</p>}
+                  {activeProject.siteAddress && <p className="site-addr"><span className="material-icons" style={{fontSize:'15px',verticalAlign:'middle',marginRight:'3px'}}>location_on</span>{activeProject.siteAddress}</p>}
                 </div>
                 <div className="project-detail-actions">
                   <button className="share-btn" onClick={() => handleToggleShare(activeProject._id)}>
-                    {activeProject.isShared ? '🔗 Shared' : '🔗 Share'}
+                    <span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle',marginRight:'4px'}}>link</span>
+                    {activeProject.isShared ? 'Shared' : 'Share'}
                   </button>
                   {activeProject.isShared && (
                     <button className="copy-link-btn" onClick={() => {
@@ -168,9 +169,11 @@ export default function Projects() {
                     }}>Copy Link</button>
                   )}
                   <button className="add-cart-btn" onClick={() => handleAddToCart(activeProject._id)} disabled={addingToCart}>
-                    {addingToCart ? 'Adding…' : '🛒 Add All to Cart'}
+                    {addingToCart ? 'Adding…' : 'Add All to Cart'}
                   </button>
-                  <button className="delete-project-btn" onClick={() => handleDelete(activeProject._id)}>🗑 Delete</button>
+                  <button className="delete-project-btn" onClick={() => handleDelete(activeProject._id)}>
+                    <span className="material-icons" style={{fontSize:'18px',verticalAlign:'middle'}}>delete</span> Delete
+                  </button>
                 </div>
               </div>
 

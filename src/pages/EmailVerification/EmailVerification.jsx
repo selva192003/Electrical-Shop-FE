@@ -74,7 +74,7 @@ const EmailVerification = () => {
     return (
       <div className="page-container auth-page">
         <div className="auth-card card ev-card">
-          <div className="ev-icon ev-icon--success">✅</div>
+          <div className="ev-icon ev-icon--success"><span className="material-icons" style={{color:'#16a34a',fontSize:'3rem'}}>check_circle</span></div>
           <h1 className="ev-title">Email Verified!</h1>
           <p className="ev-subtitle">
             Your email has been verified successfully. Your account is now active.
@@ -95,7 +95,7 @@ const EmailVerification = () => {
     return (
       <div className="page-container auth-page">
         <div className="auth-card card ev-card">
-          <div className="ev-icon ev-icon--warn">⏰</div>
+          <div className="ev-icon ev-icon--warn"><span className="material-icons" style={{color:'#d97706',fontSize:'3rem'}}>schedule</span></div>
           <h1 className="ev-title">Link Expired</h1>
           <p className="ev-subtitle">
             Your verification link has expired. Verification links are valid for <strong>24 hours</strong>.
@@ -139,7 +139,7 @@ const EmailVerification = () => {
   return (
     <div className="page-container auth-page">
       <div className="auth-card card ev-card">
-        <div className="ev-icon ev-icon--error">❌</div>
+        <div className="ev-icon ev-icon--error"><span className="material-icons" style={{color:'#dc2626',fontSize:'3rem'}}>cancel</span></div>
         <h1 className="ev-title">Invalid Link</h1>
         <p className="ev-subtitle">
           This verification link is invalid or has already been used. If you&apos;ve already verified your email, you can log in directly.

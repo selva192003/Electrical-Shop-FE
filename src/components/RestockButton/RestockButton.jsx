@@ -35,9 +35,9 @@ export default function RestockButton({ productId, initialSubscribed = false }) 
       disabled={loading}
     >
       {loading ? '…' : subscribed ? (
-        <><span className="restock-icon">🔔</span> Notifying You</>
+        <><span className="material-icons restock-icon">notifications_active</span> Notifying You</>
       ) : (
-        <><span className="restock-icon">🔕</span> Notify When Back</>
+        <><span className="material-icons restock-icon">notification_add</span> Notify When Back</>
       )}
     </button>
   );

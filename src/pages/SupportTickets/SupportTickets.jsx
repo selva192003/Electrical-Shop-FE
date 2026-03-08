@@ -13,11 +13,11 @@ const STATUS_COLORS = {
 };
 
 const CATEGORY_LABELS = {
-  order_issue: '📦 Order Issue',
-  payment_issue: '💳 Payment Issue',
-  product_query: '⚡ Product Query',
-  return_request: '🔄 Return Request',
-  other: '💬 Other',
+  order_issue: 'Order Issue',
+  payment_issue: 'Payment Issue',
+  product_query: 'Product Query',
+  return_request: 'Return Request',
+  other: 'Other',
 };
 
 const SupportTickets = () => {

@@ -292,7 +292,7 @@ const AdminProducts = () => {
                   {generating ? <><span className="material-icons" style={{fontSize:'0.9em'}}>hourglass_empty</span> Generating…</> : <><span className="material-icons" style={{fontSize:'0.9em'}}>auto_awesome</span> AI Generate</>}
                 </button>
               </div>
-              <textarea name="description" value={form.description} onChange={handleChange} rows={3} required className="adp-input adp-textarea" placeholder="Describe the product, or click ✨ AI Generate above…" />
+              <textarea name="description" value={form.description} onChange={handleChange} rows={3} required className="adp-input adp-textarea" placeholder="Describe the product, or click AI Generate above…" />
 
               {/* ── Pricing & Inventory ── */}
               <p className="adp-section-title">Pricing & Inventory</p>

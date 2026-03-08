@@ -11,7 +11,7 @@ export default function DarkModeToggle() {
       title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
       aria-label="Toggle dark mode"
     >
-      <span className="dm-icon">{darkMode ? '☀️' : '🌙'}</span>
+      <span className="material-icons dm-icon">{darkMode ? 'light_mode' : 'dark_mode'}</span>
       <span className="dm-track">
         <span className="dm-thumb" />
       </span>
