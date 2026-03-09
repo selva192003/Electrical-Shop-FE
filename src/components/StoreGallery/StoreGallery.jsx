@@ -1,18 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import logo from '../../assets/sri-murugan-logo.png';
-import shop1 from '../../assets/images/Screenshot 2026-03-07 095253.jpg';
-import shop2 from '../../assets/images/Screenshot 2026-03-07 095306.jpg';
-import shop3 from '../../assets/images/Screenshot 2026-03-07 095325.jpg';
-import shop4 from '../../assets/images/Gemini_Generated_Image_jdgbkjdgbkjdgbkj (1).png';
-import shop5 from '../../assets/images/Gemini_Generated_Image_qieegyqieegyqiee (1).png';
 import './StoreGallery.css';
 
 const IMAGES = [
-  { src: shop1, alt: 'Sri Murugan Store – Main Counter', caption: 'Main Counter' },
-  { src: shop2, alt: 'Sri Murugan Store – Product Display', caption: 'Product Display' },
-  { src: shop3, alt: 'Sri Murugan Store – Hardware Section', caption: 'Hardware Section' },
-  { src: shop4, alt: 'Sri Murugan Store – Electrical Aisle', caption: 'Electrical Aisle' },
-  { src: shop5, alt: 'Sri Murugan Store – Customer Area', caption: 'Customer Area' },
+  { src: '/store-images/store-1.jpg', alt: 'Sri Murugan Store – Main Counter', caption: 'Main Counter' },
+  { src: '/store-images/store-2.jpg', alt: 'Sri Murugan Store – Product Display', caption: 'Product Display' },
+  { src: '/store-images/store-3.jpg', alt: 'Sri Murugan Store – Hardware Section', caption: 'Hardware Section' },
+  { src: '/store-images/store-4.png', alt: 'Sri Murugan Store – Electrical Aisle', caption: 'Electrical Aisle' },
+  { src: '/store-images/store-5.png', alt: 'Sri Murugan Store – Customer Area', caption: 'Customer Area' },
 ];
 
 /* ─── helpers ─────────────────────────────────────────── */
