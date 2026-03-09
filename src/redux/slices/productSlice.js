@@ -1,18 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getProducts, getFeaturedProducts, getCategories, getProductById, getBrands, getRelatedProducts, getProductsByCategory } from '../../services/productService.js';
+import { getProducts, getCategories, getProductById, getBrands, getRelatedProducts, getProductsByCategory } from '../../services/productService.js';
 
 export const fetchProducts = createAsyncThunk('products/fetch', async (params, { rejectWithValue }) => {
   try {
     const res = await getProducts(params);
-    return res.data;
-  } catch (err) {
-    return rejectWithValue(err.message);
-  }
-});
-
-export const fetchFeaturedProducts = createAsyncThunk('products/featured', async (_, { rejectWithValue }) => {
-  try {
-    const res = await getFeaturedProducts(8);
     return res.data;
   } catch (err) {
     return rejectWithValue(err.message);
@@ -66,7 +57,6 @@ export const fetchProductsByCategory = createAsyncThunk('products/byCategory', a
 
 const initialState = {
   items: [],
-  featured: [],
   categories: [],
   brands: [],
   related: [],
@@ -79,8 +69,6 @@ const initialState = {
   error: null,
   selectedLoading: false,
   selectedError: null,
-  featuredLoading: false,
-  featuredError: null,
   filters: {
     keyword: '',
     category: '',
@@ -122,7 +110,6 @@ const productSlice = createSlice({
         }
       };
       state.items.forEach(applyPatch);
-      state.featured.forEach(applyPatch);
       state.related.forEach(applyPatch);
       if (state.selectedProduct) applyPatch(state.selectedProduct);
     },
@@ -152,18 +139,6 @@ const productSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
-      .addCase(fetchFeaturedProducts.pending, (state) => {
-        state.featuredLoading = true;
-        state.featuredError = null;
-      })
-      .addCase(fetchFeaturedProducts.fulfilled, (state, action) => {
-        state.featuredLoading = false;
-        state.featured = action.payload.products || action.payload;
-      })
-      .addCase(fetchFeaturedProducts.rejected, (state, action) => {
-        state.featuredLoading = false;
-        state.featuredError = action.payload;
       })
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.categories = action.payload;

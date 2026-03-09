@@ -36,8 +36,7 @@
   transform: scale(1.04);
 }
 
-.product-badge-out,
-.product-badge-featured {
+.product-badge-out {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -47,16 +46,8 @@
   font-weight: 600;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-}
-
-.product-badge-out {
   background-color: #fee2e2;
   color: #b91c1c;
-}
-
-.product-badge-featured {
-  background: var(--color-accent, #f5b400);
-  color: var(--color-primary, #0b1f3b);
 }
 
 /* Wishlist button */

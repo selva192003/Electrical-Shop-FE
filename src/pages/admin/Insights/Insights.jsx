@@ -145,7 +145,6 @@ const AdminInsights = () => {
                 <span className="ins-dead-brand">{d.brand} · {d.stock} units in stock</span>
               </div>
               <div className="ins-dead-actions">
-                <span className="ins-tip"><span className="material-icons" style={{fontSize:'0.9em'}}>star</span> Mark as featured</span>
                 <span className="ins-tip"><span className="material-icons" style={{fontSize:'0.9em'}}>local_offer</span> Apply a discount coupon</span>
               </div>
             </div>

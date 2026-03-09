@@ -70,9 +70,6 @@ const ProductCard = ({ product, onAddToCart }) => {
       <div className="product-card-image-wrapper">
         <img src={imgSrc} alt={product.name} className="product-card-image" />
         {product.stock === 0 && <span className="product-badge-out">Out of Stock</span>}
-        {product.featured && product.stock > 0 && (
-          <span className="product-badge-featured">Featured</span>
-        )}
         <button
           className={`product-wishlist-btn${isWishlisted ? ' active' : ''}`}
           onClick={handleWishlist}

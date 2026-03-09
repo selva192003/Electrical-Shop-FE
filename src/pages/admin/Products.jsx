@@ -18,7 +18,7 @@ const toSlug = (str) => str.toLowerCase().trim().replace(/\s+/g, '-').replace(/[
 
 const EMPTY_FORM = {
   name: '', description: '', price: '', brand: '', stock: '',
-  category: '', featured: false,
+  category: '',
   specs: [{ key: '', value: '' }],
   variants: [],
 };
@@ -68,7 +68,6 @@ const AdminProducts = () => {
       brand: p.brand || '',
       stock: p.stock,
       category: p.category?._id || p.category || '',
-      featured: !!p.featured,
       specs,
       variants: p.variants?.length ? p.variants.map((v) => ({ watt: v.watt || '', voltage: v.voltage || '', brand: v.brand || '' })) : [],
     });
@@ -129,7 +128,6 @@ const AdminProducts = () => {
       fd.append('brand',       form.brand);
       fd.append('stock',       form.stock);
       fd.append('category',   form.category);
-      fd.append('featured',   form.featured ? 'true' : 'false');
 
       // Specifications: [{key,value}] → JSON object
       const specsObj = {};
@@ -320,11 +318,6 @@ const AdminProducts = () => {
                   </select>
                 </label>
               </div>
-              <label className="adp-label adp-label--check">
-                <input name="featured" type="checkbox" checked={form.featured} onChange={handleChange} />
-                Mark as Featured product
-              </label>
-
               {/* ── Specifications ── */}
               <div className="adp-section-header">
                 <p className="adp-section-title">Specifications</p>

@@ -16,6 +16,11 @@ dist/
 .env
 .env.*.local
 
+# Local product images (served from Cloudinary in production)
+public/shop-images/
+src/assets/images/*.jpg
+src/assets/images/*.jpeg
+
 # Editor / OS
 .DS_Store
 Thumbs.db

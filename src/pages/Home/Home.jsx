@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import ProductCard from '../../components/ProductCard/ProductCard.jsx';
 import Spinner from '../../components/Spinner/Spinner.jsx';
-import { fetchProducts, fetchCategories, fetchFeaturedProducts, setFilters, setPage } from '../../redux/slices/productSlice.js';
+import { fetchProducts, fetchCategories, setFilters, setPage } from '../../redux/slices/productSlice.js';
 import { addItemToCart } from '../../redux/slices/cartSlice.js';
 import { useToast } from '../../components/Toast/ToastProvider.jsx';
 import Timeline from '../../components/Timeline/Timeline.jsx';
@@ -19,7 +19,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { addToast } = useToast();
-  const { items, featured, categories, loading, error, page, totalPages, filters, featuredLoading, featuredError } =
+  const { items, categories, loading, error, page, totalPages, filters } =
     useSelector((state) => state.products);
 
   const { register, handleSubmit, watch } = useForm({
@@ -32,7 +32,6 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(fetchCategories());
-    dispatch(fetchFeaturedProducts());
   }, [dispatch]);
 
   useEffect(() => {
