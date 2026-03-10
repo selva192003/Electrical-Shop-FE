@@ -1,4 +1,5 @@
 import './InfoPage.css';
+import StoreGallery from '../../components/StoreGallery/StoreGallery.jsx';
 
 const HIGHLIGHTS = [
   { icon: 'storefront',  label: 'Established',     value: '2015' },
@@ -69,10 +70,19 @@ const About = () => (
         </div>
       </div>
 
-      {/* What We Sell */}
+      {/* Store Gallery */}
       <div className="info-page__section">
         <div className="info-page__section-header">
           <span className="info-page__section-number">02</span>
+          <h2 className="info-page__section-title">Our Store</h2>
+        </div>
+        <StoreGallery />
+      </div>
+
+      {/* What We Sell */}
+      <div className="info-page__section">
+        <div className="info-page__section-header">
+          <span className="info-page__section-number">03</span>
           <h2 className="info-page__section-title">What We Stock</h2>
         </div>
         <p>
@@ -92,7 +102,7 @@ const About = () => (
       {/* Why Us */}
       <div className="info-page__section">
         <div className="info-page__section-header">
-          <span className="info-page__section-number">03</span>
+          <span className="info-page__section-number">04</span>
           <h2 className="info-page__section-title">Why Customers Choose Us</h2>
         </div>
         <ul>
@@ -107,7 +117,7 @@ const About = () => (
       {/* Visit Us */}
       <div className="info-page__section">
         <div className="info-page__section-header">
-          <span className="info-page__section-number">04</span>
+          <span className="info-page__section-number">05</span>
           <h2 className="info-page__section-title">Visit Our Store</h2>
         </div>
         <ul>
