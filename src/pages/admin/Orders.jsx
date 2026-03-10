@@ -149,9 +149,14 @@ const AdminOrders = () => {
                         disabled={updating[o._id]}
                         onChange={(e) => handleStatus(o._id, e.target.value)}
                       >
-                        <option value={o.orderStatus}>{o.orderStatus}</option>
-                        {(ALLOWED_TRANSITIONS[o.orderStatus] || []).map((s) => (
-                          <option key={s} value={s}>{s}</option>
+                        {STATUSES.map((s) => (
+                          <option
+                            key={s}
+                            value={s}
+                            disabled={s === o.orderStatus || !(ALLOWED_TRANSITIONS[o.orderStatus] || []).includes(s)}
+                          >
+                            {s}
+                          </option>
                         ))}
                       </select>
                     )}
