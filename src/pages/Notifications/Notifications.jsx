@@ -16,7 +16,6 @@ const TYPE_ICONS = {
   order: 'local_shipping',
   support: 'confirmation_number',
   return: 'keyboard_return',
-  coupon: 'local_offer',
   system: 'notifications',
 };
 

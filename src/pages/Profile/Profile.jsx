@@ -292,22 +292,8 @@ const Profile = () => {
 
       {/* Quick Access to new features */}
       <div className="profile-quick-access">
-        <h2 className="profile-section-heading">My Benefits &amp; Tools</h2>
+        <h2 className="profile-section-heading">My Tools</h2>
         <div className="profile-quick-grid">
-          <Link to="/loyalty" className="profile-quick-card loyalty-card">
-            <span className="material-icons pq-icon">military_tech</span>
-            <div>
-              <div className="pq-title">Loyalty Points</div>
-              <div className="pq-sub">{user?.loyaltyPoints || 0} pts • {user?.loyaltyTier || 'Bronze'}</div>
-            </div>
-          </Link>
-          <Link to="/referral" className="profile-quick-card referral-card">
-            <span className="material-icons pq-icon">people</span>
-            <div>
-              <div className="pq-title">Refer &amp; Earn</div>
-              <div className="pq-sub">{user?.referralCount || 0} referrals made</div>
-            </div>
-          </Link>
           <Link to="/wishlist?tab=projects" className="profile-quick-card projects-card">
             <span className="material-icons pq-icon">engineering</span>
             <div>

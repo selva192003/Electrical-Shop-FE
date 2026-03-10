@@ -107,7 +107,7 @@ const AdminDashboard = () => {
   };
 
   /* ── Insights data ── */
-  const { restockAlerts = [], deadStock = [], anomaly, coupons = [] } = insights || {};
+  const { restockAlerts = [], deadStock = [], anomaly } = insights || {};
 
   return (
     <div className="adb">
@@ -197,7 +197,7 @@ const AdminDashboard = () => {
         <h2 className="adb-intelligence-title">
           <span className="material-icons">psychology</span> Store Intelligence
         </h2>
-        <p className="adb-intelligence-sub">Predictions, anomaly detection &amp; coupon performance — powered by your own data.</p>
+        <p className="adb-intelligence-sub">Predictions and anomaly detection — powered by your own data.</p>
       </div>
 
       {insightsLoading && (
@@ -277,49 +277,13 @@ const AdminDashboard = () => {
                     <span className="ins-dead-brand">{d.brand} · {d.stock} units in stock</span>
                   </div>
                   <div className="ins-dead-actions">
-                    <span className="ins-tip"><span className="material-icons" style={{ fontSize: '0.9em' }}>local_offer</span> Apply a discount coupon</span>
+                    <span className="ins-tip"><span className="material-icons" style={{ fontSize: '0.9em' }}>trending_down</span> Consider a price reduction</span>
                   </div>
                 </div>
               ))}
             </div>
           </InsSection>
 
-          {/* Coupon Performance Scorer */}
-          <InsSection
-            icon={<span className="material-icons">confirmation_number</span>}
-            title="Coupon Performance Scorer"
-            subtitle="Effectiveness score based on usage, redemption rate, and active status"
-            empty={coupons.length === 0}
-            emptyMsg="No coupons have been redeemed yet."
-          >
-            <div className="ins-table-wrap">
-              <table className="ins-table">
-                <thead>
-                  <tr>
-                    <th>Code</th><th>Discount</th><th>Redeemed</th>
-                    <th>Usage Rate</th><th>Status</th><th>Effectiveness</th><th>Expires</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {coupons.map((c) => (
-                    <tr key={c.code}>
-                      <td><code className="ins-code">{c.code}</code></td>
-                      <td>{c.discountType === 'percentage' ? `${c.discountValue}%` : `₹${c.discountValue}`}</td>
-                      <td>{c.usedCount}</td>
-                      <td>{c.usageRate !== null ? `${c.usageRate}%` : '—'}</td>
-                      <td>
-                        <span className={`ins-badge ${c.isActive ? 'ins-badge--ok' : 'ins-badge--off'}`}>
-                          {c.isActive ? 'Active' : 'Inactive'}
-                        </span>
-                      </td>
-                      <td style={{ minWidth: 140 }}><ScoreBar score={c.effectivenessScore} /></td>
-                      <td className="ins-muted">{new Date(c.expiresAt).toLocaleDateString('en-IN')}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </InsSection>
         </>
       )}
     </div>

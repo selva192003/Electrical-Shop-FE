@@ -38,8 +38,6 @@ import Returns from './pages/Returns/Returns.jsx';
 import OrderDetail from './pages/Orders/OrderDetail.jsx';
 import Calculator from './pages/Calculator/Calculator.jsx';
 import EnergyCalculator from './pages/EnergyCalculator/EnergyCalculator.jsx';
-import Loyalty from './pages/Loyalty/Loyalty.jsx';
-import Referral from './pages/Referral/Referral.jsx';
 import Signup from './pages/Signup/Signup.jsx';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword.jsx';
 import VerifyOTP from './pages/VerifyOTP/VerifyOTP.jsx';
@@ -150,8 +148,6 @@ const App = () => {
           <Route path="/energy-calculator" element={<EnergyCalculator />} />
           {/* /projects is now part of the Wishlist page (tab=projects) */}
           <Route path="/projects" element={<Navigate to="/wishlist?tab=projects" replace />} />
-          <Route path="/loyalty" element={<ProtectedRoute><Loyalty /></ProtectedRoute>} />
-          <Route path="/referral" element={<ProtectedRoute><Referral /></ProtectedRoute>} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>

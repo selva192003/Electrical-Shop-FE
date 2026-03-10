@@ -27,8 +27,8 @@ const FAQ_ITEMS = [
     a: 'Absolutely. We are an authorised multi-brand distributor. Every product is sourced directly from manufacturers or certified distributors and comes with a standard brand warranty.',
   },
   {
-    q: 'How do I apply a coupon code?',
-    a: 'Coupon codes can be entered on the Checkout page in the "Apply Coupon" field before payment. If a code is invalid or expired, you will see an instant error message.',
+    q: 'What payment methods do you accept?',
+    a: 'We accept UPI, credit/debit cards, net banking, and Cash on Delivery (COD). All online transactions are secured and processed through a trusted payment gateway.',
   },
   {
     q: 'My payment was deducted but order was not placed — what should I do?',
