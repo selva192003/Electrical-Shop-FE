@@ -165,7 +165,7 @@ const Login = () => {
             onSuccess={onGoogleSuccess}
             onError={onGoogleError}
             useOneTap={false}
-            width="100%"
+            width={400}
             text="continue_with"
             shape="rectangular"
           />
