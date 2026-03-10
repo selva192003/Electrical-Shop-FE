@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { incrementUnreadCount } from '../redux/slices/notificationSlice.js';
 
 const SocketContext = createContext(null);
 
 export const SocketProvider = ({ children }) => {
   const socketRef = useRef(null);
+  const dispatch = useDispatch();
   const { user } = useSelector((s) => s.auth);
 
   useEffect(() => {
@@ -26,6 +28,11 @@ export const SocketProvider = ({ children }) => {
       }
     });
 
+    // Real-time notification: bump the bell badge immediately
+    socket.on('newNotification', () => {
+      dispatch(incrementUnreadCount());
+    });
+
     socket.on('connect_error', (err) => {
       console.warn('Socket connection error:', err.message);
     });
@@ -33,7 +40,7 @@ export const SocketProvider = ({ children }) => {
     return () => {
       socket.disconnect();
     };
-  }, [user]);
+  }, [user, dispatch]);
 
   return (
     <SocketContext.Provider value={socketRef}>

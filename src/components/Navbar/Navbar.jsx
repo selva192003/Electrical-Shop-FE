@@ -10,7 +10,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const cartCount = useSelector((state) => state.cart.items.length);
+  const cartCount = useSelector((state) =>
+    state.cart.items.reduce((sum, item) => sum + (item.quantity || 1), 0)
+  );
   const unreadCount = useSelector((state) => state.notifications.unreadCount);
 
   // Fetch unread notification count periodically when logged in
