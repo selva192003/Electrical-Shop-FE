@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { logout } from '../../redux/slices/authSlice.js';
+import { logout, fetchAddresses } from '../../redux/slices/authSlice.js';
 import { fetchUnreadCount } from '../../redux/slices/notificationSlice.js';
 import logo from '../../assets/sri-murugan-logo.png';
 import './Navbar.css';
@@ -14,11 +14,14 @@ const Navbar = () => {
     state.cart.items.reduce((sum, item) => sum + (item.quantity || 1), 0)
   );
   const unreadCount = useSelector((state) => state.notifications.unreadCount);
+  const addresses = useSelector((state) => state.auth.addresses);
+  const hasNoAddress = user && addresses.length === 0;
 
-  // Fetch unread notification count periodically when logged in
+  // Fetch unread notification count and addresses periodically when logged in
   useEffect(() => {
     if (user) {
       dispatch(fetchUnreadCount());
+      dispatch(fetchAddresses());
       const interval = setInterval(() => dispatch(fetchUnreadCount()), 60000); // every minute
       return () => clearInterval(interval);
     }
@@ -88,8 +91,9 @@ const Navbar = () => {
 
           {user ? (
             <div className="navbar-user">
-              <NavLink to="/profile" className="user-name">
+              <NavLink to="/profile" className="user-name-wrap" title={hasNoAddress ? 'Please add a delivery address to your profile' : undefined}>
                 {user.name?.split(' ')[0] || 'Profile'}
+                {hasNoAddress && <span className="user-alert-badge">!</span>}
               </NavLink>
               <button type="button" className="accent-btn navbar-logout" onClick={handleLogout}>
                 Logout

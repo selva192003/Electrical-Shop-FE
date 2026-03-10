@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -10,7 +10,7 @@ import {
   deleteUserAddress,
   setDefaultUserAddress,
 } from '../../redux/slices/authSlice.js';
-import { uploadProfileImage, changePassword } from '../../services/authService.js';
+import { changePassword } from '../../services/authService.js';
 import Spinner from '../../components/Spinner/Spinner.jsx';
 import { useToast } from '../../components/Toast/ToastProvider.jsx';
 import './Profile.css';
@@ -19,8 +19,6 @@ const Profile = () => {
   const dispatch = useDispatch();
   const { addToast } = useToast();
   const { user, addresses, loading } = useSelector((state) => state.auth);
-  const fileInputRef = useRef(null);
-  const [uploadingImg, setUploadingImg] = useState(false);
   const [changingPw, setChangingPw] = useState(false);
 
   const {
@@ -59,23 +57,6 @@ const Profile = () => {
       addToast('Profile updated', 'success');
     } catch (err) {
       addToast(err || 'Could not update profile', 'error');
-    }
-  };
-
-  const handleProfileImageChange = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const formData = new FormData();
-    formData.append('image', file);
-    setUploadingImg(true);
-    try {
-      await uploadProfileImage(formData);
-      await dispatch(loadProfile());
-      addToast('Profile picture updated!', 'success');
-    } catch (err) {
-      addToast('Failed to upload image', 'error');
-    } finally {
-      setUploadingImg(false);
     }
   };
 
@@ -138,30 +119,6 @@ const Profile = () => {
       <div className="profile-layout">
         <section className="card profile-section">
           <h2>Account</h2>
-
-          {/* Profile Image */}
-          <div className="profile-avatar-wrap">
-            <div className="profile-avatar" onClick={() => fileInputRef.current?.click()}>
-              {user?.profileImage ? (
-                <img src={user.profileImage} alt="Profile" className="profile-avatar-img" />
-              ) : (
-                <span className="profile-avatar-initials">
-                  {user?.name?.charAt(0).toUpperCase()}
-                </span>
-              )}
-              <div className="profile-avatar-overlay">
-                {uploadingImg ? '...' : <span className="material-icons" style={{fontSize:'1.2rem'}}>photo_camera</span>}
-              </div>
-            </div>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              style={{ display: 'none' }}
-              onChange={handleProfileImageChange}
-            />
-            <p className="profile-avatar-hint">Click avatar to change photo</p>
-          </div>
 
           <form className="profile-form" onSubmit={handleSubmit(onProfileSubmit)}>
             <div className="form-group">

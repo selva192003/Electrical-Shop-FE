@@ -164,9 +164,29 @@
   gap: 8px;
 }
 
-.user-name {
+.user-name-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 0.9rem;
   color: #ffffff;
+  text-decoration: none;
+}
+
+.user-alert-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background-color: #f59e0b;
+  color: #111827;
+  border-radius: 999px;
+  padding: 1px 5px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 16px;
+  text-align: center;
+  line-height: 1.4;
 }
 
 .navbar-logout {
