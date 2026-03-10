@@ -10,12 +10,12 @@ import './AdminOrders.css';
 
 const STATUSES = ['Pending', 'Confirmed', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'];
 
-// Mirrors backend ALLOWED_TRANSITIONS
+// Cancelled is user-only action — admin cannot cancel via the dropdown
 const ALLOWED_TRANSITIONS = {
-  Pending:              ['Confirmed', 'Cancelled'],
-  Confirmed:            ['Packed',    'Cancelled'],
-  Packed:               ['Shipped',   'Cancelled'],
-  Shipped:              ['Out for Delivery', 'Cancelled'],
+  Pending:              ['Confirmed'],
+  Confirmed:            ['Packed'],
+  Packed:               ['Shipped'],
+  Shipped:              ['Out for Delivery'],
   'Out for Delivery':   ['Delivered'],
   Delivered:            [],
   Cancelled:            [],
@@ -149,7 +149,7 @@ const AdminOrders = () => {
                         disabled={updating[o._id]}
                         onChange={(e) => handleStatus(o._id, e.target.value)}
                       >
-                        {STATUSES.map((s) => (
+                        {STATUSES.filter((s) => s !== 'Cancelled').map((s) => (
                           <option
                             key={s}
                             value={s}
