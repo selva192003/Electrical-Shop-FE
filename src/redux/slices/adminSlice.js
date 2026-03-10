@@ -21,6 +21,15 @@ export const fetchLowStockProducts = createAsyncThunk('admin/fetchLowStock', asy
   }
 });
 
+export const fetchLowStockCount = createAsyncThunk('admin/fetchLowStockCount', async (_, { rejectWithValue }) => {
+  try {
+    const res = await axiosInstance.get('/dashboard/low-stock-count');
+    return res.data.count ?? 0;
+  } catch (err) {
+    return rejectWithValue(err.response?.data?.message || err.message);
+  }
+});
+
 export const fetchAdminUsers = createAsyncThunk('admin/fetchUsers', async (_, { rejectWithValue }) => {
   try {
     const res = await axiosInstance.get('/users');
@@ -214,6 +223,7 @@ const adminSlice = createSlice({
     selectedTicket: null,
     ticketLoading: false,
     openTicketsCount: 0,
+    lowStockCount: 0,
     error: null,
   },
   reducers: {
@@ -222,6 +232,9 @@ const adminSlice = createSlice({
     },
     clearOpenTicketsCount(state) {
       state.openTicketsCount = 0;
+    },
+    clearLowStockCount(state) {
+      state.lowStockCount = 0;
     },
   },
   extraReducers: (builder) => {
@@ -287,6 +300,10 @@ const adminSlice = createSlice({
     builder
       .addCase(fetchOpenTicketsCount.fulfilled, (s, a) => { s.openTicketsCount = a.payload; });
 
+    // low stock badge
+    builder
+      .addCase(fetchLowStockCount.fulfilled, (s, a) => { s.lowStockCount = a.payload; });
+
     // tickets
     builder
       .addCase(fetchAdminTickets.pending, (s) => { s.ticketsLoading = true; })
@@ -310,5 +327,5 @@ const adminSlice = createSlice({
   },
 });
 
-export const { clearSelectedTicket, clearOpenTicketsCount } = adminSlice.actions;
+export const { clearSelectedTicket, clearOpenTicketsCount, clearLowStockCount } = adminSlice.actions;
 export default adminSlice.reducer;

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../../redux/slices/authSlice.js';
-import { fetchOpenTicketsCount, clearOpenTicketsCount } from '../../../redux/slices/adminSlice.js';
+import { fetchOpenTicketsCount, clearOpenTicketsCount, fetchLowStockCount, clearLowStockCount } from '../../../redux/slices/adminSlice.js';
 import logo from '../../../assets/sri-murugan-logo.png';
 import './AdminLayout.css';
 
@@ -16,25 +16,28 @@ const NAV_ITEMS = [
 ];
 
 const SUPPORT_PATH = '/admin/feedback';
+const LOW_STOCK_PATH = '/admin/low-stock';
 
 const AdminLayout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((s) => s.auth);
   const openTicketsCount = useSelector((s) => s.admin.openTicketsCount);
+  const lowStockCount = useSelector((s) => s.admin.lowStockCount);
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const refreshCount = useCallback(() => {
+  const refreshCounts = useCallback(() => {
     dispatch(fetchOpenTicketsCount());
+    dispatch(fetchLowStockCount());
   }, [dispatch]);
 
   // Fetch on mount, then poll every 30 s
   useEffect(() => {
-    refreshCount();
-    const id = setInterval(refreshCount, 30_000);
+    refreshCounts();
+    const id = setInterval(refreshCounts, 30_000);
     return () => clearInterval(id);
-  }, [refreshCount]);
+  }, [refreshCounts]);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -70,7 +73,16 @@ const AdminLayout = () => {
         <nav className="admin-sidebar__nav">
           {NAV_ITEMS.map((item) => {
             const isSupport = item.to === SUPPORT_PATH;
-            const badge = isSupport && openTicketsCount > 0 ? openTicketsCount : 0;
+            const isLowStock = item.to === LOW_STOCK_PATH;
+            let badge = 0;
+            let badgeTitle = '';
+            if (isSupport && openTicketsCount > 0) {
+              badge = openTicketsCount;
+              badgeTitle = `${badge} open ticket${badge > 1 ? 's' : ''}`;
+            } else if (isLowStock && lowStockCount > 0) {
+              badge = lowStockCount;
+              badgeTitle = `${badge} low stock item${badge > 1 ? 's' : ''}`;
+            }
             return (
               <NavLink
                 key={item.to}
@@ -81,13 +93,14 @@ const AdminLayout = () => {
                 onClick={() => {
                   setMobileOpen(false);
                   if (isSupport) dispatch(clearOpenTicketsCount());
+                  if (isLowStock) dispatch(clearLowStockCount());
                 }}
                 title={collapsed ? item.label : ''}
               >
                 <span className="material-icons admin-nav-link__icon">{item.icon}</span>
                 {!collapsed && <span className="admin-nav-link__label">{item.label}</span>}
                 {badge > 0 && (
-                  <span className="admin-nav-badge" title={`${badge} open ticket${badge > 1 ? 's' : ''}`}>
+                  <span className="admin-nav-badge" title={badgeTitle}>
                     {badge > 99 ? '99+' : badge}
                   </span>
                 )}
