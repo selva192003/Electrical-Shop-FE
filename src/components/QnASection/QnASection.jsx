@@ -104,7 +104,7 @@ export default function QnASection({ productId }) {
 
             {q.answers?.map((a, i) => (
               <div key={i} className="qna-answer-row">
-                <div className={`qna-a-icon ${a.isAdmin ? 'admin' : ''}`}>{a.isAdmin ? '✓' : 'A'}</div>
+                <div className={`qna-a-icon ${a.isAdmin ? 'admin' : ''}`}>{a.isAdmin ? <span className="material-icons" style={{fontSize:'14px',lineHeight:1}}>check</span> : 'A'}</div>
                 <div className="qna-a-body">
                   <div className="qna-a-text">{a.answer}</div>
                   <div className="qna-a-meta">

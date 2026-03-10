@@ -170,7 +170,7 @@ const AdminDashboard = () => {
         <div className="adb-table-card">
           <div className="adb-section-header">
             <h3 className="adb-section-title"><span className="material-icons">receipt</span> Recent Orders</h3>
-            <Link to="/admin/orders" className="adb-view-all">View all →</Link>
+            <Link to="/admin/orders" className="adb-view-all">View all <span className="material-icons" style={{fontSize:'14px',verticalAlign:'middle'}}>arrow_forward</span></Link>
           </div>
           {stats.recentOrders?.length > 0 ? (
             <table className="adb-table">

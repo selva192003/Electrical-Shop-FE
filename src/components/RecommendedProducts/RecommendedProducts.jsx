@@ -29,8 +29,8 @@ export default function RecommendedProducts({ productId, category }) {
       <div className="recommended-header">
         <h2>Recommended for You</h2>
         <div className="recommended-nav">
-          <button className="rec-nav-btn" onClick={() => scroll(-1)}>←</button>
-          <button className="rec-nav-btn" onClick={() => scroll(1)}>→</button>
+          <button className="rec-nav-btn" onClick={() => scroll(-1)}><span className="material-icons">chevron_left</span></button>
+          <button className="rec-nav-btn" onClick={() => scroll(1)}><span className="material-icons">chevron_right</span></button>
         </div>
       </div>
       <div className="recommended-scroll" ref={scrollRef}>
@@ -42,7 +42,7 @@ export default function RecommendedProducts({ productId, category }) {
               <div className="rec-product-brand">{product.brand}</div>
               <div className="rec-product-price">₹{product.price?.toLocaleString('en-IN')}</div>
               {product.rating > 0 && (
-                <div className="rec-product-rating">⭐ {product.rating?.toFixed(1)}</div>
+                <div className="rec-product-rating"><span className="material-icons" style={{fontSize:'13px',color:'#f59e0b',verticalAlign:'middle'}}>star</span> {product.rating?.toFixed(1)}</div>
               )}
             </div>
           </Link>

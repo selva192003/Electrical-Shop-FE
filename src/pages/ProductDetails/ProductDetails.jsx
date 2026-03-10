@@ -21,11 +21,11 @@ import './ProductDetails.css';
 
 /* ── Star mood mapping ── */
 const STAR_MOODS = {
-  1: { emoji: '\uD83D\uDE22', label: 'Terrible',   color: '#ef4444' },
-  2: { emoji: '\uD83D\uDE15', label: 'Not Good',   color: '#f97316' },
-  3: { emoji: '\uD83D\uDE10', label: 'Okay',        color: '#eab308' },
-  4: { emoji: '\uD83D\uDE0A', label: 'Good',        color: '#22c55e' },
-  5: { emoji: '\uD83E\uDD29', label: 'Excellent!',  color: '#8b5cf6' },
+  1: { icon: 'sentiment_very_dissatisfied', label: 'Terrible',   color: '#ef4444' },
+  2: { icon: 'sentiment_dissatisfied',      label: 'Not Good',   color: '#f97316' },
+  3: { icon: 'sentiment_neutral',           label: 'Okay',       color: '#eab308' },
+  4: { icon: 'sentiment_satisfied',         label: 'Good',       color: '#22c55e' },
+  5: { icon: 'sentiment_very_satisfied',    label: 'Excellent!', color: '#8b5cf6' },
 };
 
 /* ── Static star display ── */
@@ -82,7 +82,7 @@ const StarPicker = ({ value, onChange }) => {
       </div>
       {active > 0 && mood && (
         <div className="pd-star-mood" key={active}>
-          <span className="pd-star-mood__emoji">{mood.emoji}</span>
+          <span className="material-icons pd-star-mood__emoji" style={{ color: mood.color }}>{mood.icon}</span>
           <span className="pd-star-mood__label" style={{ color: mood.color }}>{mood.label}</span>
         </div>
       )}

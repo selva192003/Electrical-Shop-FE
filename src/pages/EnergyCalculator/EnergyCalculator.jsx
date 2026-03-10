@@ -130,7 +130,7 @@ const EnergyCalculator = () => {
               <span className="savings-amount">₹{Number(results.currentBill).toLocaleString('en-IN')}</span>
               <span className="savings-kwh">{results.currentMonthlyKwh} kWh</span>
             </div>
-            <div className="savings-arrow">→</div>
+            <div className="savings-arrow"><span className="material-icons">arrow_forward</span></div>
             <div className="savings-box efficient">
               <span className="savings-label">With Efficient Products</span>
               <span className="savings-amount">₹{Number(results.efficientBill).toLocaleString('en-IN')}</span>
@@ -164,7 +164,7 @@ const EnergyCalculator = () => {
                 </div>
               </div>
               <button className="view-efficient-btn" onClick={() => navigate(`/products?keyword=${encodeURIComponent(item.searchTerm)}`)}>
-                View {item.efficientName} →
+                View {item.efficientName} <span className="material-icons" style={{fontSize:'14px',verticalAlign:'middle'}}>arrow_forward</span>
               </button>
             </div>
           ))}

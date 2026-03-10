@@ -47,7 +47,7 @@ const Categories = () => {
                   {cat.productCount} {cat.productCount === 1 ? 'product' : 'products'}
                 </span>
               )}
-              <span className="category-card__cta">Shop Now →</span>
+              <span className="category-card__cta">Shop Now <span className="material-icons" style={{fontSize:'14px',verticalAlign:'middle'}}>arrow_forward</span></span>
             </Link>
           ))}
         </div>

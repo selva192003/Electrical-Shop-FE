@@ -297,7 +297,7 @@ const Calculator = () => {
             style={{ cursor: i < step ? 'pointer' : 'default' }}
           >
             <div className="calc-step-circle">
-              {i < step ? <span>✓</span> : <span>{i + 1}</span>}
+              {i < step ? <span className="material-icons" style={{fontSize:'16px',lineHeight:1}}>check</span> : <span>{i + 1}</span>}
             </div>
             <span className="calc-step-label">{s.label}</span>
             {i < STEPS.length - 1 && <div className="calc-step-connector" />}
@@ -369,7 +369,7 @@ const Calculator = () => {
           <div className="calc-footer-nav">
             <div />
             <button className="btn-primary" disabled={!propertyType} onClick={() => setStep(1)}>
-              Next: Enter Appliance Load →
+              Next: Enter Appliance Load <span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle'}}>arrow_forward</span>
             </button>
           </div>
         </div>
@@ -501,11 +501,11 @@ const Calculator = () => {
           )}
 
           <div className="calc-footer-nav">
-            <button className="btn-secondary" onClick={() => setStep(0)}>← Back</button>
+            <button className="btn-secondary" onClick={() => setStep(0)}><span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle'}}>arrow_back</span> Back</button>
             <div className="footer-nav-right">
               <button className="btn-ghost" onClick={resetAll}>↺ Reset</button>
               <button className="btn-primary" disabled={totalSelectedCount === 0} onClick={handleCalculate}>
-                Calculate Requirements →
+                Calculate Requirements <span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle'}}>arrow_forward</span>
               </button>
             </div>
           </div>
@@ -640,11 +640,11 @@ const Calculator = () => {
           </div>
 
           <div className="calc-footer-nav">
-            <button className="btn-secondary" onClick={() => setStep(1)}>← Edit Load</button>
+            <button className="btn-secondary" onClick={() => setStep(1)}><span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle'}}>arrow_back</span> Edit Load</button>
             <div className="footer-nav-right">
               <button className="btn-ghost" onClick={() => window.print()}>Print Report</button>
               <button className="btn-primary" onClick={handleMatchProducts}>
-                View Material List &amp; Shop →
+                View Material List &amp; Shop <span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle'}}>arrow_forward</span>
               </button>
             </div>
           </div>
@@ -717,7 +717,7 @@ const Calculator = () => {
                           <button
                             className="btn-browse"
                             onClick={() => navigate(`/products?keyword=${encodeURIComponent(item.searchTerm)}`)}
-                          >Browse →</button>
+                          >Browse <span className="material-icons" style={{fontSize:'14px',verticalAlign:'middle'}}>arrow_forward</span></button>
                         </div>
                       )}
                     </div>
@@ -763,8 +763,8 @@ const Calculator = () => {
           )}
 
           <div className="calc-footer-nav">
-            <button className="btn-secondary" onClick={() => setStep(2)}>← Back to Results</button>
-            <button className="btn-ghost" onClick={() => navigate('/products')}>Browse Catalog →</button>
+            <button className="btn-secondary" onClick={() => setStep(2)}><span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle'}}>arrow_back</span> Back to Results</button>
+            <button className="btn-ghost" onClick={() => navigate('/products')}>Browse Catalog <span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle'}}>arrow_forward</span></button>
           </div>
         </div>
       )}
