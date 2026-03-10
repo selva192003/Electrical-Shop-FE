@@ -191,7 +191,7 @@ export default function Projects() {
                 <div className="project-items-list">
                   {activeProject.items.map((item, i) => (
                     <div key={i} className="project-item-card">
-                      <img src={item.product?.images?.[0]} alt={item.product?.name} className="project-item-img" />
+                      <img src={item.product?.images?.[0]?.url || item.product?.images?.[0] || '/placeholder-product.png'} alt={item.product?.name} className="project-item-img" />
                       <div className="project-item-info">
                         <div className="project-item-name">{item.product?.name || 'Product'}</div>
                         <div className="project-item-meta">

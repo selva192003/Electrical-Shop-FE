@@ -66,7 +66,7 @@ const AdminLowStock = () => {
                       <div className="als-product-cell">
                         {p.images?.[0] && (
                           <img
-                            src={p.images[0]}
+                            src={p.images[0]?.url || p.images[0]}
                             alt={p.name}
                             className="als-product-img"
                           />

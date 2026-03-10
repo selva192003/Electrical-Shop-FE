@@ -36,7 +36,7 @@ export default function RecommendedProducts({ productId, category }) {
       <div className="recommended-scroll" ref={scrollRef}>
         {products.map(product => (
           <Link key={product._id} to={`/products/${product._id}`} className="rec-product-card">
-            <img src={product.images?.[0]} alt={product.name} className="rec-product-img" />
+            <img src={product.images?.[0]?.url || product.images?.[0] || '/placeholder-product.png'} alt={product.name} className="rec-product-img" />
             <div className="rec-product-body">
               <div className="rec-product-name">{product.name}</div>
               <div className="rec-product-brand">{product.brand}</div>
