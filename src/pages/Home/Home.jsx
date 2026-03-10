@@ -71,9 +71,7 @@ const Home = () => {
             <button
               type="button"
               className="accent-btn"
-              onClick={() =>
-                document.getElementById('home-products')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-              }
+              onClick={() => navigate('/products')}
             >
               Shop Now
             </button>
