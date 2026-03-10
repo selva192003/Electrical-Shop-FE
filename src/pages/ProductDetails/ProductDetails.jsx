@@ -16,7 +16,6 @@ import { useToast } from '../../components/Toast/ToastProvider.jsx';
 import { submitReview, getMyReview, getProductReviews, checkReviewEligibility } from '../../services/reviewService.js';
 import RestockButton from '../../components/RestockButton/RestockButton.jsx';
 import BulkPricing from '../../components/BulkPricing/BulkPricing.jsx';
-import RecommendedProducts from '../../components/RecommendedProducts/RecommendedProducts.jsx';
 import { trackProductView } from '../../services/recommendationService.js';
 import './ProductDetails.css';
 
@@ -529,11 +528,6 @@ const ProductDetails = () => {
             )}
           </>
         )}
-      </div>
-
-      {/* AI-powered Recommendations */}
-      <div className="pd-section card">
-        <RecommendedProducts productId={id} />
       </div>
 
       {/* Related Products */}
