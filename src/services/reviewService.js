@@ -14,3 +14,6 @@ export const getProductReviews = (productId) =>
 
 export const checkReviewEligibility = (productId) =>
   axiosInstance.get(`/reviews/product/${productId}/eligibility`);
+
+export const voteReview = (reviewId, vote) =>
+  axiosInstance.post(`/reviews/${reviewId}/vote`, { vote });

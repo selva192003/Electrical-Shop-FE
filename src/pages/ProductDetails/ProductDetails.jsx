@@ -13,11 +13,20 @@ import { addToWishlist, removeFromWishlist } from '../../redux/slices/wishlistSl
 import ProductCard from '../../components/ProductCard/ProductCard.jsx';
 import Spinner from '../../components/Spinner/Spinner.jsx';
 import { useToast } from '../../components/Toast/ToastProvider.jsx';
-import { submitReview, getMyReview, getProductReviews, checkReviewEligibility } from '../../services/reviewService.js';
+import { submitReview, getMyReview, getProductReviews, checkReviewEligibility, voteReview } from '../../services/reviewService.js';
 import RestockButton from '../../components/RestockButton/RestockButton.jsx';
 import BulkPricing from '../../components/BulkPricing/BulkPricing.jsx';
 import { trackProductView } from '../../services/recommendationService.js';
 import './ProductDetails.css';
+
+/* ── Star mood mapping ── */
+const STAR_MOODS = {
+  1: { emoji: '\uD83D\uDE22', label: 'Terrible',   color: '#ef4444' },
+  2: { emoji: '\uD83D\uDE15', label: 'Not Good',   color: '#f97316' },
+  3: { emoji: '\uD83D\uDE10', label: 'Okay',        color: '#eab308' },
+  4: { emoji: '\uD83D\uDE0A', label: 'Good',        color: '#22c55e' },
+  5: { emoji: '\uD83E\uDD29', label: 'Excellent!',  color: '#8b5cf6' },
+};
 
 /* ── Static star display ── */
 const Stars = ({ value = 0 }) => {
@@ -35,31 +44,111 @@ const Stars = ({ value = 0 }) => {
   );
 };
 
-/* ── Interactive star picker ── */
+/* ── Interactive star picker with 3D animation + mood ── */
 const StarPicker = ({ value, onChange }) => {
   const [hover, setHover] = useState(0);
+  const [bounceStar, setBounceStar] = useState(null);
   const active = hover || value;
-  const labels = ['Terrible', 'Poor', 'Okay', 'Good', 'Excellent'];
+  const mood = STAR_MOODS[active];
+
+  const handleClick = (s) => {
+    setBounceStar(s);
+    onChange(s);
+  };
+
   return (
     <div className="pd-star-picker">
       <div className="pd-star-picker__row">
         {[1, 2, 3, 4, 5].map((s) => (
           <span
             key={s}
-            className={`material-icons pd-star-pick${active >= s ? ' pd-star-pick--on' : ''}`}
+            className={[
+              'material-icons',
+              'pd-star-pick',
+              active >= s ? 'pd-star-pick--on' : '',
+              bounceStar === s ? 'pd-star-pick--bounce' : '',
+            ].filter(Boolean).join(' ')}
+            style={active >= s && mood ? { color: mood.color } : undefined}
             onMouseEnter={() => setHover(s)}
             onMouseLeave={() => setHover(0)}
-            onClick={() => onChange(s)}
+            onClick={() => handleClick(s)}
+            onAnimationEnd={() => setBounceStar(null)}
             role="button"
             aria-label={`${s} star`}
           >
             {active >= s ? 'star' : 'star_border'}
           </span>
         ))}
-        {active > 0 && (
-          <span className="pd-star-pick__label">{labels[active - 1]}</span>
-        )}
       </div>
+      {active > 0 && mood && (
+        <div className="pd-star-mood" key={active}>
+          <span className="pd-star-mood__emoji">{mood.emoji}</span>
+          <span className="pd-star-mood__label" style={{ color: mood.color }}>{mood.label}</span>
+        </div>
+      )}
+    </div>
+  );
+};
+
+/* ── Review vote buttons (like / dislike) ── */
+const ReviewVoteButtons = ({ review, userId }) => {
+  const myVote = review.votedBy?.find(
+    (v) => String(v.user?._id || v.user) === String(userId)
+  )?.vote || null;
+  const [vote, setVote] = useState(myVote);
+  const [likes, setLikes] = useState(review.helpfulVotes || 0);
+  const [dislikes, setDislikes] = useState(review.notHelpfulVotes || 0);
+  const [animLike, setAnimLike] = useState(false);
+  const [animDislike, setAnimDislike] = useState(false);
+
+  const handleVote = async (type) => {
+    if (!userId) return;
+    const prevVote = vote;
+    const prevLikes = likes;
+    const prevDislikes = dislikes;
+
+    // Optimistic update
+    if (type === 'helpful') {
+      setAnimLike(true);
+      if (vote === 'helpful') { setVote(null); setLikes((l) => l - 1); }
+      else { if (vote === 'not_helpful') setDislikes((d) => d - 1); setVote('helpful'); setLikes((l) => l + 1); }
+    } else {
+      setAnimDislike(true);
+      if (vote === 'not_helpful') { setVote(null); setDislikes((d) => d - 1); }
+      else { if (vote === 'helpful') setLikes((l) => l - 1); setVote('not_helpful'); setDislikes((d) => d + 1); }
+    }
+
+    try {
+      await voteReview(review._id, type);
+    } catch {
+      setVote(prevVote);
+      setLikes(prevLikes);
+      setDislikes(prevDislikes);
+    }
+  };
+
+  return (
+    <div className="pd-rv-votes">
+      <button
+        className={`pd-rv-vote-btn${vote === 'helpful' ? ' pd-rv-vote-btn--liked' : ''}${animLike ? ' pd-rv-vote-btn--pop' : ''}`}
+        onClick={() => handleVote('helpful')}
+        onAnimationEnd={() => setAnimLike(false)}
+        disabled={!userId}
+        title={userId ? 'Helpful' : 'Log in to vote'}
+      >
+        <span className="material-icons">thumb_up</span>
+        {likes > 0 && <span className="pd-rv-vote-count">{likes}</span>}
+      </button>
+      <button
+        className={`pd-rv-vote-btn${vote === 'not_helpful' ? ' pd-rv-vote-btn--disliked' : ''}${animDislike ? ' pd-rv-vote-btn--pop' : ''}`}
+        onClick={() => handleVote('not_helpful')}
+        onAnimationEnd={() => setAnimDislike(false)}
+        disabled={!userId}
+        title={userId ? 'Not helpful' : 'Log in to vote'}
+      >
+        <span className="material-icons">thumb_down</span>
+        {dislikes > 0 && <span className="pd-rv-vote-count">{dislikes}</span>}
+      </button>
     </div>
   );
 };
@@ -513,6 +602,9 @@ const ProductDetails = () => {
                             <p className="pd-rv-item__reply-msg">{rv.adminReply.message}</p>
                           </div>
                         </div>
+                      )}
+                      {!isOwn && (
+                        <ReviewVoteButtons review={rv} userId={user?._id} />
                       )}
                     </div>
                   );
