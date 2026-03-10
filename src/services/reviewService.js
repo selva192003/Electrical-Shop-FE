@@ -11,3 +11,6 @@ export const getMyReview = (productId) =>
 
 export const getProductReviews = (productId) =>
   axiosInstance.get(`/reviews/product/${productId}`);
+
+export const checkReviewEligibility = (productId) =>
+  axiosInstance.get(`/reviews/product/${productId}/eligibility`);

@@ -293,7 +293,8 @@ const Orders = () => {
 
   const openModal = useCallback((order) => {
     setSelected(order);
-    setFbOpen(false);
+    // Auto-expand feedback section if this order is delivered (prompt user to rate)
+    setFbOpen(order.orderStatus === 'Delivered');
     document.body.style.overflow = 'hidden';
   }, []);
 

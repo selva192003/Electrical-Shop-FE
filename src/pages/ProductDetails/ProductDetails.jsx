@@ -13,9 +13,8 @@ import { addToWishlist, removeFromWishlist } from '../../redux/slices/wishlistSl
 import ProductCard from '../../components/ProductCard/ProductCard.jsx';
 import Spinner from '../../components/Spinner/Spinner.jsx';
 import { useToast } from '../../components/Toast/ToastProvider.jsx';
-import { submitReview, getMyReview, getProductReviews } from '../../services/reviewService.js';
+import { submitReview, getMyReview, getProductReviews, checkReviewEligibility } from '../../services/reviewService.js';
 import RestockButton from '../../components/RestockButton/RestockButton.jsx';
-import QnASection from '../../components/QnASection/QnASection.jsx';
 import BulkPricing from '../../components/BulkPricing/BulkPricing.jsx';
 import RecommendedProducts from '../../components/RecommendedProducts/RecommendedProducts.jsx';
 import { trackProductView } from '../../services/recommendationService.js';
@@ -100,14 +99,16 @@ const ProductDetails = () => {
   const [allReviews,   setAllReviews]   = useState([]);
   const [rvLoading,    setRvLoading]    = useState(true);
   const [isEditing,    setIsEditing]    = useState(false);  // editing existing review
+  const [canReview,    setCanReview]    = useState(false);  // true only if user has a Delivered order for this product
 
   /* ── Load reviews on product change ── */
   const loadReviews = useCallback(async (productId) => {
     setRvLoading(true);
     try {
-      const [listRes, myRes] = await Promise.allSettled([
+      const [listRes, myRes, eligRes] = await Promise.allSettled([
         getProductReviews(productId),
         user ? getMyReview(productId) : Promise.reject(),
+        user ? checkReviewEligibility(productId) : Promise.reject(),
       ]);
       if (listRes.status === 'fulfilled') setAllReviews(listRes.value.data);
       if (myRes.status === 'fulfilled') {
@@ -122,6 +123,7 @@ const ProductDetails = () => {
         setRvComment('');
         setRvSuccess(false);
       }
+      setCanReview(eligRes.status === 'fulfilled' ? !!eligRes.value.data?.eligible : false);
     } finally {
       setRvLoading(false);
     }
@@ -403,6 +405,11 @@ const ProductDetails = () => {
                 <span className="material-icons" style={{fontSize:'1em',verticalAlign:'middle',marginRight:'4px'}}>lock</span>
                 <Link to="/login">Log in</Link> to leave a review.
               </p>
+            ) : !canReview && !myReview ? (
+              <p className="pd-login-note">
+                <span className="material-icons" style={{fontSize:'1em',verticalAlign:'middle',marginRight:'4px'}}>shopping_bag</span>
+                Only customers who have received this product can leave a review.
+              </p>
             ) : rvSuccess && !isEditing ? (
               /* Show the user's submitted review in read-only mode */
               <div className="pd-my-review">
@@ -522,11 +529,6 @@ const ProductDetails = () => {
             )}
           </>
         )}
-      </div>
-
-      {/* Q&A Section */}
-      <div className="pd-section card">
-        <QnASection productId={id} />
       </div>
 
       {/* AI-powered Recommendations */}
