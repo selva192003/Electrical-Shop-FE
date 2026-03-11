@@ -525,9 +525,7 @@ const Calculator = () => {
                 &nbsp;·&nbsp;Voltage: <strong>230V / pf 0.85</strong>
               </p>
             </div>
-            <button className="btn-print" onClick={() => window.print()} title="Print / Save as PDF">
-              Print / PDF
-            </button>
+
           </div>
 
           {/* Safety Warnings */}
@@ -642,7 +640,6 @@ const Calculator = () => {
           <div className="calc-footer-nav">
             <button className="btn-secondary" onClick={() => setStep(1)}><span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle'}}>arrow_back</span> Edit Load</button>
             <div className="footer-nav-right">
-              <button className="btn-ghost" onClick={() => window.print()}>Print Report</button>
               <button className="btn-primary" onClick={handleMatchProducts}>
                 View Material List &amp; Shop <span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle'}}>arrow_forward</span>
               </button>
