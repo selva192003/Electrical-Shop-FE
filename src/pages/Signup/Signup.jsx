@@ -102,8 +102,15 @@ const Signup = () => {
         setResendCooldown(60);
       }
     } catch (err) {
-      const msg = typeof err === 'string' ? err : err?.message || 'Registration failed';
-      if (msg.toLowerCase().includes('already exists') || msg.toLowerCase().includes('already registered')) {
+      const data = err?.response?.data;
+      const msg = data?.message || (typeof err === 'string' ? err : err?.message) || 'Registration failed';
+      const code = data?.code || '';
+      if (code === 'GOOGLE_ACCOUNT' || msg.toLowerCase().includes('google account')) {
+        setErrors((prev) => ({
+          ...prev,
+          email: 'This email is linked to a Google account. Please sign in with Google.',
+        }));
+      } else if (msg.toLowerCase().includes('already exists') || msg.toLowerCase().includes('already registered')) {
         setErrors((prev) => ({
           ...prev,
           email: 'This email already has an account. Please log in instead.',

@@ -17,6 +17,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   // Email-not-verified banner state
   const [unverifiedEmail, setUnverifiedEmail] = useState('');
+  const [isGoogleAccount, setIsGoogleAccount] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
 
@@ -46,13 +47,15 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     setUnverifiedEmail('');
+    setIsGoogleAccount(false);
     try {
       await dispatch(loginUser(data)).unwrap();
       addToast('Logged in successfully', 'success');
     } catch (err) {
-      // err is the rejectWithValue payload — check for EMAIL_NOT_VERIFIED code
       const raw = typeof err === 'object' && err !== null ? err : {};
-      if (raw.code === 'EMAIL_NOT_VERIFIED' || (typeof err === 'string' && err.toLowerCase().includes('verify your email'))) {
+      if (raw.code === 'GOOGLE_ACCOUNT') {
+        setIsGoogleAccount(true);
+      } else if (raw.code === 'EMAIL_NOT_VERIFIED' || (typeof err === 'string' && err.toLowerCase().includes('verify your email'))) {
         const email = raw.email || data.email || '';
         setUnverifiedEmail(email);
         setResendCooldown(0);
@@ -94,6 +97,14 @@ const Login = () => {
       <div className="auth-card card">
         <h1 className="auth-title">Welcome back</h1>
         <p className="auth-subtitle">Sign in to manage your electrical purchases.</p>
+
+        {/* Google-account banner */}
+        {isGoogleAccount && (
+          <div className="unverified-banner" style={{background:'#eff6ff',borderColor:'#3b82f6',color:'#1d4ed8'}}>
+            <span className="material-icons" style={{fontSize:'20px',verticalAlign:'middle',marginRight:'6px'}}>info</span>
+            This account was created with Google. Please sign in with Google below.
+          </div>
+        )}
 
         {/* Email-not-verified banner */}
         {unverifiedEmail && (
