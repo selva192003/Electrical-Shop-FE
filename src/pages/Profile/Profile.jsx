@@ -135,7 +135,8 @@ const Profile = () => {
           </form>
         </section>
 
-        {/* Change Password */}
+        {/* Change Password — hidden for Google accounts */}
+        {user?.provider !== 'google' && (
         <section className="card profile-section">
           <h2>Change Password</h2>
           <form className="profile-form" onSubmit={handlePwSubmit(onPasswordChange)}>
@@ -174,6 +175,20 @@ const Profile = () => {
             </button>
           </form>
         </section>
+        )}
+
+        {user?.provider === 'google' && (
+        <section className="card profile-section">
+          <h2>Change Password</h2>
+          <div style={{display:'flex',alignItems:'flex-start',gap:'10px',padding:'12px 16px',background:'#eff6ff',borderRadius:'10px',border:'1px solid #bfdbfe'}}>
+            <span className="material-icons" style={{color:'#3b82f6',fontSize:'22px',marginTop:'2px'}}>info</span>
+            <div>
+              <div style={{fontWeight:600,color:'#1d4ed8',marginBottom:'4px'}}>Google Sign-In Account</div>
+              <div style={{fontSize:'14px',color:'#374151'}}>Your account uses Google Sign-In, so there is no separate password to change. Your sign-in is managed securely by Google.</div>
+            </div>
+          </div>
+        </section>
+        )}
 
         <section className="card profile-section">
           <h2>Addresses</h2>
