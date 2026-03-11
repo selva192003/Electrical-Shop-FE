@@ -2,14 +2,13 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   getMyProjects, createProject, deleteProject,
-  addItemToProject, removeItemFromProject, toggleShare, addProjectToCart
+  addItemToProject, removeItemFromProject, addProjectToCart
 } from '../../services/projectService.js';
 import Spinner from '../../components/Spinner/Spinner.jsx';
 import { useToast } from '../../components/Toast/ToastProvider.jsx';
 import './Projects.css';
 
 const PROJECT_TYPES = ['Home Wiring', 'Office Wiring', 'Industrial', 'Solar Installation', 'Network Setup', 'Lighting', 'Security System', 'Other'];
-const STATUS_COLORS = { planning: '#6366f1', 'in-progress': '#f59e0b', ordered: '#3b82f6', completed: '#22c55e' };
 
 export default function Projects() {
   const toast = useToast();
@@ -61,15 +60,6 @@ export default function Projects() {
       setProjects(prev => prev.map(p => p._id === projectId ? updated : p));
       if (activeProject?._id === projectId) setActiveProject(updated);
     } catch { toast.error('Failed to remove item'); }
-  };
-
-  const handleToggleShare = async (projectId) => {
-    try {
-      const updated = await toggleShare(projectId);
-      setProjects(prev => prev.map(p => p._id === projectId ? updated : p));
-      if (activeProject?._id === projectId) setActiveProject(updated);
-      toast.success(updated.isShared ? 'Share link generated!' : 'Sharing disabled');
-    } catch { toast.error('Failed to toggle sharing'); }
   };
 
   const handleAddToCart = async (projectId) => {
@@ -137,9 +127,6 @@ export default function Projects() {
                     <div className="project-card-name">{p.name}</div>
                     <div className="project-card-type">{p.projectType}</div>
                   </div>
-                  <span className="project-card-status" style={{ background: STATUS_COLORS[p.status] + '22', color: STATUS_COLORS[p.status] }}>
-                    {p.status}
-                  </span>
                 </div>
                 <div className="project-card-meta">
                   <span>{p.items?.length || 0} items</span>
@@ -158,16 +145,6 @@ export default function Projects() {
                   {activeProject.siteAddress && <p className="site-addr"><span className="material-icons" style={{fontSize:'15px',verticalAlign:'middle',marginRight:'3px'}}>location_on</span>{activeProject.siteAddress}</p>}
                 </div>
                 <div className="project-detail-actions">
-                  <button className="share-btn" onClick={() => handleToggleShare(activeProject._id)}>
-                    <span className="material-icons" style={{fontSize:'16px',verticalAlign:'middle',marginRight:'4px'}}>link</span>
-                    {activeProject.isShared ? 'Shared' : 'Share'}
-                  </button>
-                  {activeProject.isShared && (
-                    <button className="copy-link-btn" onClick={() => {
-                      navigator.clipboard.writeText(`${window.location.origin}/projects/share/${activeProject.shareToken}`);
-                      toast.success('Link copied!');
-                    }}>Copy Link</button>
-                  )}
                   <button className="add-cart-btn" onClick={() => handleAddToCart(activeProject._id)} disabled={addingToCart}>
                     {addingToCart ? 'Adding…' : 'Add All to Cart'}
                   </button>
@@ -191,15 +168,30 @@ export default function Projects() {
                 <div className="project-items-list">
                   {activeProject.items.map((item, i) => (
                     <div key={i} className="project-item-card">
-                      <img src={item.product?.images?.[0]?.url || item.product?.images?.[0] || '/placeholder-product.png'} alt={item.product?.name} className="project-item-img" />
+                      {item.product?.images?.[0]?.url ? (
+                        <img
+                          src={item.product.images[0].url}
+                          alt={item.product?.name}
+                          className="project-item-img"
+                          onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}
+                        />
+                      ) : null}
+                      <span className="project-item-img-fallback material-icons" style={{display: item.product?.images?.[0]?.url ? 'none' : 'flex', width:'56px', height:'56px', fontSize:'28px', color:'#ccc', alignItems:'center', justifyContent:'center', flexShrink:0}}>image_not_supported</span>
                       <div className="project-item-info">
                         <div className="project-item-name">{item.product?.name || 'Product'}</div>
+                        {item.product?.brand && <div className="project-item-brand">{item.product.brand}</div>}
                         <div className="project-item-meta">
-                          Qty: {item.quantity} &times; ₹{item.priceAtAdd?.toLocaleString('en-IN')} = <strong>₹{(item.quantity * item.priceAtAdd).toLocaleString('en-IN')}</strong>
+                          Qty: <strong>{item.quantity}</strong> &times; ₹{item.priceAtAdd?.toLocaleString('en-IN')} = <strong>₹{(item.quantity * item.priceAtAdd).toLocaleString('en-IN')}</strong>
                         </div>
                         {item.notes && <div className="project-item-notes">{item.notes}</div>}
+                        <div className="project-item-stock" style={{color: item.product?.stock > 0 ? '#22c55e' : '#ef4444', fontSize:'12px', marginTop:'4px'}}>
+                          <span className="material-icons" style={{fontSize:'13px',verticalAlign:'middle',marginRight:'2px'}}>{item.product?.stock > 0 ? 'check_circle' : 'cancel'}</span>
+                          {item.product?.stock > 0 ? `In stock (${item.product.stock} available)` : 'Out of stock'}
+                        </div>
                       </div>
-                      <button className="project-item-remove" onClick={() => handleRemoveItem(activeProject._id, item._id)}>✕</button>
+                      <button className="project-item-remove" title="Remove item" onClick={() => handleRemoveItem(activeProject._id, item._id)}>
+                        <span className="material-icons" style={{fontSize:'16px'}}>close</span>
+                      </button>
                     </div>
                   ))}
                 </div>
