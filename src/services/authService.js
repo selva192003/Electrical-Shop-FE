@@ -15,6 +15,7 @@ export const uploadProfileImage = (formData) =>
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 
+export const sendChangePasswordOtp = () => axiosInstance.post('/users/change-password-otp');
 export const changePassword = (data) => axiosInstance.put('/users/change-password', data);
 
 export const getAddresses = () => axiosInstance.get('/users/addresses');
