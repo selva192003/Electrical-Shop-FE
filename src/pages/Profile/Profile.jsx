@@ -160,9 +160,9 @@ const Profile = () => {
               <span className="material-icons">favorite</span>
               Wishlist
             </Link>
-            <Link to="/wishlist?tab=projects" className="ps-nav-link">
-              <span className="material-icons">engineering</span>
-              My Projects
+            <Link to="/support" className="ps-nav-link">
+              <span className="material-icons">headset_mic</span>
+              Support
             </Link>
             <Link to="/calculator" className="ps-nav-link">
               <span className="material-icons">calculate</span>
