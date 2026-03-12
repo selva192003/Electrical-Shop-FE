@@ -75,12 +75,12 @@ const AdminGuard = () => {
   return <Outlet />;
 };
 
-/* Scroll to top on every route change */
+/* Scroll to top on every route change (pathname OR search params) */
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, [pathname]);
+  }, [pathname, search]);
   return null;
 };
 

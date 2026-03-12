@@ -27,6 +27,8 @@ const Profile = () => {
   const { user, addresses, loading } = useSelector((state) => state.auth);
 
   const [activeTab, setActiveTab] = useState('account');
+  // Scroll to top whenever the active tab changes
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }, [activeTab]);
   const [otpSent, setOtpSent] = useState(false);
   const [sendingOtp, setSendingOtp] = useState(false);
   const [changingPw, setChangingPw] = useState(false);

@@ -80,6 +80,8 @@ const Calculator = () => {
 
   // ── Step & property ─────────────────────────────────────────────────────
   const [step, setStep]                 = useState(0);
+  // Scroll to top whenever the step changes
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }, [step]);
   const [propertyType, setPropertyType] = useState('');
   const [floors, setFloors]             = useState(1);
   const [tariff, setTariff]             = useState(DEFAULT_TARIFF);
