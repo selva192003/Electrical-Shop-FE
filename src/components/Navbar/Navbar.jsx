@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { logout, fetchAddresses } from '../../redux/slices/authSlice.js';
 import { fetchUnreadCount } from '../../redux/slices/notificationSlice.js';
 import logo from '../../assets/sri-murugan-logo.png';
@@ -10,6 +10,19 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+
+  // Hide on scroll-down, reveal on scroll-up
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      setHidden(currentY > lastY.current && currentY > 60);
+      lastY.current = currentY;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
   const cartCount = useSelector((state) =>
     state.cart.items.reduce((sum, item) => sum + (item.quantity || 1), 0)
   );
@@ -33,7 +46,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="navbar">
+    <header className={`navbar${hidden ? ' navbar--hidden' : ''}`}>
       <div className="navbar-inner">
         <Link to="/" className="navbar-logo">
           <span className="logo-image-wrapper" aria-hidden="true">

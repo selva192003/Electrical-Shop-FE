@@ -5,6 +5,13 @@
   background-color: #0b1f3b;
   color: #ffffff;
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar--hidden {
+  transform: translateY(-100%);
+  box-shadow: none;
 }
 
 .navbar-inner {
