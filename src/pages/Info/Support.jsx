@@ -417,7 +417,7 @@ const Support = () => {
             </div>
             <div>
               <div className="sup-contact__label">Email</div>
-              <div className="sup-contact__value">support@srimuruganelectricals.com</div>
+              <div className="sup-contact__value">srimuruganelectricals75@gmail.com</div>
               <div className="sup-contact__sub">Response within 24 hours</div>
             </div>
           </div>

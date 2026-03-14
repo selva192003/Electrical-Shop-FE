@@ -163,7 +163,7 @@ const Privacy = () => (
           <li><strong>Objection</strong> &ndash; opt out of promotional communications at any time.</li>
           <li><strong>Portability</strong> &ndash; request your data in a structured, machine-readable format.</li>
         </ul>
-        <p>To exercise any of these rights, please contact us at <a href="mailto:support@srimuruganelectricals.com">support@srimuruganelectricals.com</a>. We will respond within 30 days.</p>
+        <p>To exercise any of these rights, please contact us at <a href="mailto:srimuruganelectricals75@gmail.com">srimuruganelectricals75@gmail.com</a>. We will respond within 30 days.</p>
       </div>
 
       {/* 7 */}
@@ -225,7 +225,7 @@ const Privacy = () => (
         <div className="info-page__contact-card-body">
           <h4>Questions about this Privacy Policy?</h4>
           <p>Sri Murugan Electrical &amp; Hardware Store<br />MKM Complex, Nayara Bunk Opposite, Kanjikoil Road, Perundurai West, Perundurai &ndash; 638052, Tamil Nadu</p>
-          <p>Email: <a href="mailto:support@srimuruganelectricals.com">support@srimuruganelectricals.com</a></p>
+          <p>Email: <a href="mailto:srimuruganelectricals75@gmail.com">srimuruganelectricals75@gmail.com</a></p>
           <p>Also see our <Link to="/terms">Terms &amp; Conditions</Link>.</p>
         </div>
       </div>

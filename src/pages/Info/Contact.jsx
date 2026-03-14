@@ -29,7 +29,7 @@ const Contact = () => (
             <span className="material-icons" style={{ color: 'var(--accent,#2563eb)', fontSize: '1.6rem', marginTop: '2px' }}>email</span>
             <div>
               <div style={{ fontWeight: 700, marginBottom: '0.25rem' }}>Email</div>
-              <a href="mailto:support@srimuruganelectricals.com" style={{ color: 'inherit' }}>support@srimuruganelectricals.com</a>
+              <a href="mailto:srimuruganelectricals75@gmail.com" style={{ color: 'inherit' }}>srimuruganelectricals75@gmail.com</a>
               <div style={{ fontSize: '0.82rem', color: 'var(--text-muted,#64748b)', marginTop: '0.2rem' }}>Response within 24 hours</div>
             </div>
           </div>

@@ -93,7 +93,7 @@ const Terms = () => (
         <ul>
           <li>Maintaining the confidentiality of your login credentials.</li>
           <li>All activity that occurs under your account, whether or not authorised by you.</li>
-          <li>Notifying us immediately at <a href="mailto:support@srimuruganelectricals.com">support@srimuruganelectricals.com</a> if you suspect unauthorised use of your account.</li>
+          <li>Notifying us immediately at <a href="mailto:srimuruganelectricals75@gmail.com">srimuruganelectricals75@gmail.com</a> if you suspect unauthorised use of your account.</li>
         </ul>
         <p>
           We reserve the right to suspend or terminate accounts that are found to be in violation of these Terms,
@@ -271,7 +271,7 @@ const Terms = () => (
         <div className="info-page__contact-card-body">
           <h4>Questions about these Terms?</h4>
           <p>Sri Murugan Electrical &amp; Hardware Store<br />MKM Complex, Nayara Bunk Opposite, Kanjikoil Road, Perundurai West, Perundurai &ndash; 638052, Tamil Nadu</p>
-          <p>Email: <a href="mailto:support@srimuruganelectricals.com">support@srimuruganelectricals.com</a></p>
+          <p>Email: <a href="mailto:srimuruganelectricals75@gmail.com">srimuruganelectricals75@gmail.com</a></p>
           <p>Also see our <Link to="/privacy">Privacy Policy</Link>.</p>
         </div>
       </div>
