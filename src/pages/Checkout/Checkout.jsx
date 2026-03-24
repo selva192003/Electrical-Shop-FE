@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchAddresses } from '../../redux/slices/authSlice.js';
-import { fetchCart, selectCartTotal, clearCartAsync } from '../../redux/slices/cartSlice.js';
+import { fetchCart, selectCartSubtotal, selectCartGstTotal, selectCartTotal, clearCartAsync } from '../../redux/slices/cartSlice.js';
 import { createOrderThunk } from '../../redux/slices/orderSlice.js';
 import { createRazorpayOrder, verifyPayment } from '../../services/paymentService.js';
 import Spinner from '../../components/Spinner/Spinner.jsx';
@@ -27,6 +27,8 @@ const Checkout = () => {
   const { addresses }           = useSelector((s) => s.auth);
   const { items, loading: cartLoading } = useSelector((s) => s.cart);
   const { user }                = useSelector((s) => s.auth);
+  const subtotal                = useSelector(selectCartSubtotal);
+  const gstTotal                = useSelector(selectCartGstTotal);
   const total                   = useSelector(selectCartTotal);
 
   const [selectedAddressId, setSelectedAddressId] = useState('');
@@ -63,12 +65,12 @@ const Checkout = () => {
      - Order < ₹100      → ₹40
   */
   const deliveryCharge = useMemo(() => {
-    if (!selectedAddress || !total) return 0;
+    if (!selectedAddress || !subtotal) return 0;
     const city = (selectedAddress.city || '').trim().toLowerCase();
     if (city === 'erode') return 0;
-    if (total >= 100)     return 0;
+    if (subtotal >= 100)  return 0;
     return 40;
-  }, [selectedAddress, total]);
+  }, [selectedAddress, subtotal]);
 
   const grandTotal = total + deliveryCharge;
 
@@ -389,7 +391,16 @@ const Checkout = () => {
                   {item.product?.name || item.name} × {item.quantity}
                 </span>
                 <span>
-                  ₹{((item.product?.price || item.price || 0) * item.quantity).toFixed(2)}
+                  {(() => {
+                    const unitPrice = item.product?.price || item.price || 0;
+                    const base = unitPrice * item.quantity;
+                    const rate =
+                      item.product?.gstRate ??
+                      (typeof item.gstRate === 'number' ? item.gstRate : 0);
+                    const gst = (base * (rate || 0)) / 100;
+                    const lineTotal = base + gst;
+                    return `₹${lineTotal.toFixed(2)}${rate ? ` (incl. GST ${rate}% )` : ''}`;
+                  })()}
                 </span>
               </li>
             ))}
@@ -398,8 +409,12 @@ const Checkout = () => {
           <div className="summary-divider" />
 
           <div className="summary-charge-row">
-            <span>Subtotal</span>
-            <span>₹{total.toFixed(2)}</span>
+            <span>Items Subtotal (before GST)</span>
+            <span>₹{subtotal.toFixed(2)}</span>
+          </div>
+          <div className="summary-charge-row">
+            <span>GST</span>
+            <span>₹{gstTotal.toFixed(2)}</span>
           </div>
           <div className="summary-charge-row">
             <span>Delivery Charge</span>

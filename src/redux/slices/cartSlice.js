@@ -84,7 +84,29 @@ const cartSlice = createSlice({
   },
 });
 
-export const selectCartTotal = (state) =>
-  state.cart.items.reduce((sum, item) => sum + item.quantity * (item.product?.price || item.price || 0), 0);
+// Subtotal before GST
+export const selectCartSubtotal = (state) =>
+  state.cart.items.reduce(
+    (sum, item) => sum + item.quantity * (item.product?.price || item.price || 0),
+    0
+  );
+
+// Total GST across all cart items, based on product or cart line GST rate
+export const selectCartGstTotal = (state) =>
+  state.cart.items.reduce((sum, item) => {
+    const unitPrice = item.product?.price || item.price || 0;
+    const lineBase = unitPrice * item.quantity;
+    const rate =
+      item.product?.gstRate ??
+      (typeof item.gstRate === 'number' ? item.gstRate : 0);
+    return sum + (lineBase * (rate || 0)) / 100;
+  }, 0);
+
+// Grand total including GST (excluding delivery, which is added at checkout)
+export const selectCartTotal = (state) => {
+  const subtotal = selectCartSubtotal(state);
+  const gst = selectCartGstTotal(state);
+  return subtotal + gst;
+};
 
 export default cartSlice.reducer;

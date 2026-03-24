@@ -21,6 +21,7 @@ const Home = () => {
   const { addToast } = useToast();
   const { items, categories, loading, error, page, totalPages, filters } =
     useSelector((state) => state.products);
+  const { user } = useSelector((state) => state.auth);
 
   const { register, handleSubmit, watch } = useForm({
     defaultValues: {
@@ -49,6 +50,11 @@ const Home = () => {
   };
 
   const handleAddToCart = async (product) => {
+    if (!user) {
+      addToast('Please log in to add items to your cart.', 'info');
+      navigate('/login');
+      return;
+    }
     try {
       await dispatch(addItemToCart({ productId: product._id, quantity: 1 })).unwrap();
       addToast('Added to cart', 'success');

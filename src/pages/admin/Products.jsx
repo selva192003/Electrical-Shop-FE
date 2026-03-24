@@ -21,6 +21,8 @@ const EMPTY_FORM = {
   category: '',
   specs: [{ key: '', value: '' }],
   variants: [],
+  gstRate: '',
+  hsnCode: '',
 };
 
 const EMPTY_CAT = { name: '', slug: '', description: '' };
@@ -70,6 +72,8 @@ const AdminProducts = () => {
       category: p.category?._id || p.category || '',
       specs,
       variants: p.variants?.length ? p.variants.map((v) => ({ watt: v.watt || '', voltage: v.voltage || '', brand: v.brand || '' })) : [],
+      gstRate: p.gstRate ?? '',
+      hsnCode: p.hsnCode || '',
     });
     setEditTarget(p);
     setImageFiles([]);
@@ -128,6 +132,8 @@ const AdminProducts = () => {
       fd.append('brand',       form.brand);
       fd.append('stock',       form.stock);
       fd.append('category',   form.category);
+      if (form.gstRate !== '') fd.append('gstRate', form.gstRate);
+      if (form.hsnCode)        fd.append('hsnCode', form.hsnCode);
 
       // Specifications: [{key,value}] → JSON object
       const specsObj = {};
@@ -300,6 +306,32 @@ const AdminProducts = () => {
                 </label>
                 <label className="adp-label">Stock Quantity *
                   <input name="stock" type="number" min="0" value={form.stock} onChange={handleChange} required className="adp-input" placeholder="0" />
+                </label>
+              </div>
+              <div className="adp-row">
+                <label className="adp-label">GST Rate (%)
+                  <input
+                    name="gstRate"
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                    value={form.gstRate}
+                    onChange={handleChange}
+                    className="adp-input"
+                    placeholder="e.g. 18"
+                  />
+                  <span className="adp-hint">Set as per official GST slab for this product.</span>
+                </label>
+                <label className="adp-label">HSN Code
+                  <input
+                    name="hsnCode"
+                    value={form.hsnCode}
+                    onChange={handleChange}
+                    className="adp-input"
+                    placeholder="e.g. 8539"
+                  />
+                  <span className="adp-hint">Optional, helps map to official GST classification.</span>
                 </label>
               </div>
 

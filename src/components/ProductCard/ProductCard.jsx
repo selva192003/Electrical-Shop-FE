@@ -34,6 +34,11 @@ const ProductCard = ({ product, onAddToCart }) => {
     e.preventDefault();
     e.stopPropagation();
     if (onAddToCart) { onAddToCart(product); return; }
+    if (!user) {
+      addToast('Please log in to add items to your cart.', 'info');
+      navigate('/login');
+      return;
+    }
     try {
       await dispatch(addItemToCart({ productId: product._id, quantity: 1 })).unwrap();
       addToast('Added to cart', 'success');
