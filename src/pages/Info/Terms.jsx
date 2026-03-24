@@ -127,7 +127,7 @@ const Terms = () => (
           <h2 className="info-page__section-title">Pricing &amp; Payment</h2>
         </div>
         <ul>
-          <li>All prices are listed in <strong>Indian Rupees (INR)</strong> and are inclusive of applicable GST unless stated otherwise.</li>
+          <li>All prices are listed in <strong>Indian Rupees (INR)</strong>. Any applicable taxes or charges will be clearly shown at checkout.</li>
           <li>We reserve the right to change prices at any time. The price charged will be the price displayed at the time of placing your order.</li>
           <li>Payments are processed securely through <strong>Razorpay</strong>. We accept UPI, credit/debit cards, and net banking.</li>
           <li>In the event of a payment failure, please do not retry multiple times. Contact our support team to verify the transaction status before attempting again.</li>

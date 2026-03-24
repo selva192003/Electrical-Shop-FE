@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CartItem from '../../components/CartItem/CartItem.jsx';
 import Spinner from '../../components/Spinner/Spinner.jsx';
-import { fetchCart, updateCartItemQty, removeCartItemAsync, selectCartSubtotal, selectCartGstTotal, selectCartTotal } from '../../redux/slices/cartSlice.js';
+import { fetchCart, updateCartItemQty, removeCartItemAsync, selectCartSubtotal } from '../../redux/slices/cartSlice.js';
 import { useToast } from '../../components/Toast/ToastProvider.jsx';
 import './Cart.css';
 
@@ -13,8 +13,6 @@ const Cart = () => {
   const { addToast } = useToast();
   const { items, loading } = useSelector((state) => state.cart);
   const subtotal = useSelector(selectCartSubtotal);
-  const gstTotal = useSelector(selectCartGstTotal);
-  const total = useSelector(selectCartTotal);
 
   useEffect(() => {
     dispatch(fetchCart());
@@ -65,13 +63,7 @@ const Cart = () => {
               Items: <strong>{items.length}</strong>
             </p>
             <p>
-              Subtotal (before GST): <strong>₹{subtotal.toFixed(2)}</strong>
-            </p>
-            <p>
-              GST: <strong>₹{gstTotal.toFixed(2)}</strong>
-            </p>
-            <p>
-              Total (incl. GST): <strong>₹{total.toFixed(2)}</strong>
+              Total: <strong>₹{subtotal.toFixed(2)}</strong>
             </p>
             <button type="button" className="accent-btn cart-checkout-btn" onClick={handleCheckout}>
               Proceed to Checkout

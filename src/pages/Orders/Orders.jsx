@@ -505,40 +505,23 @@ const Orders = () => {
                           <p className="ord-item__qty">Qty: {item.quantity}</p>
                         </div>
                         <div className="ord-item__price">
-                          {(() => {
-                            const base = item.price * item.quantity;
-                            const rate =
-                              typeof item.gstRate === 'number' ? item.gstRate : 0;
-                            const gst =
-                              typeof item.gstAmount === 'number'
-                                ? item.gstAmount
-                                : (base * (rate || 0)) / 100;
-                            const lineTotal = base + gst;
-                            return `₹${lineTotal.toLocaleString('en-IN')} ${
-                              rate ? `(incl. GST ${rate}% )` : ''
-                            }`;
-                          })()}
-                        </div>
+                              {(() => {
+                                const lineTotal = item.price * item.quantity;
+                                return `₹${lineTotal.toLocaleString('en-IN')}`;
+                              })()}
+                            </div>
                       </div>
                     ))}
                     <div className="ord-total-row">
-                      <span>Items Subtotal (before GST)</span>
+                      <span>Items Total</span>
                       <span className="ord-total-val">
-                        ₹{(order.itemsSubtotal || 0).toLocaleString('en-IN', {
-                          minimumFractionDigits: 2,
-                        })}
+                        ₹{order.orderItems
+                          .reduce((sum, it) => sum + it.price * it.quantity, 0)
+                          .toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                       </span>
                     </div>
                     <div className="ord-total-row">
-                      <span>GST</span>
-                      <span className="ord-total-val">
-                        ₹{(order.gstTotal || 0).toLocaleString('en-IN', {
-                          minimumFractionDigits: 2,
-                        })}
-                      </span>
-                    </div>
-                    <div className="ord-total-row">
-                      <span>Order Total (incl. GST)</span>
+                      <span>Order Total</span>
                       <span className="ord-total-val">
                         ₹{order.totalPrice?.toLocaleString('en-IN', {
                           minimumFractionDigits: 2,

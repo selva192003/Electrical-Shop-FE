@@ -17,7 +17,16 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
       </div>
       <div className="cart-item-actions">
         <div className="cart-item-qty">
-          <button type="button" onClick={() => onQuantityChange(item, Math.max(1, item.quantity - 1))}>
+          <button
+            type="button"
+            onClick={() => {
+              if (item.quantity <= 1) {
+                onRemove(item);
+              } else {
+                onQuantityChange(item, item.quantity - 1);
+              }
+            }}
+          >
             -
           </button>
           <span>{item.quantity}</span>

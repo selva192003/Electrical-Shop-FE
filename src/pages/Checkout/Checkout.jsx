@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchAddresses } from '../../redux/slices/authSlice.js';
-import { fetchCart, selectCartSubtotal, selectCartGstTotal, selectCartTotal, clearCartAsync } from '../../redux/slices/cartSlice.js';
+import { fetchCart, selectCartSubtotal, selectCartTotal, clearCartAsync } from '../../redux/slices/cartSlice.js';
 import { createOrderThunk } from '../../redux/slices/orderSlice.js';
 import { createRazorpayOrder, verifyPayment } from '../../services/paymentService.js';
 import Spinner from '../../components/Spinner/Spinner.jsx';
@@ -28,8 +28,6 @@ const Checkout = () => {
   const { items, loading: cartLoading } = useSelector((s) => s.cart);
   const { user }                = useSelector((s) => s.auth);
   const subtotal                = useSelector(selectCartSubtotal);
-  const gstTotal                = useSelector(selectCartGstTotal);
-  const total                   = useSelector(selectCartTotal);
 
   const [selectedAddressId, setSelectedAddressId] = useState('');
   const [useNewAddress, setUseNewAddress]         = useState(false);
@@ -72,7 +70,7 @@ const Checkout = () => {
     return 40;
   }, [selectedAddress, subtotal]);
 
-  const grandTotal = total + deliveryCharge;
+  const grandTotal = subtotal + deliveryCharge;
 
   /* ── Build shipping address object ── */
   const buildShipping = () => {
@@ -112,7 +110,7 @@ const Checkout = () => {
     } catch (err) {
       addToast(err?.message || 'Could not place order. Please try again.', 'error');
     } finally {
-      setPaying(false);
+    const grandTotal = subtotal + deliveryCharge; // Updated grand total calculation
     }
   };
 
@@ -393,13 +391,8 @@ const Checkout = () => {
                 <span>
                   {(() => {
                     const unitPrice = item.product?.price || item.price || 0;
-                    const base = unitPrice * item.quantity;
-                    const rate =
-                      item.product?.gstRate ??
-                      (typeof item.gstRate === 'number' ? item.gstRate : 0);
-                    const gst = (base * (rate || 0)) / 100;
-                    const lineTotal = base + gst;
-                    return `₹${lineTotal.toFixed(2)}${rate ? ` (incl. GST ${rate}% )` : ''}`;
+                    const lineTotal = unitPrice * item.quantity;
+                    return `₹${lineTotal.toFixed(2)}`;
                   })()}
                 </span>
               </li>
@@ -409,12 +402,8 @@ const Checkout = () => {
           <div className="summary-divider" />
 
           <div className="summary-charge-row">
-            <span>Items Subtotal (before GST)</span>
+            <span>Items Total</span>
             <span>₹{subtotal.toFixed(2)}</span>
-          </div>
-          <div className="summary-charge-row">
-            <span>GST</span>
-            <span>₹{gstTotal.toFixed(2)}</span>
           </div>
           <div className="summary-charge-row">
             <span>Delivery Charge</span>
