@@ -302,8 +302,6 @@ const AdminProducts = () => {
                   <input name="stock" type="number" min="0" value={form.stock} onChange={handleChange} required className="adp-input" placeholder="0" />
                 </label>
               </div>
-              </div>
-
               {/* ── Classification ── */}
               <p className="adp-section-title">Classification</p>
               <div className="adp-row">
